@@ -399,3 +399,4 @@ FodyWeavers.xsd
 
 Ignore/
 Notebooks/
+Predictor/Predictor.Testing/testSettings.json

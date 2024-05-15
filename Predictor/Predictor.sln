@@ -5,6 +5,10 @@ VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor.RetrieveOwmWeather", "Predictor.RetrieveOwmWeather\Predictor.RetrieveOwmWeather.csproj", "{317FEFFF-F3D6-4091-B523-9C9A752B8C76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor.Domain", "Predictor.Domain\Predictor.Domain.csproj", "{AFE887FF-6AF7-4DF2-95F4-FF94C9F98600}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor.Testing", "Predictor.Testing\Predictor.Testing.csproj", "{F3B6A9CB-64DC-4C0B-84B7-7909072BAD79}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{317FEFFF-F3D6-4091-B523-9C9A752B8C76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{317FEFFF-F3D6-4091-B523-9C9A752B8C76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{317FEFFF-F3D6-4091-B523-9C9A752B8C76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFE887FF-6AF7-4DF2-95F4-FF94C9F98600}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFE887FF-6AF7-4DF2-95F4-FF94C9F98600}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFE887FF-6AF7-4DF2-95F4-FF94C9F98600}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFE887FF-6AF7-4DF2-95F4-FF94C9F98600}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3B6A9CB-64DC-4C0B-84B7-7909072BAD79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3B6A9CB-64DC-4C0B-84B7-7909072BAD79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3B6A9CB-64DC-4C0B-84B7-7909072BAD79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3B6A9CB-64DC-4C0B-84B7-7909072BAD79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
