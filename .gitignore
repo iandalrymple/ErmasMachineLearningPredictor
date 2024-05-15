@@ -400,3 +400,4 @@ FodyWeavers.xsd
 Ignore/
 Notebooks/
 Predictor/Predictor.Testing/testSettings.json
+Predictor/Predictor.Console/consoleSettings.json

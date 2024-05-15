@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor.Domain", "Predict
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor.Testing", "Predictor.Testing\Predictor.Testing.csproj", "{F3B6A9CB-64DC-4C0B-84B7-7909072BAD79}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor.Console", "Predictor.Console\Predictor.Console.csproj", "{7673B9CE-31C6-457E-8BEE-24C073BBD611}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F3B6A9CB-64DC-4C0B-84B7-7909072BAD79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3B6A9CB-64DC-4C0B-84B7-7909072BAD79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3B6A9CB-64DC-4C0B-84B7-7909072BAD79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7673B9CE-31C6-457E-8BEE-24C073BBD611}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7673B9CE-31C6-457E-8BEE-24C073BBD611}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7673B9CE-31C6-457E-8BEE-24C073BBD611}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7673B9CE-31C6-457E-8BEE-24C073BBD611}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
