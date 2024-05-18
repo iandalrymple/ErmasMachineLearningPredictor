@@ -2,7 +2,7 @@
 
 namespace Predictor.Testing.Mocks
 {
-    internal class MockLogger : ILogger
+    internal class MockLogger<T> : ILogger where T : class
     {
         public IDisposable? BeginScope<TState>(TState state) where TState : notnull
         {

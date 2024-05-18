@@ -7,11 +7,11 @@ namespace Predictor.Console.Composition
 {
     internal class LoggerComposition
     {
-        internal static Logger BuildLogger(IConfiguration config, string loggingFolderName)
+        internal static Serilog.ILogger BuildLogger(IConfiguration config, string loggingFolderName)
         {
             // Switch that can be used by seq to control the logging programmatically.
             // https://nblumhardt.com/2014/10/dynamically-changing-the-serilog-level/
-            var logLevel = config.GetSection("Serilog").GetSection("MinimalLevel")["Default"];
+            var logLevel = config.GetSection("Serilog").GetSection("MinimumLevel")["Default"];
             var levelSwitch = TranslateLogLevel(logLevel);
 
             // Configure the logger with console 
@@ -37,7 +37,7 @@ namespace Predictor.Console.Composition
                     apiKey: config["SeqApiKey"],
                     controlLevelSwitch: levelSwitch)
                 .CreateLogger();
-            Log.Logger = serilog;
+            
             return serilog;
         }
 

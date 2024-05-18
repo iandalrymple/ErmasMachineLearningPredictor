@@ -1,16 +1,15 @@
-﻿using Predictor.Domain.Abstractions;
+﻿using Microsoft.Extensions.Logging;
+using Predictor.Domain.Abstractions;
 using Predictor.Domain.Models;
-
-using Microsoft.Extensions.Logging;
 
 namespace Predictor.RetrieveOwmWeather.Implementations;
 
 public class LoggingDecoratorRetrieveWeather : IRetrieveWeather
 {
     private readonly IRetrieveWeather _decoratedRetrieveWeather;
-    private readonly ILogger _logger;
+    private readonly ILogger<LoggingDecoratorRetrieveWeather> _logger;
 
-    public LoggingDecoratorRetrieveWeather(IRetrieveWeather decoratedRetrieveWeather, ILogger logger)
+    public LoggingDecoratorRetrieveWeather(IRetrieveWeather decoratedRetrieveWeather, ILogger<LoggingDecoratorRetrieveWeather> logger)
     {
         _decoratedRetrieveWeather = decoratedRetrieveWeather;
         _logger = logger;

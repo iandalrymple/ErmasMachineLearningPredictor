@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Predictor.Domain.Models;
 using Predictor.RetrieveOwmWeather.Implementations;
 using Predictor.Testing.Mocks;
@@ -26,10 +27,10 @@ public class TestLoggingDecoratedRetrieveWeather
         var obj = new RetrieveWeather(new RestClient(rco), new RestRequest());
 
         // Mock logger
-        var loggerMock = new MockLogger();
+        var loggerMock = new MockLogger<LoggingDecoratorRetrieveWeather>();
 
         // Now create the decorator. 
-        var decorator = new LoggingDecoratorRetrieveWeather(obj, loggerMock);
+        var decorator = new LoggingDecoratorRetrieveWeather(obj, (loggerMock as ILogger<LoggingDecoratorRetrieveWeather>));
 
         // Spin up the params object 
         var paramObject = new WeatherRetrieveParamModel
@@ -57,10 +58,10 @@ public class TestLoggingDecoratedRetrieveWeather
         var obj = new RetrieveWeather(new RestClient(rco), new RestRequest());
 
         // Mock logger
-        var loggerMock = new MockLogger();
+        var loggerMock = new MockLogger<LoggingDecoratorRetrieveWeather>();
 
         // Now create the decorator. 
-        var decorator = new LoggingDecoratorRetrieveWeather(obj, loggerMock);
+        var decorator = new LoggingDecoratorRetrieveWeather(obj, (loggerMock as ILogger<LoggingDecoratorRetrieveWeather>));
 
         // Spin up the params object 
         var paramObject = new WeatherRetrieveParamModel
