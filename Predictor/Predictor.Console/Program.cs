@@ -56,18 +56,6 @@ try
         .CreateLogger();
     Log.Logger.Information("{AppName} is starting.", System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
 
-    // Stateful container. TODO - need to get these values from args and then look up from config 
-    var stateContainer = new FsmStatefulContainer
-    {
-        CurrentState = PredictorFsmStates.Weather,
-        StoreLocation = new StoreLocation
-        {
-            StoreName = "Utica",
-            Latitude = .3,
-            Longitude = .5
-        }
-    };
-
     // Add services.
     var host = Host.CreateDefaultBuilder()
         .ConfigureServices((context, services) =>
@@ -84,7 +72,14 @@ try
                 return stateDictionary;
             });
 
-            services.AddSingleton(x => stateContainer);
+            services.AddSingleton(x =>
+            {
+                return new FsmStatefulContainer
+                {
+                    CurrentState = PredictorFsmStates.Weather,
+                    StoreLocation = config.GetSection("StoreLocation").Get<List<StoreLocation>>()!.First(x => x.Name.Equals(args[0], StringComparison.OrdinalIgnoreCase))
+                };
+            });
             services.AddSingleton<IFsmConductor, FsmConductor>();
         })
         .UseSerilog()
