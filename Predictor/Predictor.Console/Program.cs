@@ -56,13 +56,17 @@ try
         .CreateLogger();
     Log.Logger.Information("{AppName} is starting.", System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
 
-    // Create the dictionary of states.
-    var weatherState = new StateWeather();
-    var stateDictionary = new ConcurrentDictionary<PredictorFsmStates, IFsmState>();
-    stateDictionary.TryAdd(weatherState.State, weatherState);
-
-    // Stateful container.
-    var stateContainer = new FsmStatefulContainer();
+    // Stateful container. TODO - need to get these values from args and then look up from config 
+    var stateContainer = new FsmStatefulContainer
+    {
+        CurrentState = PredictorFsmStates.Weather,
+        StoreLocation = new StoreLocation
+        {
+            StoreName = "Utica",
+            Latitude = .3,
+            Longitude = .5
+        }
+    };
 
     // Add services.
     var host = Host.CreateDefaultBuilder()
@@ -71,10 +75,17 @@ try
             services.AddTransient<IRetrieveWeather>(x => new RetrieveWeather(config["BaseWeatherUri"]!));
             services.Decorate<IRetrieveWeather, LoggingDecoratorRetrieveWeather>();
 
-            services.AddSingleton(x => stateDictionary);
+            services.AddSingleton(x =>
+            {
+                var retriever = x.GetRequiredService<IRetrieveWeather>();
+                var stateWeather = new StateWeather(retriever);
+                var stateDictionary = new ConcurrentDictionary<PredictorFsmStates, IFsmState>();
+                stateDictionary.TryAdd(stateWeather.State, stateWeather);
+                return stateDictionary;
+            });
+
             services.AddSingleton(x => stateContainer);
-           services.AddSingleton<IFsmConductor, FsmConductor>();
-          
+            services.AddSingleton<IFsmConductor, FsmConductor>();
         })
         .UseSerilog()
         .Build();

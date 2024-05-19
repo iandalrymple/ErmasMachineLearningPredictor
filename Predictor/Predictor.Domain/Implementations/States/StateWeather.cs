@@ -6,8 +6,12 @@ namespace Predictor.Domain.Implementations.States;
 
 public class StateWeather : IFsmState
 {
-    public StateWeather()
+    private readonly IRetrieveWeather _retriever;
+
+    public StateWeather(IRetrieveWeather retriever)
     {
+        _retriever = retriever; 
+
         State = PredictorFsmStates.Weather;
     }
 
