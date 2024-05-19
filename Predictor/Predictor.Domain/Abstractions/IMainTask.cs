@@ -1,6 +1,6 @@
 ﻿namespace Predictor.Domain.Abstractions;
 
-public interface IMainApp
+public interface IMainTask
 {
     public Task Run();
 }

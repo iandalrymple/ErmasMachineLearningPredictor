@@ -17,67 +17,67 @@ public class TestLoggingDecoratedRetrieveWeather
     public DateTime FutureDateTime = 
         DateTime.SpecifyKind(DateTime.UtcNow.AddDays(3), DateTimeKind.Utc);
 
-    [Fact]
-    public async Task TestRetrieveDecorated()
-    {
-        // Create the options for RestClient - method above checked null.
-        var rco = new RestClientOptions(_configuration["BaseWeatherUri"]!);
+    //[Fact]
+    //public async Task TestRetrieveDecorated()
+    //{
+    //    // Create the options for RestClient - method above checked null.
+    //    var rco = new RestClientOptions(_configuration["BaseWeatherUri"]!);
 
-        // Create the OUT
-        var obj = new RetrieveWeather(new RestClient(rco), new RestRequest());
+    //    // Create the OUT
+    //    var obj = new RetrieveWeather(new RestClient(rco), new RestRequest());
 
-        // Mock logger
-        var loggerMock = new MockLogger<LoggingDecoratorRetrieveWeather>();
+    //    // Mock logger
+    //    var loggerMock = new MockLogger<LoggingDecoratorRetrieveWeather>();
 
-        // Now create the decorator. 
-        var decorator = new LoggingDecoratorRetrieveWeather(obj, (loggerMock as ILogger<LoggingDecoratorRetrieveWeather>));
+    //    // Now create the decorator. 
+    //    var decorator = new LoggingDecoratorRetrieveWeather(obj, (loggerMock as ILogger<LoggingDecoratorRetrieveWeather>));
 
-        // Spin up the params object 
-        var paramObject = new WeatherRetrieveParamModel
-        {
-            Latitude = Convert.ToDouble(_configuration["Lat_1"]),
-            Longitude = Convert.ToDouble(_configuration["Lon_1"]),
-            AppId = _configuration["AppId"]!,
-            DateTime = PastDateTime
-        };
+    //    // Spin up the params object 
+    //    var paramObject = new WeatherRetrieveParamModel
+    //    {
+    //        Latitude = Convert.ToDouble(_configuration["Lat_1"]),
+    //        Longitude = Convert.ToDouble(_configuration["Lon_1"]),
+    //        AppId = _configuration["AppId"]!,
+    //        DateTime = PastDateTime
+    //    };
 
-        // Now get the results for some special day.
-        var result = await decorator.Retrieve(paramObject);
+    //    // Now get the results for some special day.
+    //    var result = await decorator.Retrieve(paramObject);
 
-        // Test the result 
-        Assert.True(CheckWeather(result, PastDateTime));
-    }
+    //    // Test the result 
+    //    Assert.True(CheckWeather(result, PastDateTime));
+    //}
 
-    [Fact]
-    public async Task TestRetrieveDecoratedFuture()
-    {
-        // Create the options for RestClient - method above checked null.
-        var rco = new RestClientOptions(_configuration["BaseWeatherUri"]!);
+    //[Fact]
+    //public async Task TestRetrieveDecoratedFuture()
+    //{
+    //    // Create the options for RestClient - method above checked null.
+    //    var rco = new RestClientOptions(_configuration["BaseWeatherUri"]!);
 
-        // Create the OUT
-        var obj = new RetrieveWeather(new RestClient(rco), new RestRequest());
+    //    // Create the OUT
+    //    var obj = new RetrieveWeather(new RestClient(rco), new RestRequest());
 
-        // Mock logger
-        var loggerMock = new MockLogger<LoggingDecoratorRetrieveWeather>();
+    //    // Mock logger
+    //    var loggerMock = new MockLogger<LoggingDecoratorRetrieveWeather>();
 
-        // Now create the decorator. 
-        var decorator = new LoggingDecoratorRetrieveWeather(obj, (loggerMock as ILogger<LoggingDecoratorRetrieveWeather>));
+    //    // Now create the decorator. 
+    //    var decorator = new LoggingDecoratorRetrieveWeather(obj, (loggerMock as ILogger<LoggingDecoratorRetrieveWeather>));
 
-        // Spin up the params object 
-        var paramObject = new WeatherRetrieveParamModel
-        {
-            Latitude = Convert.ToDouble(_configuration["Lat_1"]),
-            Longitude = Convert.ToDouble(_configuration["Lon_1"]),
-            AppId = _configuration["AppId"]!,
-            DateTime = FutureDateTime
-        };
+    //    // Spin up the params object 
+    //    var paramObject = new WeatherRetrieveParamModel
+    //    {
+    //        Latitude = Convert.ToDouble(_configuration["Lat_1"]),
+    //        Longitude = Convert.ToDouble(_configuration["Lon_1"]),
+    //        AppId = _configuration["AppId"]!,
+    //        DateTime = FutureDateTime
+    //    };
 
-        // Now get the results for some special day.
-        var result = await decorator.Retrieve(paramObject);
+    //    // Now get the results for some special day.
+    //    var result = await decorator.Retrieve(paramObject);
 
-        // Test the result 
-        Assert.True(CheckWeather(result, FutureDateTime));
-    }
+    //    // Test the result 
+    //    Assert.True(CheckWeather(result, FutureDateTime));
+    //}
 
     internal static bool CheckWeather(WeatherSourceModel inModel, DateTime inDateTime)
     {

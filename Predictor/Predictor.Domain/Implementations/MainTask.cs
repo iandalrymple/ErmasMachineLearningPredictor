@@ -1,15 +1,17 @@
 ﻿using Microsoft.Extensions.Logging;
 using Predictor.Domain.Abstractions;
 
-namespace Predictor.Console;
+namespace Predictor.Domain.Implementations;
 
-internal class MainApp : IMainApp
+public class MainTask : IMainTask
 {
-    private readonly ILogger<MainApp> _logger;
+    private readonly ILogger<MainTask> _logger;
+    private readonly IRetrieveWeather _retriever;
 
-    public MainApp(ILogger<MainApp> logger)
+    public MainTask(ILogger<MainTask> logger, IRetrieveWeather retriever)
     {
         _logger = logger;
+        _retriever = retriever;
     }
 
     public async Task Run()

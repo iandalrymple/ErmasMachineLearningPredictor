@@ -12,10 +12,11 @@ public class RetrieveWeather : IRetrieveWeather
     private readonly RestClient _client;
     private readonly RestRequest _request;
 
-    public RetrieveWeather(RestClient inClient, RestRequest inRequest)
+    public RetrieveWeather(string baseUri)
     {
-        _client = inClient ?? throw new ArgumentNullException(nameof(inClient));
-        _request = inRequest ?? throw new ArgumentNullException(nameof(inRequest));
+        var rco = new RestClientOptions(baseUri);
+        _client = new RestClient(rco);
+        _request = new RestRequest();
     }
 
     public async Task<WeatherSourceModel> Retrieve(WeatherRetrieveParamModel inParams)
