@@ -28,8 +28,9 @@ public class FsmConductor : IFsmConductor
     {
         while (StateContainer.CurrentState < PredictorFsmStates.Completed)
         {
+            _logger.LogInformation("About to execute state {state}.", StateContainer.CurrentState);
+            await _states[StateContainer.CurrentState].Execute(StateContainer);
             await Task.Delay(5000);
-            _logger.LogInformation(DateTime.Now.ToString());
         }
     }
 }

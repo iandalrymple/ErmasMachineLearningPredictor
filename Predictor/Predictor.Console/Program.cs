@@ -60,7 +60,8 @@ try
     var host = Host.CreateDefaultBuilder()
         .ConfigureServices((context, services) =>
         {
-            services.AddTransient<IRetrieveWeather>(x => new RetrieveWeather(config["BaseWeatherUri"]!));
+            // Order matters here with the decorate pattern. This is using Scrutor.
+            services.AddSingleton<IRetrieveWeather>(x => new RetrieveWeather(config["BaseWeatherUri"]!));
             services.Decorate<IRetrieveWeather, LoggingDecoratorRetrieveWeather>();
 
             services.AddSingleton(x =>
