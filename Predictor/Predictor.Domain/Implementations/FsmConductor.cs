@@ -18,6 +18,7 @@ public class FsmConductor : IFsmConductor
     {
         _logger = logger;
         _states = states;
+
         StateContainer = container;
     }
 

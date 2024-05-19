@@ -4,9 +4,9 @@ public enum PredictorFsmStates
 {
     First,
 
-    GetWeather,
-    GetSales, 
-    KickOffPredictionProcess,
+    Weather,
+    Sales, 
+    Predict,
 
     Completed,
     Error,

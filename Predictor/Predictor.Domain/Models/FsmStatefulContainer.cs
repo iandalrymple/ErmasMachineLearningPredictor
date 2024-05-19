@@ -4,5 +4,5 @@ namespace Predictor.Domain.Models;
 
 public class FsmStatefulContainer
 {
-    public PredictorFsmStates CurrentState { get; set; }
+    public PredictorFsmStates CurrentState { get; set; } = PredictorFsmStates.Weather;
 }
