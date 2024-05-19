@@ -54,15 +54,17 @@ try
         {
             services.AddTransient<IRetrieveWeather, RetrieveWeather>(x => new RetrieveWeather(config["BaseWeatherUri"]!));
             services.Decorate<IRetrieveWeather, LoggingDecoratorRetrieveWeather>();
-            services.AddSingleton<MainTask, MainTask>();
+
+            // TODO - left off need to inject the dictionary of states.
+            services.AddSingleton<FsmConductor, FsmConductor>();
           
         })
         .UseSerilog()
         .Build();
 
     // Start the main task.
-    var svc = ActivatorUtilities.CreateInstance<MainTask>(host.Services);
-    await svc.Run();
+    var svc = ActivatorUtilities.CreateInstance<FsmConductor>(host.Services);
+    await svc.Execute();
 }
 catch (Exception ex)
 {
