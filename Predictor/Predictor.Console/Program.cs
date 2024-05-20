@@ -18,6 +18,12 @@ using Predictor.RetrieveOwmWeather.Implementations;
 // NOTE - DI model fashioned from here
 // https://www.youtube.com/watch?v=GAOCe-2nXqc
 
+// Args passed in. 
+const int storeArgIndex = 0;
+const int dateArgIndex = 1;
+var storeArg = args[storeArgIndex];
+var dateArg = Convert.ToDateTime(args[dateArgIndex]);
+
 try
 {
     // Config
@@ -78,7 +84,9 @@ try
                 return new FsmStatefulContainer
                 {
                     CurrentState = PredictorFsmStates.Weather,
-                    StoreLocation = config.GetSection("StoreLocation").Get<List<StoreLocation>>()!.First(x => x.Name.Equals(args[0], StringComparison.OrdinalIgnoreCase))
+                    StoreLocation = config.GetSection("StoreLocation").Get<List<StoreLocation>>()!.First(storeLocation => storeLocation.Name.Equals(storeArg, StringComparison.OrdinalIgnoreCase)),
+                    StateResults = [],
+                    DateToCheck = dateArg
                 };
             });
             services.AddSingleton<IFsmConductor, FsmConductor>();
