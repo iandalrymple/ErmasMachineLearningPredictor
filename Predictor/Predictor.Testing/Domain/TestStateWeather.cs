@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Predictor.Domain.Implementations.States;
 using Predictor.Domain.Models;
+using Predictor.Domain.Models.StateModels;
 using Predictor.Domain.System;
 using Predictor.RetrieveOwmWeather.Implementations;
 
@@ -33,7 +34,7 @@ public class TestStateWeather
     public async Task TestExecute_Happy()
     {
         // Arrange
-        var retrieverBaseObject = new RetrieveWeather(_config["BaseWeatherUri"]!);
+        var retrieverBaseObject = new RetrieveWeather(_config["BaseWeatherUri"]!, _config["AppId"]!);
         var decorator = new LoggingDecoratorRetrieveWeather(retrieverBaseObject, _logger);
         var sut = new StateWeather(decorator);
         var container = new FsmStatefulContainer
@@ -46,8 +47,12 @@ public class TestStateWeather
 
         // Act
         await sut.Execute(container);
-
+        
         // Assert
-
+        Assert.Equal( PredictorFsmStates.Weather + 1, container.CurrentState);
+        Assert.True(container.StateResults.TryGetValue(PredictorFsmStates.Weather, out var results));
+        Assert.NotNull(results);
+        Assert.NotNull(results as StateWeatherResultModel);
+        Assert.Equal(4, (results as StateWeatherResultModel)!.WeatherAtTimes.Count);
     }
 }

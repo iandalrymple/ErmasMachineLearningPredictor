@@ -1,4 +1,6 @@
-﻿using Predictor.Domain.Abstractions;
+﻿using System.Collections.Concurrent;
+using Predictor.Domain.Abstractions;
+using Predictor.Domain.Extensions;
 using Predictor.Domain.Models;
 using Predictor.Domain.Models.StateModels;
 using Predictor.Domain.System;
@@ -22,27 +24,32 @@ public class StateWeather : IFsmState
 
     public async Task Execute(FsmStatefulContainer container)
     {
+        var weatherDictionary = new ConcurrentDictionary<int, WeatherSourceModel>();
+        weatherDictionary.TryAdd(12, await GetWeatherCertainTime(12, container));
+        weatherDictionary.TryAdd(15, await GetWeatherCertainTime(15, container));
+        weatherDictionary.TryAdd(18, await GetWeatherCertainTime(18, container));
+        weatherDictionary.TryAdd(21, await GetWeatherCertainTime(21, container));
+        var resultModel = new StateWeatherResultModel
+        {
+            WeatherAtTimes = weatherDictionary
+        };
+        container.StateResults.TryAdd(State, resultModel);
+        container.CurrentState++;
+    }
+
+    private async Task<WeatherSourceModel> GetWeatherCertainTime(int hour, FsmStatefulContainer container)
+    {
         // Get the date locally in order to manipulate with hours and get the unix stamps.
         var localDateTime = container.DateToCheck;
 
         // Get the weather at noon.
-        var timeAtNoon = new DateTime(
-            year: localDateTime.Year, 
-            month: localDateTime.Month, 
-            day: localDateTime.Day, 
-            hour: 12, 
-            minute: 0,
-            second: 0);
-
-
-
-        await Task.Delay(1);
-
-        // Get the weather at 3.
-
-
-        // Get forecast at 6.
-
-        // Get forecast at 9.
+        var specificHour = localDateTime.DateTimeAtCertainHour(hour);
+        var paramObject = new WeatherRetrieveParamModel
+        {
+            Latitude = container.StoreLocation.Latitude,
+            Longitude = container.StoreLocation.Longitude,
+            DateTime = specificHour
+        };
+        return await _retriever.Retrieve(paramObject);
     }
 }

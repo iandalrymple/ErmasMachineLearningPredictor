@@ -67,7 +67,7 @@ try
         .ConfigureServices((context, services) =>
         {
             // Order matters here with the decorate pattern. This is using Scrutor.
-            services.AddSingleton<IRetrieveWeather>(x => new RetrieveWeather(config["BaseWeatherUri"]!));
+            services.AddSingleton<IRetrieveWeather>(x => new RetrieveWeather(config["BaseWeatherUri"]!, config["AppId"]!));
             services.Decorate<IRetrieveWeather, LoggingDecoratorRetrieveWeather>();
 
             services.AddSingleton(x =>

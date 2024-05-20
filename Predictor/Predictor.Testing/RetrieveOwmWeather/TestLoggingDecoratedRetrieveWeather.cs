@@ -33,13 +33,12 @@ public class TestLoggingDecoratedRetrieveWeather
     public async Task TestRetrieveDecorated()
     {
         // Arrange
-        var obj = new RetrieveWeather(_configuration["BaseWeatherUri"]!);
+        var obj = new RetrieveWeather(_configuration["BaseWeatherUri"]!, _configuration["AppId"]!);
         var decorator = new LoggingDecoratorRetrieveWeather(obj, _logger);
         var paramObject = new WeatherRetrieveParamModel
         {
             Latitude = Convert.ToDouble(_configuration["Lat_1"]),
             Longitude = Convert.ToDouble(_configuration["Lon_1"]),
-            AppId = _configuration["AppId"]!,
             DateTime = _pastDateTime
         };
 
@@ -54,13 +53,12 @@ public class TestLoggingDecoratedRetrieveWeather
     public async Task TestRetrieveDecoratedFuture()
     {
         // Arrange
-        var obj = new RetrieveWeather(_configuration["BaseWeatherUri"]!);
+        var obj = new RetrieveWeather(_configuration["BaseWeatherUri"]!, _configuration["AppId"]!);
         var decorator = new LoggingDecoratorRetrieveWeather(obj, _logger);
         var paramObject = new WeatherRetrieveParamModel
         {
             Latitude = Convert.ToDouble(_configuration["Lat_1"]),
             Longitude = Convert.ToDouble(_configuration["Lon_1"]),
-            AppId = _configuration["AppId"]!,
             DateTime = _futureDateTime
         };
 

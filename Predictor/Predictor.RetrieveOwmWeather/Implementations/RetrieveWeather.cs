@@ -11,12 +11,14 @@ public class RetrieveWeather : IRetrieveWeather
     // Backing 
     private readonly RestClient _client;
     private readonly RestRequest _request;
+    private readonly string _appId;
 
-    public RetrieveWeather(string baseUri)
+    public RetrieveWeather(string baseUri, string appId)
     {
         var rco = new RestClientOptions(baseUri);
         _client = new RestClient(rco);
         _request = new RestRequest();
+        _appId = appId;
     }
 
     public async Task<WeatherSourceModel> Retrieve(WeatherRetrieveParamModel inParams)
@@ -37,7 +39,7 @@ public class RetrieveWeather : IRetrieveWeather
         _request.AddOrUpdateParameter("dt", ((DateTimeOffset)inParams.DateTime).ToUnixTimeSeconds());
         _request.AddOrUpdateParameter("lat", inParams.Latitude);
         _request.AddOrUpdateParameter("lon", inParams.Longitude);
-        _request.AddOrUpdateParameter("appid", inParams.AppId);
+        _request.AddOrUpdateParameter("appid", _appId);
 
         // Execute the request
         var apiResponse = await _client.GetAsync(_request);
