@@ -3,4 +3,5 @@
 public class StateResultAggregatorModel
 {
     public StateWeatherResultModel? StateWeatherResults { get; set; }
+    public StateSalesResultModel? StateSalesResults { get; set; }
 }
