@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Predictor.Domain.Implementations.States;
 using Predictor.Domain.Models;
 using Predictor.Domain.Models.StateModels;
@@ -41,7 +42,7 @@ public class TestStateWeather
         {
             CurrentState = PredictorFsmStates.Weather,
             StoreLocation = _config.GetSection("StoreLocation").Get<List<StoreLocation>>()!.First(storeLocation => storeLocation.Name.Equals("Utica", StringComparison.OrdinalIgnoreCase)),
-            StateResults = [],
+            StateResults = new StateResultAggregatorModel(),
             DateToCheck = _dateToCheck
         };
 
@@ -50,9 +51,7 @@ public class TestStateWeather
         
         // Assert
         Assert.Equal( PredictorFsmStates.Weather + 1, container.CurrentState);
-        Assert.True(container.StateResults.TryGetValue(PredictorFsmStates.Weather, out var results));
-        Assert.NotNull(results);
-        Assert.NotNull(results as StateWeatherResultModel);
-        Assert.Equal(4, (results as StateWeatherResultModel)!.WeatherAtTimes.Count);
+        Assert.NotNull(container.StateResults.StateWeatherResults);
+        Assert.Equal(4, container.StateResults.StateWeatherResults.WeatherAtTimes.Count);
     }
 }

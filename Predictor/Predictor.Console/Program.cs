@@ -12,6 +12,7 @@ using Predictor.Domain.Implementations;
 using Predictor.Domain.System;
 using Predictor.Domain.Implementations.States;
 using Predictor.Domain.Models;
+using Predictor.Domain.Models.StateModels;
 using Predictor.RetrieveOwmWeather.Implementations;
 
 
@@ -85,7 +86,7 @@ try
                 {
                     CurrentState = PredictorFsmStates.Weather,
                     StoreLocation = config.GetSection("StoreLocation").Get<List<StoreLocation>>()!.First(storeLocation => storeLocation.Name.Equals(storeArg, StringComparison.OrdinalIgnoreCase)),
-                    StateResults = [],
+                    StateResults = new StateResultAggregatorModel(),
                     DateToCheck = dateArg
                 };
             });

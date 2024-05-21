@@ -33,7 +33,7 @@ public class StateWeather : IFsmState
         {
             WeatherAtTimes = weatherDictionary
         };
-        container.StateResults.TryAdd(State, resultModel);
+        container.StateResults.StateWeatherResults = resultModel;
         container.CurrentState++;
     }
 
