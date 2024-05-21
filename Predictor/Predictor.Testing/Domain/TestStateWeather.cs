@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Predictor.Domain.Implementations.States;
 using Predictor.Domain.Models;
 using Predictor.Domain.Models.StateModels;
@@ -14,7 +13,6 @@ public class TestStateWeather
 {
     private readonly IConfiguration _config;
     private readonly ILogger<LoggingDecoratorRetrieveWeather> _logger;
-    private readonly DateTime _dateToCheck;
 
     public TestStateWeather()
     {
@@ -27,14 +25,15 @@ public class TestStateWeather
             .BuildServiceProvider();
         var factory = serviceProvider.GetService<ILoggerFactory>();
         _logger = factory!.CreateLogger<LoggingDecoratorRetrieveWeather>();
-
-        _dateToCheck = new DateTime(year: 2024, month: 5, day: 15);
     }
 
-    [Fact]
-    public async Task TestExecute_Happy()
+    [Theory]
+    [InlineData( 2024, 5, 15)]
+    [InlineData(2024, 5, 22)]
+    public async Task TestExecute_Happy(int year, int month, int day)
     {
         // Arrange
+        var dateToCheck = new DateTime(year: year, month: month, day: day);
         var retrieverBaseObject = new RetrieveWeather(_config["BaseWeatherUri"]!, _config["AppId"]!);
         var decorator = new LoggingDecoratorRetrieveWeather(retrieverBaseObject, _logger);
         var sut = new StateWeather(decorator);
@@ -43,7 +42,7 @@ public class TestStateWeather
             CurrentState = PredictorFsmStates.Weather,
             StoreLocation = _config.GetSection("StoreLocation").Get<List<StoreLocation>>()!.First(storeLocation => storeLocation.Name.Equals("Utica", StringComparison.OrdinalIgnoreCase)),
             StateResults = new StateResultAggregatorModel(),
-            DateToCheck = _dateToCheck
+            DateToCheck = dateToCheck
         };
 
         // Act

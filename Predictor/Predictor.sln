@@ -3,18 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor.RetrieveOwmWeather", "Predictor.RetrieveOwmWeather\Predictor.RetrieveOwmWeather.csproj", "{317FEFFF-F3D6-4091-B523-9C9A752B8C76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Predictor.RetrieveOwmWeather", "Predictor.RetrieveOwmWeather\Predictor.RetrieveOwmWeather.csproj", "{317FEFFF-F3D6-4091-B523-9C9A752B8C76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor.Domain", "Predictor.Domain\Predictor.Domain.csproj", "{AFE887FF-6AF7-4DF2-95F4-FF94C9F98600}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Predictor.Domain", "Predictor.Domain\Predictor.Domain.csproj", "{AFE887FF-6AF7-4DF2-95F4-FF94C9F98600}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor.Testing", "Predictor.Testing\Predictor.Testing.csproj", "{F3B6A9CB-64DC-4C0B-84B7-7909072BAD79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Predictor.Testing", "Predictor.Testing\Predictor.Testing.csproj", "{F3B6A9CB-64DC-4C0B-84B7-7909072BAD79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor.Console", "Predictor.Console\Predictor.Console.csproj", "{7673B9CE-31C6-457E-8BEE-24C073BBD611}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Predictor.Console", "Predictor.Console\Predictor.Console.csproj", "{7673B9CE-31C6-457E-8BEE-24C073BBD611}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{1197211B-5E0B-440D-8B76-FD12E51EC070}"
 	ProjectSection(SolutionItems) = preProject
 		ToDo.txt = ToDo.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor.RetrieveSales", "Predictor.RetrieveSalesFromFile\Predictor.RetrieveSales.csproj", "{6F4BAE4F-C9EC-4D55-A1EE-F6D629E3ED74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,10 @@ Global
 		{7673B9CE-31C6-457E-8BEE-24C073BBD611}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7673B9CE-31C6-457E-8BEE-24C073BBD611}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7673B9CE-31C6-457E-8BEE-24C073BBD611}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F4BAE4F-C9EC-4D55-A1EE-F6D629E3ED74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F4BAE4F-C9EC-4D55-A1EE-F6D629E3ED74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F4BAE4F-C9EC-4D55-A1EE-F6D629E3ED74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F4BAE4F-C9EC-4D55-A1EE-F6D629E3ED74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

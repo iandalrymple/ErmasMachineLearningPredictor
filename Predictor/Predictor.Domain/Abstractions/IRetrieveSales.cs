@@ -2,5 +2,5 @@
 
 public interface IRetrieveSales
 {
-    public decimal Retrieve();
+    public Task<decimal> Retrieve(DateTime dateTime);
 }

@@ -16,11 +16,9 @@ public class StateWeather : IFsmState
         _retriever = retriever; 
 
         State = PredictorFsmStates.Weather;
-        ResultType = typeof(StateWeatherResultModel);
     }
 
     public PredictorFsmStates State { get; init; }
-    public Type ResultType { get; init; }
 
     public async Task Execute(FsmStatefulContainer container)
     {
