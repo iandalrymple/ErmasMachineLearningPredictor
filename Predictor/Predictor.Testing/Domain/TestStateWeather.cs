@@ -40,7 +40,9 @@ public class TestStateWeather
         var container = new FsmStatefulContainer
         {
             CurrentState = PredictorFsmStates.Weather,
-            StoreLocation = _config.GetSection("StoreLocation").Get<List<StoreLocation>>()!.First(storeLocation => storeLocation.Name.Equals("Utica", StringComparison.OrdinalIgnoreCase)),
+            StoreLocation = _config.GetSection("StoreLocation")
+                .Get<List<StoreLocation>>()!
+                .First(storeLocation => storeLocation.Name.Equals("Utica", StringComparison.OrdinalIgnoreCase)),
             StateResults = new StateResultAggregatorModel(),
             DateToCheck = dateToCheck
         };
