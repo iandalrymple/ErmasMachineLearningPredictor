@@ -6,6 +6,7 @@ using Predictor.RetrieveOwmWeather.Implementations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Predictor.Testing.Mock;
 
 namespace Predictor.Testing.Domain
 {
@@ -31,6 +32,11 @@ namespace Predictor.Testing.Domain
         public async Task TestExecute_Happy()
         {
             // Arrange
+
+            var something = new MockLoggingDecoratedRetrieveWeather();
+            something.Retrieve(new WeatherRetrieveParamModel());
+
+
             var dateToCheck = new DateTime(year: 2024, month: 5, day: 1);
             var retrieverBaseObject = new RetrieveWeather(_config["BaseWeatherUri"]!, _config["AppId"]!);
             var decorator = new LoggingDecoratorRetrieveWeather(retrieverBaseObject, _logger);
