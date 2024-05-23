@@ -3,6 +3,27 @@
 public class StateAggregateResultModel
 {
     public decimal Sales_Three_Pm { get; set; }
+    public decimal TotalSalesDayBefore { get; set; }
+    public decimal TotalSalesTwoDaysBefore { get; set; }
+
+   public uint First_Order_Minutes_In_Day { get; set; }
+   public uint Last_Order_Minutes_In_Day { get; set; }
+    public byte WeekDayNumber { get; set; }
+    public byte DayOfMonth { get; set; }    
+    public byte Month { get; set; }
+    public byte Year { get; set; }
+    public ushort JulianDay { get; set; }
+    public bool isMemorialDay { get; set; }
+    public bool isIndependenceDay { get; set; }
+    public bool isLaborDay { get; set; }
+    public bool isColumbusDay { get; set; }
+    public bool isCincoDeMayo { get; set; }
+    public bool isOpeningDay { get; set; }
+    public bool isClosingDay { get; set; }
+    public bool isEaster { get; set; }
+    public bool isGoodFriday { get; set; }
+    public bool isMothersDay { get; set; }
+    public bool isFatherDay { get; set; }
 
     public double TempNoon { get; set; }
     public double FeelsLikeNoon { get; set; }
@@ -15,6 +36,8 @@ public class StateAggregateResultModel
     public double WindSpeedNoon { get; set; }
     public double WindGustNoon { get; set; }
     public double WindDegNoon { get; set; }
+    public bool NoonRaining { get; set; }
+    public bool NoonSnowing { get; set; }
 
     public double TempThree { get; set; }
     public double FeelsLikeThree { get; set; }
@@ -27,28 +50,14 @@ public class StateAggregateResultModel
     public double WindSpeedThree { get; set; }
     public double WindGustThree { get; set; }
     public double WindDegThree { get; set; }
+    public bool ThreeRaining { get; set; }
+    public bool ThreeSnowing { get; set; }
 
     public double TempSix { get; set; }
-    public double FeelsLikeSix { get; set; }
-    public double PressureSix { get; set; }
-    public double HumiditySix { get; set; }
-    public double DewPointSix { get; set; }
-    public double UviSix { get; set; }
-    public double CloudsSix { get; set; }
-    public double VisibilitySix { get; set; }
-    public double WindSpeedSix { get; set; }
-    public double WindGustSix { get; set; }
-    public double WindDegSix { get; set; }
+    public bool SixRaining { get; set; }
+    public bool SixSnowing { get; set; }
 
     public double TempNine { get; set; }
-    public double FeelsLikeNine { get; set; }
-    public double PressureNine { get; set; }
-    public double HumidityNine { get; set; }
-    public double DewPointNine { get; set; }
-    public double UviNine { get; set; }
-    public double CloudsNine { get; set; }
-    public double VisibilityNine { get; set; }
-    public double WindSpeedNine { get; set; }
-    public double WindGustNine { get; set; }
-    public double WindDegNine { get; set; }
+    public bool NineRaining { get; set; }
+    public bool NineSnowing { get; set; }
 }
