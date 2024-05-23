@@ -43,7 +43,7 @@ public class TestStateWeather
             StoreLocation = _config.GetSection("StoreLocation")
                 .Get<List<StoreLocation>>()!
                 .First(storeLocation => storeLocation.Name.Equals("Utica", StringComparison.OrdinalIgnoreCase)),
-            StateResults = new StateResultAggregatorModel(),
+            StateResults = new StatesCombinedResultModel(),
             DateToCheck = dateToCheck
         };
 

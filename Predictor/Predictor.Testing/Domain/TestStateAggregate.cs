@@ -6,7 +6,7 @@ using Predictor.RetrieveOwmWeather.Implementations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Predictor.Testing.Mock;
+using Newtonsoft.Json;
 
 namespace Predictor.Testing.Domain
 {
@@ -32,30 +32,32 @@ namespace Predictor.Testing.Domain
         public async Task TestExecute_Happy()
         {
             // Arrange
-
-            var something = new MockLoggingDecoratedRetrieveWeather();
-            something.Retrieve(new WeatherRetrieveParamModel());
-
-
+            var rawWeatherString = Properties.Resources.WeatherData_05152024;
+            var rawWeatherModel = JsonConvert.DeserializeObject<StateWeatherResultModel>(rawWeatherString);
             var dateToCheck = new DateTime(year: 2024, month: 5, day: 1);
-            var retrieverBaseObject = new RetrieveWeather(_config["BaseWeatherUri"]!, _config["AppId"]!);
-            var decorator = new LoggingDecoratorRetrieveWeather(retrieverBaseObject, _logger);
-            var sut = new StateWeather(decorator);
             var container = new FsmStatefulContainer
             {
-                CurrentState = PredictorFsmStates.Weather,
+                CurrentState = PredictorFsmStates.Aggregate,
                 StoreLocation = _config.GetSection("StoreLocation")
                     .Get<List<StoreLocation>>()!
                     .First(storeLocation => storeLocation.Name.Equals("Utica", StringComparison.OrdinalIgnoreCase)),
-                StateResults = new StateResultAggregatorModel(),
+                StateResults = new StatesCombinedResultModel
+                {
+                    StateWeatherResults = rawWeatherModel,
+                    StateSalesResults = new StateSalesResultModel
+                    {
+                        SalesAtThree = 2500.0m
+                    }
+                },
                 DateToCheck = dateToCheck
             };
+            var sut = new StateAggregate();
 
             // Act
             await sut.Execute(container);
 
             // Assert
-            Assert.Equal(PredictorFsmStates.Weather + 1, container.CurrentState);
+            Assert.Equal(PredictorFsmStates.Aggregate + 1, container.CurrentState);
             Assert.NotNull(container.StateResults.StateWeatherResults);
             Assert.Equal(4, container.StateResults.StateWeatherResults.WeatherAtTimes.Count);
         }

@@ -8,5 +8,5 @@ public class FsmStatefulContainer
     public PredictorFsmStates CurrentState { get; set; } = PredictorFsmStates.Weather;
     public required StoreLocation StoreLocation { get; init; }
     public required DateTime DateToCheck { get; init; }
-    public required StateResultAggregatorModel StateResults { get; init; }
+    public required StatesCombinedResultModel StateResults { get; init; }
 }

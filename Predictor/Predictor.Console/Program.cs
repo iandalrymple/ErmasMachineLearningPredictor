@@ -86,7 +86,7 @@ try
                 {
                     CurrentState = PredictorFsmStates.Weather,
                     StoreLocation = config.GetSection("StoreLocation").Get<List<StoreLocation>>()!.First(storeLocation => storeLocation.Name.Equals(storeArg, StringComparison.OrdinalIgnoreCase)),
-                    StateResults = new StateResultAggregatorModel(),
+                    StateResults = new StatesCombinedResultModel(),
                     DateToCheck = dateArg
                 };
             });
