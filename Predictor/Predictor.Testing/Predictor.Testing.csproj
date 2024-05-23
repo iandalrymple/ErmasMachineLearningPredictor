@@ -34,7 +34,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Predictor.Domain\Predictor.Domain.csproj" />
     <ProjectReference Include="..\Predictor.RetrieveOwmWeather\Predictor.RetrieveOwmWeather.csproj" />
-    <ProjectReference Include="..\Predictor.RetrieveSalesFromFile\Predictor.RetrieveSales.csproj" />
+    <ProjectReference Include="..\Predictor.RetrieveSalesFromFile\Predictor.RetrieveSalesApi.csproj" />
   </ItemGroup>
 
   <ItemGroup>

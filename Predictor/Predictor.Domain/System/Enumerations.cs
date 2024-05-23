@@ -5,7 +5,8 @@ public enum PredictorFsmStates
     First,
 
     Weather,
-    SalesRetrieve, 
+    CurrentSalesRetrieve, 
+    HistoricSalesRetrieve,
     Aggregate,
     Predict,
 

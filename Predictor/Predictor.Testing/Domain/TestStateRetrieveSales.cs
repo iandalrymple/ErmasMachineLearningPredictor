@@ -21,10 +21,10 @@ public class TestStateRetrieveSales
         // Arrange
         var dateToCheck = new DateTime(year: year, month: month, day: day);
         var retriever = new RetrieveSalesMock();
-        var sut = new StateRetrieveSales(retriever);
+        var sut = new StateRetrieveCurrentSales(retriever);
         var container = new FsmStatefulContainer
         {
-            CurrentState = PredictorFsmStates.SalesRetrieve,
+            CurrentState = PredictorFsmStates.CurrentSalesRetrieve,
             StoreLocation = _config.GetSection("StoreLocation")
                 .Get<List<StoreLocation>>()!
                 .First(storeLocation => storeLocation.Name.Equals("Utica", StringComparison.OrdinalIgnoreCase)),
@@ -36,7 +36,7 @@ public class TestStateRetrieveSales
         await sut.Execute(container);
 
         // Assert
-        Assert.Equal(PredictorFsmStates.SalesRetrieve + 1, container.CurrentState);
+        Assert.Equal(PredictorFsmStates.CurrentSalesRetrieve + 1, container.CurrentState);
         Assert.NotNull(container.StateResults.StateSalesResults);
     }
 }

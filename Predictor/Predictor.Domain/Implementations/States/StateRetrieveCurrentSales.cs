@@ -5,13 +5,13 @@ using Predictor.Domain.System;
 
 namespace Predictor.Domain.Implementations.States;
 
-public class StateRetrieveSales : IFsmState
+public class StateRetrieveCurrentSales : IFsmState
 {
     private readonly IRetrieveSales _retrieveSales;
 
-    public StateRetrieveSales(IRetrieveSales retrieveSales)
+    public StateRetrieveCurrentSales(IRetrieveSales retrieveSales)
     {
-        State = PredictorFsmStates.SalesRetrieve;
+        State = PredictorFsmStates.CurrentSalesRetrieve;
         _retrieveSales = retrieveSales;
     }
 
