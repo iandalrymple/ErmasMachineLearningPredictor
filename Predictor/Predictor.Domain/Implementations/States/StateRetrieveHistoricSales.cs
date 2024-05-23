@@ -1,21 +1,39 @@
 ﻿using Predictor.Domain.Abstractions;
 using Predictor.Domain.Models;
+using Predictor.Domain.Models.StateModels;
 using Predictor.Domain.System;
 
 namespace Predictor.Domain.Implementations.States
 {
     internal class StateRetrieveHistoricSales : IFsmState
     {
-        public StateRetrieveHistoricSales()
+        private readonly IRetrieveSales _retriever;
+
+        public StateRetrieveHistoricSales(IRetrieveSales retriever)
         {
             State = PredictorFsmStates.HistoricSalesRetrieve;
+            _retriever = retriever;
         }
 
         public PredictorFsmStates State { get; init; }
 
-        public Task Execute(FsmStatefulContainer container)
+        public async Task Execute(FsmStatefulContainer container)
         {
-            throw new NotImplementedException();
+            // Get the day before. 
+            var dayBeforeSales = await _retriever.Retrieve(container.DateToCheck.AddDays(-1));
+
+            // Get two days before.
+            var twoDaysBeforeSales = await _retriever.Retrieve(container.DateToCheck.AddDays(-2));
+
+            // Stuff into the container. 
+            container.StateResults.StateHistoricSalesResults = new StateHistoricSalesResultModel
+            {
+                SalesDayBefore = dayBeforeSales,
+                SalesTwoDaysBefore = twoDaysBeforeSales
+            };
+
+            // Increment the state.
+            container.CurrentState++;
         }
     }
 }

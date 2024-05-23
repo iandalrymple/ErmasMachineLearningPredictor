@@ -44,7 +44,7 @@ namespace Predictor.Testing.Domain
                 StateResults = new StatesCombinedResultModel
                 {
                     StateWeatherResults = rawWeatherModel,
-                    StateSalesResults = new StateSalesResultModel
+                    StateCurrentSalesResults = new StateCurrentSalesResultModel
                     {
                         SalesAtThree = 2500.0m
                     }

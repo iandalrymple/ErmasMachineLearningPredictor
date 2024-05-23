@@ -1,6 +1,6 @@
 ﻿namespace Predictor.Domain.Models.StateModels;
 
-public class StateSalesResultModel
+public sealed class StateCurrentSalesResultModel
 {
     public required decimal SalesAtThree { get; init; }
 }

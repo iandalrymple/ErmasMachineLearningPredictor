@@ -20,7 +20,7 @@ public class StateRetrieveCurrentSales : IFsmState
     public Task Execute(FsmStatefulContainer container)
     {
         var sales = _retrieveSales.Retrieve(DateTime.Now).Result;
-        container.StateResults.StateSalesResults = new StateSalesResultModel
+        container.StateResults.StateCurrentSalesResults = new StateCurrentSalesResultModel
         {
             SalesAtThree = sales
         };

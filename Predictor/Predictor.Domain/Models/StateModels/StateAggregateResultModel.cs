@@ -1,6 +1,6 @@
 ﻿namespace Predictor.Domain.Models.StateModels;
 
-public class StateAggregateResultModel
+public sealed class StateAggregateResultModel
 {
     public decimal Sales_Three_Pm { get; set; }
     public decimal TotalSalesDayBefore { get; set; }

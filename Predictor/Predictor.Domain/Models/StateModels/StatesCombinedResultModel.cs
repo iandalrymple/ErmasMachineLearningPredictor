@@ -1,10 +1,9 @@
-﻿using Predictor.Domain.Implementations.States;
+﻿namespace Predictor.Domain.Models.StateModels;
 
-namespace Predictor.Domain.Models.StateModels;
-
-public class StatesCombinedResultModel
+public sealed class StatesCombinedResultModel
 {
     public StateWeatherResultModel? StateWeatherResults { get; set; }
-    public StateSalesResultModel? StateSalesResults { get; set; }
+    public StateCurrentSalesResultModel? StateCurrentSalesResults { get; set; }
+    public StateHistoricSalesResultModel? StateHistoricSalesResults { get; set; }
     public StateAggregateResultModel? StateAggregateResults { get; set; }
 }

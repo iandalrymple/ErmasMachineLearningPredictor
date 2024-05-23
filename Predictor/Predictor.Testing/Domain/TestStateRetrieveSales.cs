@@ -37,6 +37,6 @@ public class TestStateRetrieveSales
 
         // Assert
         Assert.Equal(PredictorFsmStates.CurrentSalesRetrieve + 1, container.CurrentState);
-        Assert.NotNull(container.StateResults.StateSalesResults);
+        Assert.NotNull(container.StateResults.StateCurrentSalesResults);
     }
 }
