@@ -5,7 +5,7 @@ using Predictor.Domain.System;
 
 namespace Predictor.Domain.Implementations.States
 {
-    internal class StateRetrieveHistoricSales : IFsmState
+    public class StateRetrieveHistoricSales : IFsmState
     {
         private readonly IRetrieveSales _retriever;
 
