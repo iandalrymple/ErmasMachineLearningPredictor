@@ -20,10 +20,10 @@ namespace Predictor.Domain.Implementations.States
         public async Task Execute(FsmStatefulContainer container)
         {
             // Get the day before. 
-            var dayBeforeSales = await _retriever.Retrieve(container.DateToCheck.AddDays(-1));
+            var dayBeforeSales = await _retriever.Retrieve(container.DateToCheck.AddDays(-1), container.StoreLocation.Name);
 
             // Get two days before.
-            var twoDaysBeforeSales = await _retriever.Retrieve(container.DateToCheck.AddDays(-2));
+            var twoDaysBeforeSales = await _retriever.Retrieve(container.DateToCheck.AddDays(-2), container.StoreLocation.Name);
 
             // Stuff into the container. 
             container.StateResults.StateHistoricSalesResults = new StateHistoricSalesResultModel

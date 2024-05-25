@@ -14,7 +14,7 @@ public class TestRetrieveSalesSqlServer
             .AddJsonFile("testSettings.json")
             .Build();
 
-        _dateToRetrieve = DateTime.SpecifyKind(new DateTime(year: 2023, month: 4, day: 19), DateTimeKind.Utc);
+        _dateToRetrieve = DateTime.SpecifyKind(new DateTime(year: 2023, month: 6, day: 19), DateTimeKind.Utc);
     }
 
     [Fact]
@@ -24,7 +24,7 @@ public class TestRetrieveSalesSqlServer
         var sut = new Predictor.RetrieveSalesSqlServer.Implementations.RetrieveSales(_configuration["ConnectionStringSqlExpressOne"]!);
 
         // Act
-        var result = await sut.Retrieve(_dateToRetrieve);
+        var result = await sut.Retrieve(_dateToRetrieve, "Utica");
 
         // Assert
         Assert.True(result > 0);

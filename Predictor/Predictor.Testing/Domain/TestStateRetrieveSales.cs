@@ -2,8 +2,8 @@
 using Predictor.Domain.Models.StateModels;
 using Predictor.Domain.Models;
 using Predictor.Domain.System;
-using Predictor.RetrieveSales.Implementations;
 using Microsoft.Extensions.Configuration;
+using Predictor.RetrieveSalesApi.Implementations;
 
 namespace Predictor.Testing.Domain;
 
