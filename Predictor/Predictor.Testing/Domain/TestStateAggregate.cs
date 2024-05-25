@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Predictor.Testing.Supporting;
 
 namespace Predictor.Testing.Domain
 {
@@ -17,9 +18,7 @@ namespace Predictor.Testing.Domain
 
         public TestStateAggregate()
         {
-            _config = new ConfigurationBuilder()
-                .AddJsonFile("testSettings.json")
-                .Build();
+            _config = ConfigurationSingleton.Instance;
 
             var serviceProvider = new ServiceCollection()
                 .AddLogging()

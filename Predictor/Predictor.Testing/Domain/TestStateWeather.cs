@@ -6,6 +6,7 @@ using Predictor.Domain.Models;
 using Predictor.Domain.Models.StateModels;
 using Predictor.Domain.System;
 using Predictor.RetrieveOwmWeather.Implementations;
+using Predictor.Testing.Supporting;
 
 namespace Predictor.Testing.Domain;
 
@@ -16,9 +17,7 @@ public class TestStateWeather
 
     public TestStateWeather()
     {
-        _config = new ConfigurationBuilder()
-            .AddJsonFile("testSettings.json")
-            .Build();
+        _config = ConfigurationSingleton.Instance;
 
         var serviceProvider = new ServiceCollection()
             .AddLogging()

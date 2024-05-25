@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Predictor.Testing.Supporting;
 
 namespace Predictor.Testing.RetrieveSalesSqlServer;
 
@@ -10,10 +11,7 @@ public class TestRetrieveSalesSqlServer
 
     public TestRetrieveSalesSqlServer()
     {
-        _configuration = new ConfigurationBuilder()
-            .AddJsonFile("testSettings.json")
-            .Build();
-
+        _configuration = ConfigurationSingleton.Instance;
         _dateToRetrieve = DateTime.SpecifyKind(new DateTime(year: 2023, month: 6, day: 19), DateTimeKind.Utc);
     }
 

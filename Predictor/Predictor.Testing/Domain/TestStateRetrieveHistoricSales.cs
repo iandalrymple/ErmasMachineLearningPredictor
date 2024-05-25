@@ -3,14 +3,13 @@ using Predictor.Domain.Implementations.States;
 using Predictor.Domain.Models;
 using Predictor.Domain.Models.StateModels;
 using Predictor.Domain.System;
+using Predictor.Testing.Supporting;
 
 namespace Predictor.Testing.Domain;
 
 public class TestStateRetrieveHistoricSales
 {
-    private readonly IConfiguration _config = new ConfigurationBuilder()
-        .AddJsonFile("testSettings.json")
-        .Build();
+    private readonly IConfiguration _config = ConfigurationSingleton.Instance;
 
     [Theory]
     [InlineData(2024, 4, 15)]

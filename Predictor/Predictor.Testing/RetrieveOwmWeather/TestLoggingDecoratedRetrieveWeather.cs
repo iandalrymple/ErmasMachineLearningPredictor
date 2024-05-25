@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Predictor.Domain.Models;
 using Predictor.RetrieveOwmWeather.Implementations;
+using Predictor.Testing.Supporting;
 
 namespace Predictor.Testing.RetrieveOwmWeather;
 
@@ -15,9 +16,7 @@ public class TestLoggingDecoratedRetrieveWeather
 
     public TestLoggingDecoratedRetrieveWeather()
     {
-        _configuration = new ConfigurationBuilder()
-            .AddJsonFile("testSettings.json")
-            .Build();
+        _configuration = ConfigurationSingleton.Instance;
 
         var serviceProvider = new ServiceCollection()
             .AddLogging()
