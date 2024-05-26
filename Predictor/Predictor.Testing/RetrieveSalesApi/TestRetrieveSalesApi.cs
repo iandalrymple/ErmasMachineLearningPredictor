@@ -9,6 +9,19 @@ public class TestRetrieveSalesApi
     private readonly DateTime _dateToRetrieve = DateTime.SpecifyKind(new DateTime(year: 2024, month: 5, day: 5), DateTimeKind.Utc);
 
     [Fact]
+    public async Task TestAggregateModelIntoSales()
+    {
+        // Arrange
+        var rawWeatherString = Properties.Resources.CheckListModelExample;
+
+        // Act
+
+
+        // Assert
+        Assert.True(true);
+    }
+
+    [Fact]
     public async Task TestRetrieve()
     {
         // Arrange

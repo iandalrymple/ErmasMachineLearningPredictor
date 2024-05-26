@@ -45,7 +45,8 @@ public class RetrieveSales : IRetrieveSales
             throw new NoSalesDataFromApiException(dateTime, storeName);
         }
 
-        var deserialized = JsonConvert.DeserializeObject<CheckListModel>(result.Content);
+        await File.WriteAllTextAsync("CheckListModelExample.json", result.Content);
+        //var deserialized = JsonConvert.DeserializeObject<CheckListModel>(result.Content);
         foreach (var item in result.Content)
         {
 
