@@ -45,13 +45,16 @@ public class RetrieveSales : IRetrieveSales
             throw new NoSalesDataFromApiException(dateTime, storeName);
         }
 
-        await File.WriteAllTextAsync("CheckListModelExample.json", result.Content);
-        //var deserialized = JsonConvert.DeserializeObject<CheckListModel>(result.Content);
-        foreach (var item in result.Content)
-        {
+        // Uncomment to write files for testing.
+        //await File.WriteAllTextAsync("CheckListModelExample.json", result.Content);
 
-        }
+        // Parse the model.
+        var deserialized = JsonConvert.DeserializeObject<List<Root>>(result.Content) ?? throw new NoSalesDataFromApiException(dateTime, storeName);
 
-        return -99.0m;
+        // Sum the total and the void.
+        var salesTotal = deserialized.Sum(check => check.total);
+        var voidTotal = deserialized.Sum(check => check.void_total);
+
+        return Convert.ToDecimal(salesTotal - voidTotal);
     }
 }
