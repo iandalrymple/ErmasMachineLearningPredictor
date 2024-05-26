@@ -12,7 +12,7 @@ public class TestRetrieveSalesApi
     public async Task TestRetrieve()
     {
         // Arrange
-        var sut = new Predictor.RetrieveSalesApi.Implementations.RetrieveSales(_configuration["KeyOne"]!, _configuration["KeyTwo"]!);
+        var sut = new Predictor.RetrieveSalesApi.Implementations.RetrieveSales(_configuration["PublicShiftFour"]!, _configuration["PrivateShiftFour"]!);
 
         // Act
         var result = await sut.Retrieve(_dateToRetrieve, "Utica");
