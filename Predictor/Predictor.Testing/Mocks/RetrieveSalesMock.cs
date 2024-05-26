@@ -1,6 +1,6 @@
 ﻿using Predictor.Domain.Abstractions;
 
-namespace Predictor.RetrieveSalesApi.Implementations;
+namespace Predictor.Testing.Mocks;
 
 public class RetrieveSalesMock : IRetrieveSales
 {

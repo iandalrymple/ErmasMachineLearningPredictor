@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Predictor.Testing.Supporting;
 
-namespace Predictor.Testing.RetrieveSalesSqlServer;
+namespace Predictor.Testing.RetrieveSalesApi;
 
-public class TestRetrieveSalesSqlServer
+public class TestRetrieveSalesApi
 {
     private readonly IConfiguration _configuration = ConfigurationSingleton.Instance;
     private readonly DateTime _dateToRetrieve = DateTime.SpecifyKind(new DateTime(year: 2023, month: 6, day: 19), DateTimeKind.Utc);
@@ -12,7 +12,7 @@ public class TestRetrieveSalesSqlServer
     public async Task TestRetrieve()
     {
         // Arrange
-        var sut = new Predictor.RetrieveSalesSqlServer.Implementations.RetrieveSales(_configuration["ConnectionStringSqlExpressOne"]!);
+        var sut = new Predictor.RetrieveSalesApi.Implementations.RetrieveSales(_configuration["KeyOne"]!, _configuration["KeyTwo"]!);
 
         // Act
         var result = await sut.Retrieve(_dateToRetrieve, "Utica");

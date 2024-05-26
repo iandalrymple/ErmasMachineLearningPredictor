@@ -4,6 +4,7 @@ using Predictor.Domain.Models;
 using Predictor.Domain.System;
 using Microsoft.Extensions.Configuration;
 using Predictor.RetrieveSalesApi.Implementations;
+using Predictor.Testing.Mocks;
 using Predictor.Testing.Supporting;
 
 namespace Predictor.Testing.Domain;
