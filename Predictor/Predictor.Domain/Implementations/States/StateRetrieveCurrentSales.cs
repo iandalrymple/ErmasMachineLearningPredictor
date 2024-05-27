@@ -17,14 +17,13 @@ public class StateRetrieveCurrentSales : IFsmState
 
     public PredictorFsmStates State { get; init; }
 
-    public Task Execute(FsmStatefulContainer container)
+    public async Task Execute(FsmStatefulContainer container)
     {
-        var sales = _retrieveSales.Retrieve(DateTime.Now, container.StoreLocation.Name).Result;
+        var sales = await _retrieveSales.Retrieve(DateTime.Now, container.StoreLocation.Name);
         container.StateResults.StateCurrentSalesResults = new StateCurrentSalesResultModel
         {
             SalesAtThree = sales
         };
         container.CurrentState++;
-        return Task.CompletedTask;
     }
 }

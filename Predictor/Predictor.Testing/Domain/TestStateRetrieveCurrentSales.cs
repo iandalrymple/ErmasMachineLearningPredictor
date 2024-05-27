@@ -4,7 +4,6 @@ using Predictor.Domain.Models;
 using Predictor.Domain.System;
 using Microsoft.Extensions.Configuration;
 using Predictor.RetrieveSalesApi.Implementations;
-using Predictor.Testing.Mocks;
 using Predictor.Testing.Supporting;
 
 namespace Predictor.Testing.Domain;
@@ -19,8 +18,13 @@ public class TestStateRetrieveCurrentSales
     public async Task TestExecute_Happy(int year, int month, int day)
     {
         // Arrange
+        var guidDictionary = new Dictionary<string, string>
+        {
+            {"UTICA", _config["UticaFocusGuid"]!},
+            {"WARREN", _config["WarrenFocusGuid"]!}
+        };
         var dateToCheck = new DateTime(year: year, month: month, day: day);
-        var retriever = new RetrieveSalesMock();
+        var retriever = new RetrieveSales(_config["PublicShiftFour"]!, _config["PrivateShiftFour"]!, guidDictionary);
         var sut = new StateRetrieveCurrentSales(retriever);
         var container = new FsmStatefulContainer
         {
