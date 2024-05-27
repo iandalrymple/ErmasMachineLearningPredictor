@@ -9,11 +9,11 @@ public sealed class StateAggregateResultModel
     public uint First_Order_Minutes_In_Day { get; set; }
     public uint Last_Order_Minutes_In_Day { get; set; }
 
-    public byte WeekDayNumber { get; set; }
-    public byte DayOfMonth { get; set; }    
-    public byte Month { get; set; }
-    public byte Year { get; set; }
-    public ushort JulianDay { get; set; }
+    public int WeekDayNumberSundayAsZero { get; set; }
+    public int DayOfMonth { get; set; }    
+    public int Month { get; set; }
+    public int Year { get; set; }
+    public int JulianDay { get; set; }
     public bool isMemorialDay { get; set; }
     public bool isIndependenceDay { get; set; }
     public bool isLaborDay { get; set; }

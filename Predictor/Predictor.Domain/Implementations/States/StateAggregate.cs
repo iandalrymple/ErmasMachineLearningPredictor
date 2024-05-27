@@ -25,11 +25,23 @@ public class StateAggregate : IFsmState
         }
 
         // Spin up the result object.
-        var result = new StateAggregateResultModel();
-        result.Sales_Three_Pm = container.StateResults.StateCurrentSalesResults.SalesAtThree;
-        result.TotalSalesDayBefore = container.StateResults.StateHistoricSalesResults.SalesDayBefore;
-        result.TotalSalesTwoDaysBefore = container.StateResults.StateHistoricSalesResults.SalesTwoDaysBefore;
+        var result = new StateAggregateResultModel
+        {
+            Sales_Three_Pm = container.StateResults.StateCurrentSalesResults.SalesAtThree,
+            TotalSalesDayBefore = container.StateResults.StateHistoricSalesResults.SalesDayBefore,
+            TotalSalesTwoDaysBefore = container.StateResults.StateHistoricSalesResults.SalesTwoDaysBefore,
+            First_Order_Minutes_In_Day = container.StateResults.StateCurrentSalesResults.FirstOrderMinutesInDay,
+            Last_Order_Minutes_In_Day = container.StateResults.StateCurrentSalesResults.LastOrderMinutesInDay,
 
+            WeekDayNumberSundayAsZero = (int)container.DateToCheck.DayOfWeek,
+            DayOfMonth = container.DateToCheck.Day,
+            Month = container.DateToCheck.Month,
+            Year = container.DateToCheck.Year,
+            JulianDay = container.DateToCheck.DayOfYear,
+
+
+
+        };
 
         // Move onto next state.
         container.CurrentState++;
