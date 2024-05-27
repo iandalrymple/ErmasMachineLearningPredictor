@@ -9,7 +9,7 @@ using Predictor.Testing.Supporting;
 
 namespace Predictor.Testing.Domain;
 
-public class TestStateRetrieveSales
+public class TestStateRetrieveCurrentSales
 {
     private readonly IConfiguration _config = ConfigurationSingleton.Instance;
 
