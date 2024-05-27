@@ -6,8 +6,9 @@ public sealed class StateAggregateResultModel
     public decimal TotalSalesDayBefore { get; set; }
     public decimal TotalSalesTwoDaysBefore { get; set; }
 
-   public uint First_Order_Minutes_In_Day { get; set; }
-   public uint Last_Order_Minutes_In_Day { get; set; }
+    public uint First_Order_Minutes_In_Day { get; set; }
+    public uint Last_Order_Minutes_In_Day { get; set; }
+
     public byte WeekDayNumber { get; set; }
     public byte DayOfMonth { get; set; }    
     public byte Month { get; set; }

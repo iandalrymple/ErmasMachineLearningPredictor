@@ -1,6 +1,6 @@
 ﻿namespace Predictor.Domain.Abstractions;
 
-public interface IRetrieveSales
+public interface IRetrieveSales<T>
 {
-    public Task<decimal> Retrieve(DateTime dateTime, string storeName);
+    public Task<T> Retrieve(DateTime dateTime, string storeName);
 }

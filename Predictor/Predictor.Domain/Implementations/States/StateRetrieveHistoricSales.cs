@@ -7,9 +7,9 @@ namespace Predictor.Domain.Implementations.States
 {
     public class StateRetrieveHistoricSales : IFsmState
     {
-        private readonly IRetrieveSales _retriever;
+        private readonly IRetrieveSales<decimal> _retriever;
 
-        public StateRetrieveHistoricSales(IRetrieveSales retriever)
+        public StateRetrieveHistoricSales(IRetrieveSales<decimal> retriever)
         {
             State = PredictorFsmStates.HistoricSalesRetrieve;
             _retriever = retriever;

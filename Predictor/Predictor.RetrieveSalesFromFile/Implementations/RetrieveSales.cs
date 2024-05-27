@@ -1,12 +1,14 @@
 ﻿using Newtonsoft.Json;
 using Predictor.Domain.Abstractions;
 using Predictor.Domain.Exceptions;
+using Predictor.Domain.Extensions;
+using Predictor.Domain.Models.StateModels;
 using Predictor.RetrieveSalesApi.Models;
 using RestSharp;
 
 namespace Predictor.RetrieveSalesApi.Implementations;
 
-public class RetrieveSales : IRetrieveSales
+public class RetrieveSales : IRetrieveSales<StateCurrentSalesResultModel>
 {
     private readonly string _encoded;
     private readonly RestClient _client;
@@ -24,7 +26,7 @@ public class RetrieveSales : IRetrieveSales
         _client = new RestClient();
     }
 
-    public async Task<decimal> Retrieve(DateTime dateTime, string storeName)
+    public async Task<StateCurrentSalesResultModel> Retrieve(DateTime dateTime, string storeName)
     {
         var request = new RestRequest(_baseUri)
             .AddUrlSegment("business_date", $"{dateTime.Month:d2}{dateTime.Day:d2}{dateTime.Year}");
@@ -47,14 +49,21 @@ public class RetrieveSales : IRetrieveSales
 
         // Uncomment to write files for testing.
         //await File.WriteAllTextAsync("CheckListModelExample.json", result.Content);
-
-        // Parse the model.
-        var deserialized = JsonConvert.DeserializeObject<List<Root>>(result.Content) ?? throw new NoSalesDataFromApiException(dateTime, storeName);
-
-        // Sum the total and the void.
-        var salesTotal = deserialized.Sum(check => check.total);
-        var voidTotal = deserialized.Sum(check => check.void_total);
-
-        return Convert.ToDecimal(salesTotal - voidTotal);
+        var modelled = JsonConvert.DeserializeObject<List<Root>>(result.Content) ?? throw new NoSalesDataFromApiException(dateTime, storeName);
+        var salesTotal = modelled!.Sum(check => check.total);
+        var voidTotal = modelled!.Sum(check => check.void_total);
+        var firstOrderMinutes = modelled!
+            .Where(check => check.time_opened.Year > 2020)
+            .Min(check => check.time_opened.MinutesIntoDayForCertainDateTime());
+        var lastOrderMinutes = modelled!
+            .Where(check => check.time_opened.Year > 2020)
+            .Max(check => check.time_opened.MinutesIntoDayForCertainDateTime());
+        var returnObject = new StateCurrentSalesResultModel
+        {
+            SalesAtThree = Convert.ToDecimal(salesTotal - voidTotal),
+            FirstOrderMinutesInDay = firstOrderMinutes,
+            LastOrderMinutesInDay = lastOrderMinutes
+        };
+        return returnObject;
     }
 }

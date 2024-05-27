@@ -2,7 +2,7 @@
 
 namespace Predictor.Testing.Mocks;
 
-public class RetrieveSalesMock : IRetrieveSales
+public class RetrieveSalesMock : IRetrieveSales<decimal>
 {
     public Task<decimal> Retrieve(DateTime dateTime, string storeName)
     {

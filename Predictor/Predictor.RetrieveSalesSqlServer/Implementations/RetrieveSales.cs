@@ -5,7 +5,7 @@ using Predictor.RetrieveSalesSqlServer.Models;
 
 namespace Predictor.RetrieveSalesSqlServer.Implementations;
 
-public class RetrieveSales : IRetrieveSales
+public class RetrieveSales : IRetrieveSales<decimal>
 {
     private readonly string _connectionString;
 

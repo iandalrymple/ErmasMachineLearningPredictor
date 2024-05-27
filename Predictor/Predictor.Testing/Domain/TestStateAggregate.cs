@@ -43,9 +43,16 @@ namespace Predictor.Testing.Domain
                 StateResults = new StatesCombinedResultModel
                 {
                     StateWeatherResults = rawWeatherModel,
+                    StateHistoricSalesResults = new StateHistoricSalesResultModel
+                    {
+                        SalesDayBefore = 2535.0m,
+                        SalesTwoDaysBefore = 4500.3m
+                    },
                     StateCurrentSalesResults = new StateCurrentSalesResultModel
                     {
-                        SalesAtThree = 2500.0m
+                        SalesAtThree = 2500.0m,
+                        FirstOrderMinutesInDay = 680,
+                        LastOrderMinutesInDay = 1350
                     }
                 },
                 DateToCheck = dateToCheck

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Predictor.Domain.Extensions;
 using Predictor.RetrieveSalesApi.Models;
 using Predictor.Testing.Supporting;
 
@@ -20,9 +21,18 @@ public class TestRetrieveSalesApi
         // Act
         var salesTotal = modelled!.Sum(check => check.total);
         var voidTotal = modelled!.Sum(check => check.void_total);
+        var firstOrderMinutes = modelled!
+            .Where(check => check.time_opened.Year > 2020)
+            .Min(check => check.time_opened.MinutesIntoDayForCertainDateTime());
+        var lastOrderMinutes = modelled!
+            .Where(check => check.time_opened.Year > 2020)
+            .Max(check => check.time_opened.MinutesIntoDayForCertainDateTime());
 
         // Assert
         Assert.True(salesTotal - voidTotal > 0);
+        Assert.True(firstOrderMinutes > 0);
+        Assert.True(lastOrderMinutes > 0);
+        Assert.True(lastOrderMinutes > firstOrderMinutes);
     }
 
     [Fact]
@@ -40,6 +50,9 @@ public class TestRetrieveSalesApi
         var result = await sut.Retrieve(_dateToRetrieve, "Utica");
 
         // Assert
-        Assert.True(result > 0);
+        Assert.True(result.SalesAtThree > 0);
+        Assert.True(result.FirstOrderMinutesInDay > 0);
+        Assert.True(result.LastOrderMinutesInDay > 0);
+        Assert.True(result.FirstOrderMinutesInDay < result.LastOrderMinutesInDay);
     }
 }
