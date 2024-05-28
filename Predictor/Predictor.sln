@@ -16,9 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		ToDo.txt = ToDo.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor.RetrieveSalesApi", "Predictor.RetrieveSalesFromFile\Predictor.RetrieveSalesApi.csproj", "{6F4BAE4F-C9EC-4D55-A1EE-F6D629E3ED74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Predictor.RetrieveSalesApi", "Predictor.RetrieveSalesFromFile\Predictor.RetrieveSalesApi.csproj", "{6F4BAE4F-C9EC-4D55-A1EE-F6D629E3ED74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor.RetrieveSalesSqlServer", "Predictor.RetrieveSalesSqlServer\Predictor.RetrieveSalesSqlServer.csproj", "{61FD97B6-AE54-4464-AB30-DAADBEA60C02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Predictor.RetrieveSalesSqlServer", "Predictor.RetrieveSalesSqlServer\Predictor.RetrieveSalesSqlServer.csproj", "{61FD97B6-AE54-4464-AB30-DAADBEA60C02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor.RetrieveHolidays", "Predictor.RetrieveHolidays\Predictor.RetrieveHolidays.csproj", "{675DC433-97B4-4E70-8315-001D8B6D9E5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{61FD97B6-AE54-4464-AB30-DAADBEA60C02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61FD97B6-AE54-4464-AB30-DAADBEA60C02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61FD97B6-AE54-4464-AB30-DAADBEA60C02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{675DC433-97B4-4E70-8315-001D8B6D9E5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{675DC433-97B4-4E70-8315-001D8B6D9E5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{675DC433-97B4-4E70-8315-001D8B6D9E5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{675DC433-97B4-4E70-8315-001D8B6D9E5E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
