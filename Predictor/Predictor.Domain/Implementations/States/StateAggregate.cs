@@ -7,14 +7,17 @@ namespace Predictor.Domain.Implementations.States;
 
 public class StateAggregate : IFsmState
 {
-    public StateAggregate()
+    private readonly IHolidayRetriever _holidayRetriever;
+
+    public StateAggregate(IHolidayRetriever retriever)
     {
         State = PredictorFsmStates.Aggregate;
+        _holidayRetriever = retriever;
     }
     
     public PredictorFsmStates State { get; init; }
 
-    public Task Execute(FsmStatefulContainer container)
+    public async Task Execute(FsmStatefulContainer container)
     {
         // Perform null checks.
         if (container.StateResults.StateCurrentSalesResults == null ||
@@ -23,6 +26,9 @@ public class StateAggregate : IFsmState
         {
             throw new ArgumentNullException(nameof(container.StateResults));
         }
+
+        // Grab the holiday information.
+        var holidays = await _holidayRetriever.GetHolidays(container.DateToCheck.Year);
 
         // Spin up the result object.
         var result = new StateAggregateResultModel
