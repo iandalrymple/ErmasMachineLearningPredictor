@@ -41,7 +41,6 @@ public class StateAggregate : IFsmState
             container.CurrentState = PredictorFsmStates.Error;
             return;
         }
-        var holidayNameStringList = GetHoliday(container.DateToCheck, holidays);
 
         // Spin up the result object.
         var result = new StateAggregateResultModel
