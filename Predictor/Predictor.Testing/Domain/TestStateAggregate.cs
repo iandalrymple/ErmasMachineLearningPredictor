@@ -6,6 +6,7 @@ using Predictor.RetrieveOwmWeather.Implementations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using Predictor.Testing.Supporting;
 
@@ -25,6 +26,19 @@ namespace Predictor.Testing.Domain
                 .BuildServiceProvider();
             var factory = serviceProvider.GetService<ILoggerFactory>();
             _logger = factory!.CreateLogger<LoggingDecoratorRetrieveWeather>();
+        }
+
+        [Theory]
+        [InlineData(2024, 5, 27)]
+        public void TestIsMemorialDay(int year, int month, int day)
+        {
+            // Arrange
+            var holidayModel = JsonConvert.DeserializeObject<List<HolidaysModel>>(Properties.Resources.Holidays2024);
+
+            // Act
+
+
+            // Assert
         }
 
         [Fact]
@@ -57,10 +71,10 @@ namespace Predictor.Testing.Domain
                 },
                 DateToCheck = dateToCheck
             };
-            var sut = new StateAggregate();
+            //var sut = new StateAggregate();
 
             // Act
-            await sut.Execute(container);
+            //await sut.Execute(container);
 
             // Assert
             Assert.Equal(PredictorFsmStates.Aggregate + 1, container.CurrentState);

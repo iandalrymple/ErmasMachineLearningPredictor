@@ -1,4 +1,5 @@
 ﻿using Predictor.Domain.Abstractions;
+using Predictor.Domain.Extensions;
 using Predictor.Domain.Models;
 using Predictor.Domain.Models.StateModels;
 using Predictor.Domain.System;
@@ -29,6 +30,18 @@ public class StateAggregate : IFsmState
 
         // Grab the holiday information.
         var holidays = await _holidayRetriever.GetHolidays(container.DateToCheck.Year);
+        if (holidays == null)
+        {
+            container.ApplicableError = new ErrorModel
+            {
+                Message = "Holidays returned null",
+                StateErrorOccurredIn = container.CurrentState,
+                Exception = null
+            };
+            container.CurrentState = PredictorFsmStates.Error;
+            return;
+        }
+        var holidayNameStringList = GetHoliday(container.DateToCheck, holidays);
 
         // Spin up the result object.
         var result = new StateAggregateResultModel
@@ -45,14 +58,22 @@ public class StateAggregate : IFsmState
             Year = container.DateToCheck.Year,
             JulianDay = container.DateToCheck.DayOfYear,
 
+            isMemorialDay = holidays.Exists(x => x.IsDateMemorialDay(container.DateToCheck))
 
 
         };
 
         // Move onto next state.
         container.CurrentState++;
-
-        // Bounce back a completed task.
-        return Task.CompletedTask;
     }
+
+    private static IEnumerable<string> GetHoliday(DateTime dt, IEnumerable<HolidaysModel> holidaysModels)
+    {
+        var todayHoliday = holidaysModels
+            .Where(day => day.Date != null && dt.EqualToDateOnly((DateOnly)day.Date))
+            .Where(x => x.Name != null);
+        return todayHoliday.Select(x => x.Name!).ToList();
+    }
+
+
 }

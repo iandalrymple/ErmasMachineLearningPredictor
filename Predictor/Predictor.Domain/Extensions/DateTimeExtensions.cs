@@ -18,4 +18,9 @@ public static class DateTimeExtensions
         var span = d.TimeOfDay.TotalMinutes;
         return Convert.ToUInt32(span);
     }
+
+    public static bool EqualToDateOnly(this DateTime dateTime, DateOnly dateOnly)
+    {
+        return dateTime.Year == dateOnly.Year && dateTime.Month == dateOnly.Month && dateTime.Day == dateOnly.Day;
+    }
 }

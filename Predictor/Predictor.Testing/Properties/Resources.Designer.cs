@@ -70,6 +70,15 @@ namespace Predictor.Testing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [{&quot;date&quot;:&quot;2024-01-01&quot;,&quot;localName&quot;:&quot;New Year&apos;s Day&quot;,&quot;name&quot;:&quot;New Year&apos;s Day&quot;,&quot;countryCode&quot;:&quot;US&quot;,&quot;fixed&quot;:false,&quot;global&quot;:true,&quot;counties&quot;:null,&quot;launchYear&quot;:null,&quot;types&quot;:[&quot;Public&quot;]},{&quot;date&quot;:&quot;2024-01-15&quot;,&quot;localName&quot;:&quot;Martin Luther King, Jr. Day&quot;,&quot;name&quot;:&quot;Martin Luther King, Jr. Day&quot;,&quot;countryCode&quot;:&quot;US&quot;,&quot;fixed&quot;:false,&quot;global&quot;:true,&quot;counties&quot;:null,&quot;launchYear&quot;:null,&quot;types&quot;:[&quot;Public&quot;]},{&quot;date&quot;:&quot;2024-02-19&quot;,&quot;localName&quot;:&quot;Washington&apos;s Birthday&quot;,&quot;name&quot;:&quot;Presidents Day&quot;,&quot;countryCode&quot;:&quot;US&quot;,&quot;fixed&quot;:false,&quot;global&quot;:true,&quot;counti [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Holidays2024 {
+            get {
+                return ResourceManager.GetString("Holidays2024", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {&quot;WeatherAtTimes&quot;:{&quot;12&quot;:{&quot;lat&quot;:42.5345,&quot;lon&quot;:-83.0856,&quot;timezone&quot;:&quot;America/Detroit&quot;,&quot;timezone_offset&quot;:-14400,&quot;data&quot;:[{&quot;dt&quot;:1715788800,&quot;sunrise&quot;:1715767799,&quot;sunset&quot;:1715820456,&quot;temp&quot;:66.54,&quot;feels_like&quot;:65.86,&quot;pressure&quot;:1010.0,&quot;humidity&quot;:63.0,&quot;dew_point&quot;:53.56,&quot;uvi&quot;:0.0,&quot;clouds&quot;:0.0,&quot;visibility&quot;:10000.0,&quot;wind_speed&quot;:9.22,&quot;wind_gust&quot;:0.0,&quot;wind_deg&quot;:40.0,&quot;weather&quot;:[{&quot;id&quot;:500,&quot;main&quot;:&quot;Rain&quot;,&quot;description&quot;:&quot;light rain&quot;,&quot;icon&quot;:&quot;10d&quot;}]}]},&quot;15&quot;:{&quot;lat&quot;:42.5345,&quot;lon&quot;:-83.0856,&quot;timezone&quot;:&quot;America/Detroit&quot;,&quot;timezone_offset [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string WeatherData_05152024 {

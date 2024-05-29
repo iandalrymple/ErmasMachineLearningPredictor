@@ -9,4 +9,6 @@ public class FsmStatefulContainer
     public required StoreLocation StoreLocation { get; init; }
     public required DateTime DateToCheck { get; init; }
     public required StatesCombinedResultModel StateResults { get; init; }
+
+    public ErrorModel? ApplicableError { get; set; } 
 }
