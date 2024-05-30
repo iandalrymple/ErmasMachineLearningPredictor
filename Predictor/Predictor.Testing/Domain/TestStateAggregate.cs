@@ -134,6 +134,58 @@ namespace Predictor.Testing.Domain
             Assert.True(result == assertResult);
         }
 
+        [Theory]
+        [InlineData(2024, 3, 31, true)]
+        [InlineData(2024, 4, 1, false)]
+        [InlineData(2024, 3, 30, false)]
+        [InlineData(2024, 12, 25, false)]
+        public void TestIsEaster(int year, int month, int day, bool assertResult)
+        {
+            // Arrange
+            var holidays = JsonConvert.DeserializeObject<List<HolidaysModel>>(Properties.Resources.Holidays2024);
+            var dateToCheck = new DateTime(year, month, day);
+
+            // Act
+            var result = HolidaysModelExtensions.IsEaster(holidays, dateToCheck);
+
+            // Assert
+            Assert.True(result == assertResult);
+        }
+
+        [Theory]
+        [InlineData(2024, 5, 12, true)]
+        [InlineData(2024, 5, 13, false)]
+        [InlineData(2024, 5, 11, false)]
+        [InlineData(2024, 12, 25, false)]
+        public void TestIsMothersDay(int year, int month, int day, bool assertResult)
+        {
+            // Arrange
+            var dateToCheck = new DateTime(year, month, day);
+
+            // Act
+            var result = HolidaysModelExtensions.IsMothersDay(dateToCheck);
+
+            // Assert
+            Assert.True(result == assertResult);
+        }
+
+        [Theory]
+        [InlineData(2024, 6, 16, true)]
+        [InlineData(2024, 6, 17, false)]
+        [InlineData(2024, 6, 15, false)]
+        [InlineData(2024, 12, 25, false)]
+        public void TestIsFathersDay(int year, int month, int day, bool assertResult)
+        {
+            // Arrange
+            var dateToCheck = new DateTime(year, month, day);
+
+            // Act
+            var result = HolidaysModelExtensions.IsFathersDay(dateToCheck);
+
+            // Assert
+            Assert.True(result == assertResult);
+        }
+
         [Fact]
         public async Task TestExecute_Happy()
         {

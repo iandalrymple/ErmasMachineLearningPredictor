@@ -5,7 +5,7 @@ namespace Predictor.Domain.Models;
 public class HolidaysModel
 {
     [JsonProperty(PropertyName = "date")]
-    public DateOnly? Date { get; set; }
+    public DateOnly Date { get; set; }
 
     [JsonProperty(PropertyName = "localName")]
     public string? LocalName { get; set; }
