@@ -57,8 +57,17 @@ public class StateAggregate : IFsmState
             Year = container.DateToCheck.Year,
             JulianDay = container.DateToCheck.DayOfYear,
 
-            isMemorialDay = holidays.Exists(x => x.IsDateMemorialDay(container.DateToCheck))
-
+            isMemorialDay = holidays.Exists(x => x.IsDateMemorialDay(container.DateToCheck)),
+            isIndependenceDay = holidays.Exists(x => x.IsIndependenceDay(container.DateToCheck)),
+            isLaborDay = holidays.Exists(x => x.IsLaborDay(container.DateToCheck)),
+            isColumbusDay = holidays.Exists(x => x.IsColumbusDay(container.DateToCheck)),
+            isCincoDeMayo = HolidaysModelExtensions.IsCincoDeMayo(container.DateToCheck),
+            isOpeningDay = HolidaysModelExtensions.IsOpeningDay(container.DateToCheck),
+            isClosingDay = HolidaysModelExtensions.IsClosingDay(container.DateToCheck),
+            isEaster = HolidaysModelExtensions.IsEaster(holidays, container.DateToCheck),
+            isGoodFriday = holidays.Exists(x => x.IsGoodFriday(container.DateToCheck)),
+            isMothersDay = HolidaysModelExtensions.IsMothersDay(container.DateToCheck),
+            isFatherDay = HolidaysModelExtensions.IsFathersDay(container.DateToCheck)
 
         };
 

@@ -113,6 +113,16 @@ public static class HolidaysModelExtensions
         return dt is { Month: 5, Day: 5 };
     }
 
+    public static bool IsOpeningDay(DateTime dt)
+    {
+        return dt is { Month: 4, Day: 1 };
+    }
+
+    public static bool IsClosingDay(DateTime dt)
+    {
+        return dt is { Month: 10, Day: 31 };
+    }
+
     private static int FindDay(int year, int month, DayOfWeek day, int occurence)
     {
         if (occurence is <= 0 or > 5)
