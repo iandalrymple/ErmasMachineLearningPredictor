@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Predictor.Testing.Supporting;
 using Predictor.Domain.Extensions;
+using Predictor.Domain.Implementations.States;
+using Predictor.Testing.Mocks;
 
 namespace Predictor.Testing.Domain
 {
@@ -216,10 +218,10 @@ namespace Predictor.Testing.Domain
                 },
                 DateToCheck = dateToCheck
             };
-            //var sut = new StateAggregate();
+            var sut = new StateAggregate(new RetrieveHolidaysMock());
 
             // Act
-            //await sut.Execute(container);
+            await sut.Execute(container);
 
             // Assert
             Assert.Equal(PredictorFsmStates.Aggregate + 1, container.CurrentState);

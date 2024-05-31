@@ -23,7 +23,15 @@ public class StateAggregate : IFsmState
         // Perform null checks.
         if (container.StateResults.StateCurrentSalesResults == null ||
             container.StateResults.StateHistoricSalesResults == null ||
-            container.StateResults.StateWeatherResults == null)
+            container.StateResults.StateWeatherResults == null ||
+            !container.StateResults.StateWeatherResults.WeatherAtTimes.TryGetValue(12, out _) ||
+            !container.StateResults.StateWeatherResults.WeatherAtTimes.TryGetValue(15, out _) ||
+            !container.StateResults.StateWeatherResults.WeatherAtTimes.TryGetValue(18, out _) ||
+            !container.StateResults.StateWeatherResults.WeatherAtTimes.TryGetValue(21, out _) ||
+            container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data == null ||
+            container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data == null ||
+            container.StateResults.StateWeatherResults.WeatherAtTimes[18].Data == null ||
+            container.StateResults.StateWeatherResults.WeatherAtTimes[21].Data == null)
         {
             throw new ArgumentNullException(nameof(container.StateResults));
         }
@@ -67,21 +75,39 @@ public class StateAggregate : IFsmState
             isEaster = HolidaysModelExtensions.IsEaster(holidays, container.DateToCheck),
             isGoodFriday = holidays.Exists(x => x.IsGoodFriday(container.DateToCheck)),
             isMothersDay = HolidaysModelExtensions.IsMothersDay(container.DateToCheck),
-            isFatherDay = HolidaysModelExtensions.IsFathersDay(container.DateToCheck)
+            isFatherDay = HolidaysModelExtensions.IsFathersDay(container.DateToCheck),
 
+            // TODO - need to verify for nulls and more than one Data element
+            TempNoon = container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data!.First().Temp,
+            FeelsLikeNoon = container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data!.First().FeelsLike,
+            PressureNoon = container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data!.First().Pressure,
+            HumidityNoon = container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data!.First().Humidity,
+            DewPointNoon = container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data!.First().DewPoint,
+            UviNoon = container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data!.First().Uvi,
+            CloudsNoon = container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data!.First().Clouds,
+            VisibilityNoon = container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data!.First().Visibility,
+            WindSpeedNoon = container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data!.First().WindSpeed,
+            WindGustNoon = container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data!.First().WindGust,
+            WindDegNoon = container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data!.First().WindDeg,
+
+            TempThree = container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data!.First().Temp,
+            FeelsLikeThree = container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data!.First().FeelsLike,
+            PressureThree = container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data!.First().Pressure,
+            HumidityThree = container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data!.First().Humidity,
+            DewPointThree = container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data!.First().DewPoint,
+            UviThree = container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data!.First().Uvi,
+            CloudsThree = container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data!.First().Clouds,
+            VisibilityThree = container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data!.First().Visibility,
+            WindSpeedThree = container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data!.First().WindSpeed,
+            WindGustThree = container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data!.First().WindGust,
+            WindDegThree = container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data!.First().WindDeg,
+
+            TempSix = container.StateResults.StateWeatherResults.WeatherAtTimes[18].Data!.First().Temp,
+
+            TempNine = container.StateResults.StateWeatherResults.WeatherAtTimes[21].Data!.First().Temp,
         };
 
         // Move onto next state.
         container.CurrentState++;
     }
-
-    private static IEnumerable<string> GetHoliday(DateTime dt, IEnumerable<HolidaysModel> holidaysModels)
-    {
-        var todayHoliday = holidaysModels
-            .Where(day => day.Date != null && dt.EqualToDateOnly((DateOnly)day.Date))
-            .Where(x => x.Name != null);
-        return todayHoliday.Select(x => x.Name!).ToList();
-    }
-
-
 }
