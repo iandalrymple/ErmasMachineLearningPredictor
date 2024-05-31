@@ -89,6 +89,8 @@ public class StateAggregate : IFsmState
             WindSpeedNoon = container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data!.First().WindSpeed,
             WindGustNoon = container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data!.First().WindGust,
             WindDegNoon = container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data!.First().WindDeg,
+            NoonRaining = container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data!.First().IsRaining(),
+            NoonSnowing = container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data!.First().IsSnowing(),
 
             TempThree = container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data!.First().Temp,
             FeelsLikeThree = container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data!.First().FeelsLike,
@@ -101,10 +103,16 @@ public class StateAggregate : IFsmState
             WindSpeedThree = container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data!.First().WindSpeed,
             WindGustThree = container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data!.First().WindGust,
             WindDegThree = container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data!.First().WindDeg,
+            ThreeRaining = container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data!.First().IsRaining(),
+            ThreeSnowing = container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data!.First().IsSnowing(),
 
             TempSix = container.StateResults.StateWeatherResults.WeatherAtTimes[18].Data!.First().Temp,
+            SixRaining = container.StateResults.StateWeatherResults.WeatherAtTimes[18].Data!.First().IsRaining(),
+            SixSnowing = container.StateResults.StateWeatherResults.WeatherAtTimes[18].Data!.First().IsSnowing(),
 
             TempNine = container.StateResults.StateWeatherResults.WeatherAtTimes[21].Data!.First().Temp,
+            NineRaining = container.StateResults.StateWeatherResults.WeatherAtTimes[21].Data!.First().IsRaining(),
+            NineSnowing = container.StateResults.StateWeatherResults.WeatherAtTimes[21].Data!.First().IsSnowing()
         };
 
         // Move onto next state.
