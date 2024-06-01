@@ -51,7 +51,7 @@ public class StateAggregate : IFsmState
         }
 
         // Spin up the result object.
-        var result = new StateAggregateResultModel
+        var resultModel = new StateAggregateResultModel
         {
             Sales_Three_Pm = container.StateResults.StateCurrentSalesResults.SalesAtThree,
             TotalSalesDayBefore = container.StateResults.StateHistoricSalesResults.SalesDayBefore,
@@ -114,6 +114,7 @@ public class StateAggregate : IFsmState
             NineRaining = container.StateResults.StateWeatherResults.WeatherAtTimes[21].Data!.First().IsRaining(),
             NineSnowing = container.StateResults.StateWeatherResults.WeatherAtTimes[21].Data!.First().IsSnowing()
         };
+        container.StateResults.StateAggregateResults = resultModel;
 
         // Move onto next state.
         container.CurrentState++;

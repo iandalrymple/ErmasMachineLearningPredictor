@@ -188,13 +188,17 @@ namespace Predictor.Testing.Domain
             Assert.True(result == assertResult);
         }
 
-        [Fact]
-        public async Task TestExecute_Happy()
+        [Theory]
+        [InlineData(2024, 5, 5, false, true, false)]
+        [InlineData(2024, 4, 1, true, false, false)]
+        [InlineData(2024, 6, 15, false, false, false)]
+        [InlineData(2024, 7, 4, false, false, true)]
+        public async Task TestExecute_Happy(int year, int month, int day, bool isOpening, bool isCinco, bool isFourth)
         {
             // Arrange
             var rawWeatherString = Properties.Resources.WeatherData_05152024;
             var rawWeatherModel = JsonConvert.DeserializeObject<StateWeatherResultModel>(rawWeatherString);
-            var dateToCheck = new DateTime(year: 2024, month: 5, day: 1);
+            var dateToCheck = new DateTime(year: year, month: month, day: day);
             var container = new FsmStatefulContainer
             {
                 CurrentState = PredictorFsmStates.Aggregate,
@@ -225,8 +229,10 @@ namespace Predictor.Testing.Domain
 
             // Assert
             Assert.Equal(PredictorFsmStates.Aggregate + 1, container.CurrentState);
-            Assert.NotNull(container.StateResults.StateWeatherResults);
-            Assert.Equal(4, container.StateResults.StateWeatherResults.WeatherAtTimes.Count);
+            Assert.NotNull(container.StateResults.StateAggregateResults);
+            Assert.Equal(container.StateResults.StateAggregateResults.isOpeningDay, isOpening);
+            Assert.Equal(container.StateResults.StateAggregateResults.isCincoDeMayo, isCinco);
+            Assert.Equal(container.StateResults.StateAggregateResults.isIndependenceDay, isFourth);
         }
     }
 }
