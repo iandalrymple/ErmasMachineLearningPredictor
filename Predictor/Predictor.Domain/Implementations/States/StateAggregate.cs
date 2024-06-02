@@ -31,7 +31,15 @@ public class StateAggregate : IFsmState
             container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data == null ||
             container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data == null ||
             container.StateResults.StateWeatherResults.WeatherAtTimes[18].Data == null ||
-            container.StateResults.StateWeatherResults.WeatherAtTimes[21].Data == null)
+            container.StateResults.StateWeatherResults.WeatherAtTimes[21].Data == null ||
+            container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data!.First() == null ||
+            container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data!.First() == null ||
+            container.StateResults.StateWeatherResults.WeatherAtTimes[18].Data!.First() == null ||
+            container.StateResults.StateWeatherResults.WeatherAtTimes[21].Data!.First() == null ||
+            container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data!.Length > 1 ||
+            container.StateResults.StateWeatherResults.WeatherAtTimes[15].Data!.Length > 1 ||
+            container.StateResults.StateWeatherResults.WeatherAtTimes[18].Data!.Length > 1 ||
+            container.StateResults.StateWeatherResults.WeatherAtTimes[21].Data!.Length > 1)
         {
             throw new ArgumentNullException(nameof(container.StateResults));
         }
@@ -77,7 +85,6 @@ public class StateAggregate : IFsmState
             isMothersDay = HolidaysModelExtensions.IsMothersDay(container.DateToCheck),
             isFatherDay = HolidaysModelExtensions.IsFathersDay(container.DateToCheck),
 
-            // TODO - need to verify for nulls and more than one Data element
             TempNoon = container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data!.First().Temp,
             FeelsLikeNoon = container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data!.First().FeelsLike,
             PressureNoon = container.StateResults.StateWeatherResults.WeatherAtTimes[12].Data!.First().Pressure,
