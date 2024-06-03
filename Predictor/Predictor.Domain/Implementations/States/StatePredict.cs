@@ -6,14 +6,19 @@ namespace Predictor.Domain.Implementations.States;
 
 public class StatePredict : IFsmState
 {
-    public StatePredict()
+    private readonly IPredictingEngine _predictingEngine;
+
+    public StatePredict(IPredictingEngine predictingEngine)
     {
         State = PredictorFsmStates.Predict;
+        _predictingEngine = predictingEngine;
     }
 
     public PredictorFsmStates State { get; init; }
-    public Task Execute(FsmStatefulContainer container)
+    public async Task Execute(FsmStatefulContainer container)
     {
+        var paramModel = new PredictingEngineParameterModel();
+        var result = await _predictingEngine.RunProcessAsync(paramModel);
         throw new NotImplementedException();
     }
 }
