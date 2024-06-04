@@ -1,17 +1,21 @@
-﻿namespace Predictor.Testing.PredictingEnginePython;
+﻿using Predictor.Domain.Models;
+using Predictor.PredictingEnginePython.Implementations;
+
+namespace Predictor.Testing.PredictingEnginePython;
 
 public class TestPredictingEnginePython
 {
     [Fact]
-    public void TestRunProcessAsync()
+    public async Task TestRunProcessAsync()
     {
         // Arrange
-
+        var sut = new PredictingEnginePythonImpl();
+        var inputParams = new PredictingEngineParameterModel();
 
         // Act
-
+        var result = await sut.RunProcessAsync(inputParams);
 
         // Assert
-
+        Assert.NotNull(result);
     }
 }
