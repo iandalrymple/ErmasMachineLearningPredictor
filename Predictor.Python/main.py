@@ -16,8 +16,8 @@ def main():
     try:
 
         # Delete later - keeping around for debugging.
-        # raw_frame = pd.read_pickle(R"C:\Users\ianda\source\GitHub\ErmasMachineLearningPredictor\Ignore\PROCESSED_FRAME_UTICA.pkl")
-        model = pd.read_pickle(R"C:\Users\ianda\source\GitHub\ErmasMachineLearningPredictor\Ignore\GBR_UTICA.pkl")
+        raw_frame = pd.read_pickle(R"C:\Users\ianda\source\GitHub\ErmasMachineLearningPredictor\Ignore\PROCESSED_FRAME_UTICA.pkl")
+        # model = pd.read_pickle(R"C:\Users\ianda\source\GitHub\ErmasMachineLearningPredictor\Ignore\GBR_UTICA.pkl")
         # col_transformer = pd.read_pickle(R"C:\Users\ianda\source\GitHub\ErmasMachineLearningPredictor\Ignore\COL_TRANSFORMER_UTICA.pkl")
 
         # Parse the args 

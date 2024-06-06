@@ -67,7 +67,7 @@ public class StateAggregate : IFsmState
             First_Order_Minutes_In_Day = container.StateResults.StateCurrentSalesResults.FirstOrderMinutesInDay,
             Last_Order_Minutes_In_Day = container.StateResults.StateCurrentSalesResults.LastOrderMinutesInDay,
 
-            WeekDayNumberSundayAsZero = (int)container.DateToCheck.DayOfWeek,
+            WeekDayNumber = (int)container.DateToCheck.DayOfWeek,
             DayOfMonth = container.DateToCheck.Day,
             Month = container.DateToCheck.Month,
             Year = container.DateToCheck.Year,
@@ -121,6 +121,7 @@ public class StateAggregate : IFsmState
             NineRaining = container.StateResults.StateWeatherResults.WeatherAtTimes[21].Data!.First().IsRaining(),
             NineSnowing = container.StateResults.StateWeatherResults.WeatherAtTimes[21].Data!.First().IsSnowing()
         };
+        resultModel.IsPopulated = true;
         container.StateResults.StateAggregateResults = resultModel;
 
         // Move onto next state.
