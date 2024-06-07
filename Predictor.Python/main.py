@@ -37,11 +37,11 @@ def main():
 
         # Finally peform the prediction.
         predictions = pd.DataFrame(model.predict(transformed))
-        print(predictions.head())
+        print(predictions[0][0])
 
     except Exception as ex:
         
-        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+        template = "An exception of type {0} occurred with arguments:\n{1!r}"
         message = template.format(type(ex).__name__, ex.args)
         logs.append(message)
         error_occurred = 1
