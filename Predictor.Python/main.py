@@ -12,6 +12,7 @@ def main():
     # Locals 
     logs = []
     error_occurred = 0
+    predictions = 0.0
 
     try:
 
@@ -20,10 +21,18 @@ def main():
         # model = pd.read_pickle(R"C:\Users\ianda\source\GitHub\ErmasMachineLearningPredictor\Ignore\GBR_UTICA.pkl")
         # col_transformer = pd.read_pickle(R"C:\Users\ianda\source\GitHub\ErmasMachineLearningPredictor\Ignore\COL_TRANSFORMER_UTICA.pkl")
 
+        # Kick off log.
+        logs.append("Starting application.")
+
         # Parse the args 
         model_path = sys.argv[arg_model_index]
         trans_path = sys.argv[arg_trans_index]
         features_path = sys.argv[arg_features_index]
+
+        # Add args to logs.
+        logs.append(model_path)
+        logs.append(trans_path)
+        logs.append(features_path)
 
         # Read in the pickles.
         model =  pd.read_pickle(model_path)
@@ -37,7 +46,6 @@ def main():
 
         # Finally peform the prediction.
         predictions = pd.DataFrame(model.predict(transformed))
-        print(predictions[0][0])
 
     except Exception as ex:
         
@@ -48,7 +56,25 @@ def main():
    
     finally:
          
-        print("fixing to exit")
+        try:
+            print("!!!!!" + ConstructReturnJson(error_occurred, predictions[0][0], logs) + "!!!!!")
+        except:
+            pass
+
+def ConstructReturnJson(error_occurred, prediction, logs: list) -> str:
+    
+    # Opening and closing {} need to be added after as they mess up the .format method
+    json = "\"error\" : {0},"
+    json += "\"prediction\" : \"{1}\""  
+    json = json.format(error_occurred, prediction)
+    if(len(logs) > 0):
+        json += ",\"logs\":["
+        for i in range(len(logs)):
+            json += "\"" + logs[i] + "\","
+        json = json[:-1]
+        json += "]"
+    final_json = "{" + json + "}"
+    return final_json
 
 if __name__ == "__main__":
     main()
