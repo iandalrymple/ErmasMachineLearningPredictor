@@ -29,7 +29,7 @@ public sealed class StateAggregateResultModel
     public bool isEaster { get; set; }
     public bool isGoodFriday { get; set; }
     public bool isMothersDay { get; set; }
-    public bool isFatherDay { get; set; }
+    public bool isFathersDay { get; set; }
 
     public double TempNoon { get; set; }
     public double FeelsLikeNoon { get; set; }
@@ -42,8 +42,8 @@ public sealed class StateAggregateResultModel
     public double WindSpeedNoon { get; set; }
     public double WindGustNoon { get; set; }
     public double WindDegNoon { get; set; }
-    public bool NoonRaining { get; set; }
-    public bool NoonSnowing { get; set; }
+    public bool Noon_Raining { get; set; }
+    public bool Noon_Snowing { get; set; }
 
     public double TempThree { get; set; }
     public double FeelsLikeThree { get; set; }
@@ -56,16 +56,16 @@ public sealed class StateAggregateResultModel
     public double WindSpeedThree { get; set; }
     public double WindGustThree { get; set; }
     public double WindDegThree { get; set; }
-    public bool ThreeRaining { get; set; }
-    public bool ThreeSnowing { get; set; }
+    public bool Three_Raining { get; set; }
+    public bool Three_Snowing { get; set; }
 
     public double TempSix { get; set; }
-    public bool SixRaining { get; set; }
-    public bool SixSnowing { get; set; }
+    public bool Six_Raining { get; set; }
+    public bool Six_Snowing { get; set; }
 
     public double TempNine { get; set; }
-    public bool NineRaining { get; set; }
-    public bool NineSnowing { get; set; }
+    public bool Nine_Raining { get; set; }
+    public bool Nine_Snowing { get; set; }
 
     public bool IsPopulated { get; set; }
 
@@ -77,6 +77,7 @@ public sealed class StateAggregateResultModel
         }
 
         var returnString = $"{Header}{Environment.NewLine}" +
+
                            $"{Sales_Three_Pm}," +
 
                            $"{TempNoon}," +
@@ -105,14 +106,14 @@ public sealed class StateAggregateResultModel
 
                            $"{TempSix}," +
                            $"{TempNine}," +
-                           $"{NoonRaining}," +
-                           $"{ThreeRaining}," +
-                           $"{SixRaining}," +
-                           $"{NineRaining}," +
-                           $"{NoonSnowing}," +
-                           $"{ThreeSnowing}," +
-                           $"{SixSnowing}," +
-                           $"{NineSnowing}," +
+                           $"{Noon_Raining}," +
+                           $"{Three_Raining}," +
+                           $"{Six_Raining}," +
+                           $"{Nine_Raining}," +
+                           $"{Noon_Snowing}," +
+                           $"{Three_Snowing}," +
+                           $"{Six_Snowing}," +
+                           $"{Nine_Snowing}," +
 
                            $"{First_Order_Minutes_In_Day}," +
                            $"{Last_Order_Minutes_In_Day}," +
@@ -131,7 +132,7 @@ public sealed class StateAggregateResultModel
                            $"{isEaster}," +
                            $"{isGoodFriday}," +
                            $"{isMothersDay}," +
-                           $"{isFatherDay}," +
+                           $"{isFathersDay}," +
                            $"{TotalSalesDayBefore}," +
                            $"{TotalSalesTwoDaysBefore}";
 
@@ -167,15 +168,15 @@ public sealed class StateAggregateResultModel
                                  nameof(TempSix) + "," +
                                  nameof(TempNine) + "," +
 
-                                 nameof(NoonRaining) + "," +
-                                 nameof(ThreeRaining) + "," +
-                                 nameof(SixRaining) + "," +
-                                 nameof(NineRaining) + "," +
+                                 nameof(Noon_Raining) + "," +
+                                 nameof(Three_Raining) + "," +
+                                 nameof(Six_Raining) + "," +
+                                 nameof(Nine_Raining) + "," +
 
-                                 nameof(NoonSnowing) + "," +
-                                 nameof(ThreeSnowing) + "," +
-                                 nameof(SixSnowing) + "," +
-                                 nameof(NineSnowing) + "," +
+                                 nameof(Noon_Snowing) + "," +
+                                 nameof(Three_Snowing) + "," +
+                                 nameof(Six_Snowing) + "," +
+                                 nameof(Nine_Snowing) + "," +
 
                                  nameof(First_Order_Minutes_In_Day) + "," +
                                  nameof(Last_Order_Minutes_In_Day) + "," +
@@ -194,7 +195,7 @@ public sealed class StateAggregateResultModel
                                  nameof(isEaster) + "," +
                                  nameof(isGoodFriday) + "," +
                                  nameof(isMothersDay) + "," +
-                                 nameof(isFatherDay) + "," +
+                                 nameof(isFathersDay) + "," +
 
                                  nameof(TotalSalesDayBefore) + "," +
                                  nameof(TotalSalesTwoDaysBefore);
