@@ -4,7 +4,9 @@ using Predictor.Domain.Models;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
+using Newtonsoft.Json;
 using Predictor.Domain.Exceptions;
+using Predictor.Domain.Extensions;
 
 namespace Predictor.PredictingEnginePython.Implementations;
 
@@ -45,7 +47,7 @@ public class PredictingEnginePythonImpl : IPredictingEngine, IDisposable
         var tcs = new TaskCompletionSource<PredictingEngineResponseModel>();
 
         // Get the path to the model based on the store name being passed in. 
-        var modelPathFromArgs = string.Empty;
+        string modelPathFromArgs;
         if (parameterModel.StoreName.Equals("Utica", StringComparison.OrdinalIgnoreCase))
         {
             modelPathFromArgs = _args[UticaModelPathIndexInArgs];
@@ -101,25 +103,71 @@ public class PredictingEnginePythonImpl : IPredictingEngine, IDisposable
         return tcs.Task;
     }
 
+    private static PredictingEngineResponseModel BuildModel(
+        int exitCode,
+        string consoleResponse,
+        string consoleError,
+        Guid guid,
+        DateTime startTime,
+        string store)
+    {
+        try
+        {
+            var parsedString = consoleResponse.Between("!!!!!", "!!!!!");
+            var parsedModel = JsonConvert.DeserializeObject<PythonProcessResponseModel>(parsedString);
+            var returnModel = new PredictingEngineResponseModel
+            {
+                ExitCode = exitCode,
+                RawModelFromStandardInput = consoleResponse,
+                ParsedModelFromStandardInput = parsedModel,
+                RawStandardError = consoleError,
+                Guid = guid,
+                StartTime = startTime,
+                EndTime = DateTime.Now,
+                StoreName = store
+            };
+            return returnModel;
+        }
+        catch
+        {
+            // Intentionally gobbling
+        }
+
+        return new PredictingEngineResponseModel
+        {
+            ExitCode = exitCode,
+            RawModelFromStandardInput = $"{consoleResponse} AND UNABLE TO PARSE MODEL",
+            ParsedModelFromStandardInput = null,
+            RawStandardError = consoleError,
+            Guid = guid,
+            StartTime = startTime,
+            EndTime = DateTime.Now,
+            StoreName = store
+        };
+    }
+
+    public void CancelAllProcesses()
+    {
+        foreach (var p in _processDictionary)
+        {
+            p.Value.Kill();
+            p.Value.Dispose();
+        }
+        _processDictionary.Clear();
+        _processing = false;
+    }
+
     protected virtual void Dispose(bool disposing)
     {
         if (_disposedValue) return;
+
         if (disposing)
         {
-            // TODO: dispose managed state (managed objects)
+            CancelAllProcesses();
         }
 
-        // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-        // TODO: set large fields to null
         _disposedValue = true;
     }
-
-    // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-    // ~PredictingEnginePython()
-    // {
-    //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-    //     Dispose(disposing: false);
-    // }
 
     public void Dispose()
     {
