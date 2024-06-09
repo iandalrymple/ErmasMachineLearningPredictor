@@ -13,7 +13,7 @@ public class TestPredictingEnginePython
         var inputParams = new PredictingEngineParameterModel();
 
         // Act
-        var result = await sut.RunProcessAsync(inputParams);
+        var result = await sut.PredictAsync(inputParams);
 
         // Assert
         Assert.NotNull(result);

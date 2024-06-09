@@ -18,7 +18,7 @@ public class StatePredict : IFsmState
     public async Task Execute(FsmStatefulContainer container)
     {
         var paramModel = new PredictingEngineParameterModel();
-        var result = await _predictingEngine.RunProcessAsync(paramModel);
+        var result = await _predictingEngine.PredictAsync(paramModel);
         throw new NotImplementedException();
     }
 }
