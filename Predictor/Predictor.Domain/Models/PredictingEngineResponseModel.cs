@@ -19,7 +19,6 @@ public class PredictingEngineResponseModel
             returnString += $"{nameof(ExitCode)}={ExitCode} ";
             returnString += $"{nameof(Guid)}={Guid} ";
             returnString += $"{nameof(Error)}={Error} ";
-            returnString += $"{nameof(Path)}={Path} ";
             returnString += $"{nameof(StartTime)}={StartTime} ";
             returnString += $"{nameof(TotalTimeInSeconds)}={TotalTimeInSeconds} ";
             if (string.IsNullOrEmpty(RawStandardError) == false)
@@ -43,7 +42,6 @@ public class PredictingEngineResponseModel
             returnString += $"{nameof(ExitCode)}={ExitCode}{Environment.NewLine}";
             returnString += $"{nameof(Guid)}={Guid}{Environment.NewLine}";
             returnString += $"{nameof(Error)}={Error}{Environment.NewLine}";
-            returnString += $"{nameof(Path)}={Path}{Environment.NewLine}";
             returnString += $"{nameof(StartTime)}={StartTime}{Environment.NewLine}";
             returnString += $"{nameof(TotalTimeInSeconds)}={TotalTimeInSeconds}{Environment.NewLine}";
             returnString += $"{nameof(Logs)}={Logs}{Environment.NewLine}";
@@ -69,7 +67,7 @@ public class PredictingEngineResponseModel
             return ParsedModelFromStandardInput.Error == 0 ? "None" : "Yes";
         }
     }
-    public string Path => ParsedModelFromStandardInput == null ? "Not provided." : ParsedModelFromStandardInput.BestModelPath;
+
     public string Logs
     {
         get

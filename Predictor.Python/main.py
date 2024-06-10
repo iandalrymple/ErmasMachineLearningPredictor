@@ -5,7 +5,7 @@ import sys
 def main():
 
     # Constants 
-    arg_model_index = 1
+    arg_model_index = 2
     arg_trans_index = arg_model_index + 1
     arg_features_index = arg_trans_index + 1
 
@@ -16,10 +16,13 @@ def main():
 
     try:
 
+        print("we are here")
+        return
+
         # Delete later - keeping around for debugging.
-        # raw_frame = pd.read_pickle(R"C:\Users\ianda\source\GitHub\ErmasMachineLearningPredictor\Ignore\PROCESSED_FRAME_UTICA.pkl")
-        # model = pd.read_pickle(R"C:\Users\ianda\source\GitHub\ErmasMachineLearningPredictor\Ignore\GBR_UTICA.pkl")
-        # col_transformer = pd.read_pickle(R"C:\Users\ianda\source\GitHub\ErmasMachineLearningPredictor\Ignore\COL_TRANSFORMER_UTICA.pkl")
+        # raw_frame = pd.read_pickle(R"C:\Users\ianda\source\GitHub\ErmasMachineLearningPredictor\Ignore\MODELS\PROCESSED_FRAME_UTICA.pkl")
+        # model = pd.read_pickle(R"C:\Users\ianda\source\GitHub\ErmasMachineLearningPredictor\Ignore\MODELS\GBR_UTICA.pkl")
+        # col_transformer = pd.read_pickle(R"C:\Users\ianda\source\GitHub\ErmasMachineLearningPredictor\Ignore\TRANSFORMER\COL_TRANSFORMER.pkl")
 
         # Kick off log.
         logs.append("Starting application.")
@@ -54,12 +57,12 @@ def main():
         logs.append(message)
         error_occurred = 1
    
-    finally:
+    # finally:
          
-        try:
-            print("!!!!!" + ConstructReturnJson(error_occurred, predictions[0][0], logs) + "!!!!!")
-        except:
-            pass
+    #     try:
+    #         print("!!!!!" + ConstructReturnJson(error_occurred, predictions[0][0], logs) + "!!!!!")
+    #     except:
+    #         pass
 
 def ConstructReturnJson(error_occurred, prediction, logs: list) -> str:
     

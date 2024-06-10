@@ -91,7 +91,7 @@ public class PredictingEnginePythonImpl : IPredictingEngine, IDisposable
             {
                 _logger.LogError("Error encountered in Python process {exception}", rawConsoleError);
             }
-            tcs.SetResult(BuildModel(process.ExitCode, rawConsoleStandard, rawConsoleError, guid, startTime, storeName));
+            tcs.SetResult(BuildModel(process.ExitCode, rawConsoleStandard, rawConsoleError, guid, startTime, parameterModel.StoreName));
 
             // Clean up.
             process.Dispose();

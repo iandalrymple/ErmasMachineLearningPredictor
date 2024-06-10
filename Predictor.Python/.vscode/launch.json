@@ -11,9 +11,10 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "args": [
-                "C:\\Users\\ianda\\source\\GitHub\\ErmasMachineLearningPredictor\\Ignore\\GBR_UTICA.pkl",
-                "C:\\Users\\ianda\\source\\GitHub\\ErmasMachineLearningPredictor\\Ignore\\COL_TRANSFORMER_UTICA.pkl",
-                "C:\\Users\\ianda\\source\\GitHub\\ErmasMachineLearningPredictor\\Ignore\\PredictorFeatures.csv"
+                "C:\\Users\\ianda\\source\\GitHub\\ErmasMachineLearningPredictor\\Predictor.Python\\main.py",
+                "C:\\Users\\ianda\\source\\GitHub\\ErmasMachineLearningPredictor\\Ignore\\MODELS\\BEST\\GBR_UTICA.pkl",
+                "C:\\Users\\ianda\\source\\GitHub\\ErmasMachineLearningPredictor\\Ignore\\TRANSFORMER\\COL_TRANSFORMER.pkl",
+                "C:\\Users\\ianda\\source\\GitHub\\ErmasMachineLearningPredictor\\Ignore\\FEATURES\\PredictorFeatures.csv"
             ],
         }
     ]
