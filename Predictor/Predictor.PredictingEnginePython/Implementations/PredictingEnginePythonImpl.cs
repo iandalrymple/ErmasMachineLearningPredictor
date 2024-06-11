@@ -96,7 +96,10 @@ public class PredictingEnginePythonImpl : IPredictingEngine, IDisposable
             tcs.SetResult(BuildModel(process.ExitCode, rawConsoleStandard, rawConsoleError, guid, startTime, parameterModel.StoreName));
 
             // Clean up.
-            // TODO - need to nuke out the file with the features 
+            if (File.Exists(parameterModel.FeaturesPath))
+            {
+                File.Delete(parameterModel.FeaturesPath);
+            }
             process.Dispose();
             _processing = false;
             _processDictionary.TryRemove(guid, out _);

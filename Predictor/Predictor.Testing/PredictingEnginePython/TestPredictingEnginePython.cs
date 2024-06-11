@@ -40,6 +40,8 @@ public class TestPredictingEnginePython
         // Act
         var result = await sut.PredictAsync(inputParams);
 
+        // TODO - parse out the results and get the prediction
+
         // Assert
         Assert.NotNull(result);
     }
