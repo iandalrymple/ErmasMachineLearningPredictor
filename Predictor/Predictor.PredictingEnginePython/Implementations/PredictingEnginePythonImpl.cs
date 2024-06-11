@@ -119,7 +119,7 @@ public class PredictingEnginePythonImpl : IPredictingEngine, IDisposable
     {
         try
         {
-            var parsedString = consoleResponse.Between("!!!!!", "!!!!!");
+            var parsedString = consoleResponse.Between("!!!!!", "!!!!!").Replace("\\", "\\\\");
             var parsedModel = JsonConvert.DeserializeObject<PythonProcessResponseModel>(parsedString);
             var returnModel = new PredictingEngineResponseModel
             {
