@@ -6,4 +6,5 @@ public sealed class StatesCombinedResultModel
     public StateCurrentSalesResultModel? StateCurrentSalesResults { get; set; }
     public StateHistoricSalesResultModel? StateHistoricSalesResults { get; set; }
     public StateAggregateResultModel? StateAggregateResults { get; set; }
+    public StatePredictResultModel? StatePredictResults { get; set; }
 }

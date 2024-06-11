@@ -1,8 +1,6 @@
 ﻿// ReSharper disable InconsistentNaming
 // Disabled to match the names being used in the receiving Python application.
 
-using System.Security.Principal;
-
 namespace Predictor.Domain.Models.StateModels;
 
 public sealed class StateAggregateResultModel
