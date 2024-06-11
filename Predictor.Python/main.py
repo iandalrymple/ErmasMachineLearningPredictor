@@ -5,7 +5,7 @@ import sys
 def main():
 
     # Constants 
-    arg_model_index = 2
+    arg_model_index = 1
     arg_trans_index = arg_model_index + 1
     arg_features_index = arg_trans_index + 1
 
@@ -15,9 +15,6 @@ def main():
     predictions = 0.0
 
     try:
-
-        print("we are here")
-        return
 
         # Delete later - keeping around for debugging.
         # raw_frame = pd.read_pickle(R"C:\Users\ianda\source\GitHub\ErmasMachineLearningPredictor\Ignore\MODELS\PROCESSED_FRAME_UTICA.pkl")
@@ -31,6 +28,12 @@ def main():
         model_path = sys.argv[arg_model_index]
         trans_path = sys.argv[arg_trans_index]
         features_path = sys.argv[arg_features_index]
+
+        # Delete later - debugging content.
+        # print(model_path)
+        # print(trans_path)
+        # print(features_path)
+        # return
 
         # Add args to logs.
         logs.append(model_path)
@@ -57,12 +60,12 @@ def main():
         logs.append(message)
         error_occurred = 1
    
-    # finally:
+    finally:
          
-    #     try:
-    #         print("!!!!!" + ConstructReturnJson(error_occurred, predictions[0][0], logs) + "!!!!!")
-    #     except:
-    #         pass
+        try:
+            print("!!!!!" + ConstructReturnJson(error_occurred, predictions[0][0], logs) + "!!!!!")
+        except:
+            pass
 
 def ConstructReturnJson(error_occurred, prediction, logs: list) -> str:
     

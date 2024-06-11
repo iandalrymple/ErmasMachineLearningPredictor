@@ -34,7 +34,8 @@ public class TestPredictingEnginePython
             _config.GetSection("PythonArgs").Get<string[]>()!, 
             _logger);
         var rawFeatureString = Properties.Resources.PredictorFeatures;
-        var inputParams = new PredictingEngineParameterModel{ StoreName = "Utica", Features = rawFeatureString};
+        var fileName = await PredictingEngineParameterModel.CreateTempFile(rawFeatureString);
+        var inputParams = new PredictingEngineParameterModel{ StoreName = "Utica", FeaturesPath = fileName };
 
         // Act
         var result = await sut.PredictAsync(inputParams);

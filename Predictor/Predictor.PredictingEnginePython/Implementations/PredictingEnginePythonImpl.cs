@@ -12,7 +12,8 @@ namespace Predictor.PredictingEnginePython.Implementations;
 
 public class PredictingEnginePythonImpl : IPredictingEngine, IDisposable
 {
-    public static readonly int UticaModelPathIndexInArgs = 0;
+    public static readonly int PythonScriptFileIndex = 0;
+    public static readonly int UticaModelPathIndexInArgs = PythonScriptFileIndex + 1;
     private static readonly int WarrenModelPathIndexInArgs = UticaModelPathIndexInArgs + 1;
     private static readonly int TransformerIndexInArgs = WarrenModelPathIndexInArgs + 1;
 
@@ -61,10 +62,11 @@ public class PredictingEnginePythonImpl : IPredictingEngine, IDisposable
             throw new PredictionModelNotFoundException(nameof(parameterModel.StoreName));
         }
 
+        // NOTE - the script file is the first argument always (main.py)
         var startInfo = new ProcessStartInfo
         {
             FileName = _pythonPath,
-            Arguments = string.Join(" ", modelPathFromArgs, _args[TransformerIndexInArgs], parameterModel.Features),
+            Arguments = string.Join(" ", _args[PythonScriptFileIndex], modelPathFromArgs, _args[TransformerIndexInArgs], parameterModel.FeaturesPath),
             UseShellExecute = false,
             CreateNoWindow = true,
             RedirectStandardOutput = true,
@@ -94,6 +96,7 @@ public class PredictingEnginePythonImpl : IPredictingEngine, IDisposable
             tcs.SetResult(BuildModel(process.ExitCode, rawConsoleStandard, rawConsoleError, guid, startTime, parameterModel.StoreName));
 
             // Clean up.
+            // TODO - need to nuke out the file with the features 
             process.Dispose();
             _processing = false;
             _processDictionary.TryRemove(guid, out _);
