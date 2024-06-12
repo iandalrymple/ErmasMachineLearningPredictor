@@ -44,6 +44,7 @@ public class StatePredict : IFsmState
             };
             return;
         }
+
         // Spin up a temp file to put on the input params.
         var fileName = await PredictingEngineParameterModel.CreateTempFile(rawFeatureString);
         var inputParams = new PredictingEngineParameterModel { StoreName = container.StoreLocation.Name, FeaturesPath = fileName };

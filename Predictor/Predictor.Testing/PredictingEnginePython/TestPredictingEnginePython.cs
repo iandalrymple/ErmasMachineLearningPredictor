@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Predictor.Domain.Models;
 using Predictor.PredictingEnginePython.Implementations;
-using Predictor.RetrieveOwmWeather.Implementations;
 using Predictor.Testing.Supporting;
 
 namespace Predictor.Testing.PredictingEnginePython;
