@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Globalization;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -10,6 +11,7 @@ using Predictor.RetrieveOwmWeather.Implementations;
 using Predictor.Testing.Mocks;
 using Predictor.Testing.Supporting;
 using Predictor.PredictingEnginePython.Implementations;
+using Xunit.Abstractions;
 
 namespace Predictor.Testing.Domain;
 
@@ -17,8 +19,9 @@ public class TestStatePredict
 {
     private readonly IConfiguration _config;
     private readonly ILogger<PredictingEnginePythonImpl> _logger;
+    private readonly ITestOutputHelper _xUnitOutput;
 
-    public TestStatePredict()
+    public TestStatePredict(ITestOutputHelper xUnitOutput)
     {
         _config = ConfigurationSingleton.Instance;
 
@@ -27,18 +30,19 @@ public class TestStatePredict
             .BuildServiceProvider();
         var factory = serviceProvider.GetService<ILoggerFactory>();
         _logger = factory!.CreateLogger<PredictingEnginePythonImpl>();
+        _xUnitOutput = xUnitOutput;
     }
 
     [Theory]
-    [InlineData(2024, 5, 5, "Utica")]
-    [InlineData(2024, 4, 1, "Utica")]
-    [InlineData(2024, 6, 15, "Utica")]
-    [InlineData(2024, 7, 4, "Utica")]
-    [InlineData(2024, 5, 5, "Warren")]
-    [InlineData(2024, 4, 1, "Warren")]
-    [InlineData(2024, 6, 15, "Warren")]
-    [InlineData(2024, 7, 4, "Warren")]
-    public async Task TestExecute_Happy(int year, int month, int day, string storeName)
+    [InlineData(2024, 5, 5, 1500, "Utica")]
+    [InlineData(2024, 4, 1, 1000, "Utica")]
+    [InlineData(2024, 6, 15, 3500, "Utica")]
+    [InlineData(2024, 7, 4, 4000, "Utica")]
+    [InlineData(2024, 5, 5, 1500, "Warren")]
+    [InlineData(2024, 4, 1, 1000, "Warren")]
+    [InlineData(2024, 6, 15, 3500, "Warren")]
+    [InlineData(2024, 7, 4, 4000, "Warren")]
+    public async Task TestExecute_Happy(int year, int month, int day, decimal salesAtThree, string storeName)
     {
         // Arrange
         var rawWeatherString = Properties.Resources.WeatherData_05152024;
@@ -60,7 +64,7 @@ public class TestStatePredict
                 },
                 StateCurrentSalesResults = new StateCurrentSalesResultModel
                 {
-                    SalesAtThree = 2500.0m,
+                    SalesAtThree = salesAtThree,
                     FirstOrderMinutesInDay = 680,
                     LastOrderMinutesInDay = 1350
                 }
@@ -82,8 +86,10 @@ public class TestStatePredict
         await sut.Execute(container);
 
         // Assert
-        Assert.Equal(PredictorFsmStates.Predict + 1, container.CurrentState);
         Assert.NotNull(container.StateResults.StatePredictResults);
+        Assert.NotNull(container.StateResults.StatePredictResults.PredictingEngineModel.ParsedModelFromStandardInput);
+        _xUnitOutput.WriteLine(container.StateResults.StatePredictResults.PredictingEngineModel.ParsedModelFromStandardInput.Prediction.ToString(CultureInfo.InvariantCulture));
+        Assert.Equal(PredictorFsmStates.Predict + 1, container.CurrentState);
     }
 
     [Fact]
