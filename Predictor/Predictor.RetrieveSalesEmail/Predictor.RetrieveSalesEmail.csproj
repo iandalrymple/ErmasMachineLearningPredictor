@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BasicEmailLibrary.Lib" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Predictor.Domain\Predictor.Domain.csproj" />
   </ItemGroup>
 
