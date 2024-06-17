@@ -19,6 +19,7 @@ namespace Predictor.RetrieveSalesEmail.Implementations
             var emails = _email.GetAllUnreadEmail();
 
             // Now we need to fish through them and grab the one from 3 pm. 
+            throw new NotFiniteNumberException();
         }
     }
 }
