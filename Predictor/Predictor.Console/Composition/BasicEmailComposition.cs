@@ -3,9 +3,9 @@ using BasicEmailLibrary.Lib;
 
 namespace Predictor.Console.Composition
 {
-    internal class BasicEmailComposition
+    public class BasicEmailComposition
     {
-        static BasicEmail CreateBasicEmailObject(IConfiguration config)
+        public static BasicEmail CreateBasicEmailObject(IConfiguration config)
         {
             // Build up the params 
             var emailParams = new BasicEmailCtorParamModel
