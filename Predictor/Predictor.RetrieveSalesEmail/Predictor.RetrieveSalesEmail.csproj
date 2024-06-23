@@ -7,11 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BasicEmailClient" Version="1.0.1" />
+    <PackageReference Include="BasicEmailClient" Version="1.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Predictor.Domain\Predictor.Domain.csproj" />
   </ItemGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>Predictor.Testing</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
 
 </Project>

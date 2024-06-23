@@ -121,6 +121,15 @@
   <data name="CheckListModelExample" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>CheckListModelExample.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="EmailOnePm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>EmailOnePm.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="EmailThreePm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>EmailThreePm.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="EmailTwoPm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>EmailTwoPm.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="Holidays2024" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Holidays2024.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

@@ -34,5 +34,18 @@ namespace Predictor.Testing.RetrieveSalesEmail
             Assert.True(result.LastOrderMinutesInDay > 0);
             Assert.True(result.FirstOrderMinutesInDay < result.LastOrderMinutesInDay);
         }
+
+        [Fact]
+        public void TestCsvModelFirstOrder()
+        {
+            // Arrange
+            var rawCsvString = Properties.Resources.EmailThreePm;
+            var csvModel = new Predictor.RetrieveSalesEmail.Models.CsvModel(rawCsvString);
+
+            // Act
+            //var result = Predictor.RetrieveSalesEmail.Implementations.RetrieveSales.FirstOrderOfDay(csv!);
+
+            // Assert
+        }
     }
 }

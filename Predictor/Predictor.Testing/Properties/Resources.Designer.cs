@@ -70,6 +70,63 @@ namespace Predictor.Testing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &quot;10:00&quot;,&quot;10:10&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;0.00&quot;
+        ///&quot;10:10&quot;,&quot;10:20&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;0.00&quot;
+        ///&quot;10:20&quot;,&quot;10:30&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;0.00&quot;
+        ///&quot;10:30&quot;,&quot;10:40&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;0.00&quot;
+        ///&quot;10:40&quot;,&quot;10:50&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;0.00&quot;
+        ///&quot;10:50&quot;,&quot;11:00&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;0.00&quot;
+        ///&quot;11:00&quot;,&quot;11:10&quot;,&quot;1&quot;,&quot;1&quot;,&quot;6.75&quot;,&quot;6.75&quot;
+        ///&quot;11:10&quot;,&quot;11:20&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;6.75&quot;
+        ///&quot;11:20&quot;,&quot;11:30&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;6.75&quot;
+        ///&quot;11:30&quot;,&quot;11:40&quot;,&quot;2&quot;,&quot;2&quot;,&quot;8.30&quot;,&quot;15.05&quot;
+        ///&quot;11:40&quot;,&quot;11:50&....
+        /// </summary>
+        internal static string EmailOnePm {
+            get {
+                return ResourceManager.GetString("EmailOnePm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;10:00&quot;,&quot;10:10&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;0.00&quot;
+        ///&quot;10:10&quot;,&quot;10:20&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;0.00&quot;
+        ///&quot;10:20&quot;,&quot;10:30&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;0.00&quot;
+        ///&quot;10:30&quot;,&quot;10:40&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;0.00&quot;
+        ///&quot;10:40&quot;,&quot;10:50&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;0.00&quot;
+        ///&quot;10:50&quot;,&quot;11:00&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;0.00&quot;
+        ///&quot;11:00&quot;,&quot;11:10&quot;,&quot;1&quot;,&quot;1&quot;,&quot;6.75&quot;,&quot;6.75&quot;
+        ///&quot;11:10&quot;,&quot;11:20&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;6.75&quot;
+        ///&quot;11:20&quot;,&quot;11:30&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;6.75&quot;
+        ///&quot;11:30&quot;,&quot;11:40&quot;,&quot;2&quot;,&quot;2&quot;,&quot;8.30&quot;,&quot;15.05&quot;
+        ///&quot;11:40&quot;,&quot;11:50&....
+        /// </summary>
+        internal static string EmailThreePm {
+            get {
+                return ResourceManager.GetString("EmailThreePm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;10:00&quot;,&quot;10:10&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;0.00&quot;
+        ///&quot;10:10&quot;,&quot;10:20&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;0.00&quot;
+        ///&quot;10:20&quot;,&quot;10:30&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;0.00&quot;
+        ///&quot;10:30&quot;,&quot;10:40&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;0.00&quot;
+        ///&quot;10:40&quot;,&quot;10:50&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;0.00&quot;
+        ///&quot;10:50&quot;,&quot;11:00&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;0.00&quot;
+        ///&quot;11:00&quot;,&quot;11:10&quot;,&quot;1&quot;,&quot;1&quot;,&quot;6.75&quot;,&quot;6.75&quot;
+        ///&quot;11:10&quot;,&quot;11:20&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;6.75&quot;
+        ///&quot;11:20&quot;,&quot;11:30&quot;,&quot;0&quot;,&quot;0&quot;,&quot;0.00&quot;,&quot;6.75&quot;
+        ///&quot;11:30&quot;,&quot;11:40&quot;,&quot;2&quot;,&quot;2&quot;,&quot;8.30&quot;,&quot;15.05&quot;
+        ///&quot;11:40&quot;,&quot;11:50&....
+        /// </summary>
+        internal static string EmailTwoPm {
+            get {
+                return ResourceManager.GetString("EmailTwoPm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [{&quot;date&quot;:&quot;2024-01-01&quot;,&quot;localName&quot;:&quot;New Year&apos;s Day&quot;,&quot;name&quot;:&quot;New Year&apos;s Day&quot;,&quot;countryCode&quot;:&quot;US&quot;,&quot;fixed&quot;:false,&quot;global&quot;:true,&quot;counties&quot;:null,&quot;launchYear&quot;:null,&quot;types&quot;:[&quot;Public&quot;]},{&quot;date&quot;:&quot;2024-01-15&quot;,&quot;localName&quot;:&quot;Martin Luther King, Jr. Day&quot;,&quot;name&quot;:&quot;Martin Luther King, Jr. Day&quot;,&quot;countryCode&quot;:&quot;US&quot;,&quot;fixed&quot;:false,&quot;global&quot;:true,&quot;counties&quot;:null,&quot;launchYear&quot;:null,&quot;types&quot;:[&quot;Public&quot;]},{&quot;date&quot;:&quot;2024-02-19&quot;,&quot;localName&quot;:&quot;Washington&apos;s Birthday&quot;,&quot;name&quot;:&quot;Presidents Day&quot;,&quot;countryCode&quot;:&quot;US&quot;,&quot;fixed&quot;:false,&quot;global&quot;:true,&quot;counti [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Holidays2024 {
