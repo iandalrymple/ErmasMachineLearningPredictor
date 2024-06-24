@@ -15,10 +15,21 @@
                 _rows.Add(new CsvRowModel(row));
             }
 
-            // TODO - need the logic here to get the fields 
+            FirstOrderInMinutesFromStartOfDay = ProcessFirstOrder(_rows);
         }
 
         internal uint FirstOrderInMinutesFromStartOfDay { get; init; }
         internal decimal SalesAtThree { get; init; }
+
+        private static uint ProcessFirstOrder(List<CsvRowModel> rows)
+        {
+            if (rows.Count == 0) throw new ArgumentException("Value cannot be an empty collection.", nameof(rows));
+            var firstOrder = rows
+                .OrderBy(r => r.StartTime)
+                .First(r => r.TotalChecksTimePeriod > 0);
+            var firstOrderTime = firstOrder.StartTime;
+            var totalMinutes = Convert.ToUInt32(firstOrderTime.Hour * 60 + firstOrderTime.Minute);
+            return totalMinutes;
+        }
     }
 }

@@ -16,16 +16,16 @@ internal class CsvRowModel
     internal CsvRowModel(string row)
     {
         var split = row.Split(',');
-        StartTime = split[StartTimeIndex].Trim('"');
-        EndTime = split[EndTimeIndex].Trim('"');
+        StartTime = TimeOnly.Parse(split[StartTimeIndex].Trim('"'));
+        EndTime = TimeOnly.Parse(split[EndTimeIndex].Trim('"'));
         TotalChecksTimePeriod = Convert.ToInt32(split[TotalChecksTimePeriodIndex].Trim('"'));
         // TotalChecksCumulative = Convert.ToInt32(split[TotalChecksCumulativeIndex]);
         TotalSalesTimePeriod = Convert.ToDecimal(split[TotalSalesTimePeriodIndex].Trim('"'));
         TotalSalesCumulative = Convert.ToDecimal(split[TotalSalesCumulativeIndex].Trim('"'));
     }
 
-    internal string StartTime { get; init; }
-    internal string EndTime { get; init; }
+    internal TimeOnly StartTime { get; init; }
+    internal TimeOnly EndTime { get; init; }
     internal int TotalChecksTimePeriod { get; init; }
 
     // public int TotalChecksCumulative { get; init; }

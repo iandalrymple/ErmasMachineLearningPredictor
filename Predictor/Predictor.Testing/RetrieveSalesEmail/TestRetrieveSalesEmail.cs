@@ -13,7 +13,6 @@ namespace Predictor.Testing.RetrieveSalesEmail
     public class TestRetrieveSalesEmail
     {
         private readonly IConfiguration _configuration = ConfigurationSingleton.Instance;
-        private readonly DateTime _dateToRetrieve = DateTime.SpecifyKind(new DateTime(year: 2024, month: 5, day: 5), DateTimeKind.Utc);
 
         [Theory]
         [InlineData(2024, 6, 19, 2.3)]
