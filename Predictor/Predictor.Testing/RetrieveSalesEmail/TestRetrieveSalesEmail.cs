@@ -35,16 +35,17 @@ namespace Predictor.Testing.RetrieveSalesEmail
         }
 
         [Fact]
-        public void TestCsvModelFirstOrder()
+        public void TestCsvModel()
         {
             // Arrange
             var rawCsvString = Properties.Resources.EmailThreePm;
-            var csvModel = new Predictor.RetrieveSalesEmail.Models.CsvModel(rawCsvString);
 
             // Act
-            //var result = Predictor.RetrieveSalesEmail.Implementations.RetrieveSales.FirstOrderOfDay(csv!);
+            var csvModel = new Predictor.RetrieveSalesEmail.Models.CsvModel(rawCsvString);
 
             // Assert
+            Assert.Equal((uint)660, csvModel.FirstOrderInMinutesFromStartOfDay);
+            Assert.Equal(858.53m, csvModel.SalesAtThree, 0);
         }
     }
 }

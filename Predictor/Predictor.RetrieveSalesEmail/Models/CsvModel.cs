@@ -16,6 +16,7 @@
             }
 
             FirstOrderInMinutesFromStartOfDay = ProcessFirstOrder(_rows);
+            SalesAtThree = ProcessSalesAtThree(_rows);
         }
 
         internal uint FirstOrderInMinutesFromStartOfDay { get; init; }
@@ -30,6 +31,14 @@
             var firstOrderTime = firstOrder.StartTime;
             var totalMinutes = Convert.ToUInt32(firstOrderTime.Hour * 60 + firstOrderTime.Minute);
             return totalMinutes;
+        }
+
+        private static decimal ProcessSalesAtThree(List<CsvRowModel> rows)
+        {
+            if (rows.Count == 0) throw new ArgumentException("Value cannot be an empty collection.", nameof(rows));
+            var threeRow = rows.
+                First(r => r.EndTime == new TimeOnly(hour: 15, minute: 0, second: 0));
+            return threeRow.TotalSalesCumulative;
         }
     }
 }
