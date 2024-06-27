@@ -20,17 +20,25 @@ namespace Predictor.RetrieveSalesEmail.Implementations
             var emails = await _email.GetAllUnreadEmail(dateTime, storeName);
 
             // Grab the latest file since we know they just duplicate after the one at three. 
-            var sorted = emails
-                .OrderByDescending(e => e.Date.LocalDateTime);
-                
-            // Check for null.
-            if (!sorted.Any())
+            var lastEmail = emails.MaxBy(e => e.Date.LocalDateTime) ?? throw new NoSalesDataFromEmailException(dateTime, storeName, "No emails returned.");
+
+            // Check to make sure the email has an attachment. 
+            if (!lastEmail.Attachments.Any() || lastEmail.Attachments.First() is null)
             {
-                throw new NoSalesDataFromEmailException(dateTime, storeName, "No emails returned.");   
+                throw new NoSalesDataFromEmailException(dateTime, storeName, "The selected email has no attachment.");
             }
 
+            // Parse the attachment. 
+            var rawAttachmentContents = lastEmail.Attachments.First()!;
+
+
+            
+
             // Now we need to check for the time on the record. 
-            //if(sorted.First().Date.LocalDateTime.Tim)
+            var result = new StateCurrentSalesResultModel
+            {
+                FirstOrderMinutesInDay = lastEmail.
+            };
 
             // Now we need to fish through them and grab the one from 3 pm. 
             throw new NotFiniteNumberException();

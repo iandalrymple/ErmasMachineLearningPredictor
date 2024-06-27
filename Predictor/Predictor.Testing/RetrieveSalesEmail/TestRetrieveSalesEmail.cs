@@ -1,12 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using Predictor.RetrieveSalesApi.Models;
-using Predictor.Testing.Supporting;
-using System;
-using BasicEmailLibrary.Lib;
-using Microsoft.VisualBasic;
 using Predictor.Console.Composition;
-using Predictor.Domain.Extensions;
+using Predictor.Testing.Supporting;
 
 namespace Predictor.Testing.RetrieveSalesEmail
 {
