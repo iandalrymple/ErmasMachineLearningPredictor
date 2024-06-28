@@ -1,23 +1,18 @@
 ﻿using BasicEmailLibrary.Lib;
+using MimeKit;
 using Predictor.Domain.Abstractions;
 using Predictor.Domain.Exceptions;
 using Predictor.Domain.Models.StateModels;
+using Predictor.RetrieveSalesEmail.Models;
 
 namespace Predictor.RetrieveSalesEmail.Implementations
 {
-    public class RetrieveSales : IRetrieveSales<StateCurrentSalesResultModel>
+    public class RetrieveSales(BasicEmail email) : IRetrieveSales<StateCurrentSalesResultModel>
     {
-        private readonly BasicEmail _email;
-
-        public RetrieveSales(BasicEmail email)
-        {
-            _email = email;
-        }
-
         public async Task<StateCurrentSalesResultModel> Retrieve(DateTime dateTime, string storeName)
         {
             // Get all the emails 
-            var emails = await _email.GetAllUnreadEmail(dateTime, storeName);
+            var emails = await email.GetAllUnreadEmail(dateTime, storeName);
 
             // Grab the latest file since we know they just duplicate after the one at three. 
             var lastEmail = emails.MaxBy(e => e.Date.LocalDateTime) ?? throw new NoSalesDataFromEmailException(dateTime, storeName, "No emails returned.");
@@ -29,19 +24,36 @@ namespace Predictor.RetrieveSalesEmail.Implementations
             }
 
             // Parse the attachment. 
-            var rawAttachmentContents = lastEmail.Attachments.First()!;
+            if (lastEmail.Attachments.First() is not MimePart part)
+            {
+                throw new NoSalesDataFromEmailException(dateTime, storeName, "The attachment is not a MimePart.");
+            }
 
+            // Get a new stream queued up 
+            using var memStream = new MemoryStream();
 
-            
+            // Decode the file to a string 
+            await part.Content.DecodeToAsync(memStream);
+
+            // Set the stream to the start 
+            memStream.Seek(0, SeekOrigin.Begin);
+
+            // Read the file into string.
+            var rawCsv = await new StreamReader(memStream).ReadToEndAsync();
+
+            // Parse the csv.
+            var parsedCsv = new CsvModel(rawCsv);
 
             // Now we need to check for the time on the record. 
             var result = new StateCurrentSalesResultModel
             {
-                FirstOrderMinutesInDay = lastEmail.
+                FirstOrderMinutesInDay = parsedCsv.FirstOrderInMinutesFromStartOfDay,
+                LastOrderMinutesInDay = uint.MinValue,
+                SalesAtThree = parsedCsv.SalesAtThree
             };
 
-            // Now we need to fish through them and grab the one from 3 pm. 
-            throw new NotFiniteNumberException();
+            // Bounce back the result.
+            return result;
         }
     }
 }

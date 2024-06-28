@@ -9,9 +9,9 @@ namespace Predictor.Testing.RetrieveSalesEmail
         private readonly IConfiguration _configuration = ConfigurationSingleton.Instance;
 
         [Theory]
-        [InlineData(2024, 6, 19, 2.3)]
-        [InlineData(2024, 6, 20, 5.3)]
-        public async Task TestAggregateModelIntoSales(int year, int month, int day, decimal salesAtThree)
+        [InlineData(2024, 6, 19, 858.53, 660, 0)]
+        [InlineData(2024, 6, 20, 5.3, 250, 0)]
+        public async Task TestRetrieve(int year, int month, int day, decimal salesAtThree, uint firstOrderTime, uint lastOrderTime)
         {
             // Arrange
             var basicEmail = BasicEmailComposition.CreateBasicEmailObject(_configuration);
@@ -22,10 +22,9 @@ namespace Predictor.Testing.RetrieveSalesEmail
             var result = await sut.Retrieve(dateTime, "Utica");
 
             // Assert
-            Assert.Equal(salesAtThree, result.SalesAtThree);
-            Assert.True(result.FirstOrderMinutesInDay > 0);
-            Assert.True(result.LastOrderMinutesInDay > 0);
-            Assert.True(result.FirstOrderMinutesInDay < result.LastOrderMinutesInDay);
+            Assert.Equal(salesAtThree, result.SalesAtThree, 0);
+            Assert.Equal(firstOrderTime, result.FirstOrderMinutesInDay);
+            Assert.Equal(lastOrderTime, result.LastOrderMinutesInDay);
         }
 
         [Fact]
