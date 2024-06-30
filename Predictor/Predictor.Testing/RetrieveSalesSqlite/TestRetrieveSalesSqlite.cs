@@ -14,7 +14,7 @@ public class TestRetrieveSalesSqlite
     public async Task TestRetrieve(int year, int month, int day, decimal salesAtThree, uint firstOrderTime, uint lastOrderTime)
     {
         // Arrange
-        var sut = new Predictor.RetrieveSalesSqlite.Implementations.RetrieveSales("basicEmail");
+        var sut = new Predictor.RetrieveSalesSqlite.Implementations.RetrieveSales(_configuration["ConnectionStringSqlite"]!);
 
         // Act
         var dateTime = new DateTime(year: year, month: month, day: day);

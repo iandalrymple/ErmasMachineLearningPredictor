@@ -1,5 +1,8 @@
-﻿using Predictor.Domain.Abstractions;
+﻿using System.Data.SQLite;
+using Dapper;
+using Predictor.Domain.Abstractions;
 using Predictor.Domain.Models.StateModels;
+using Predictor.RetrieveSalesSqlite.Models;
 
 namespace Predictor.RetrieveSalesSqlite.Implementations
 {
@@ -12,9 +15,11 @@ namespace Predictor.RetrieveSalesSqlite.Implementations
             _connectionString = connectionString;   
         }
 
-        public Task<StateCurrentSalesResultModel?> Retrieve(DateTime dateTime, string storeName)
+        public async Task<StateCurrentSalesResultModel?> Retrieve(DateTime dateTime, string storeName)
         {
-            throw new NotImplementedException();
+            await using var conn = new SQLiteConnection(_connectionString);
+            var result = await conn.QueryAsync<CacheModel>("SELECT * FROM CurrentSales;", new DynamicParameters());
+            return null;
         }
     }
 }
