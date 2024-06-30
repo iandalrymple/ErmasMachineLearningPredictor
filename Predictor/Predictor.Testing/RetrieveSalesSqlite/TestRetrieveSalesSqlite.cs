@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Predictor.Console.Composition;
 using Predictor.Testing.Supporting;
 
 namespace Predictor.Testing.RetrieveSalesSqlite;
@@ -7,6 +6,13 @@ namespace Predictor.Testing.RetrieveSalesSqlite;
 public class TestRetrieveSalesSqlite
 {
     private readonly IConfiguration _configuration = ConfigurationSingleton.Instance;
+
+    public TestRetrieveSalesSqlite()
+    {
+        // Make a copy of the database file.
+        var connString = _configuration["ConnectionStringSqlite"]!;
+
+    }
 
     [Theory]
     [InlineData(2024, 6, 19, 1127.85, 660, 0)]
