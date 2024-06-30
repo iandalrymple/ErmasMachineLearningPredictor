@@ -9,8 +9,8 @@ namespace Predictor.Testing.RetrieveSalesEmail
         private readonly IConfiguration _configuration = ConfigurationSingleton.Instance;
 
         [Theory]
-        [InlineData(2024, 6, 19, 858.53, 660, 0)]
-        [InlineData(2024, 6, 20, 5.3, 250, 0)]
+        [InlineData(2024, 6, 19, 1127.85, 660, 0)]
+        [InlineData(2024, 6, 20, 858.53, 660, 0)]
         public async Task TestRetrieve(int year, int month, int day, decimal salesAtThree, uint firstOrderTime, uint lastOrderTime)
         {
             // Arrange
