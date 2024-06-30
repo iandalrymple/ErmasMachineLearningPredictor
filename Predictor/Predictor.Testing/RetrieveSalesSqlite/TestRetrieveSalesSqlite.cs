@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Runtime.InteropServices.JavaScript;
+using Microsoft.Extensions.Configuration;
 using Predictor.Testing.Supporting;
 
 namespace Predictor.Testing.RetrieveSalesSqlite;
@@ -6,12 +7,18 @@ namespace Predictor.Testing.RetrieveSalesSqlite;
 public class TestRetrieveSalesSqlite
 {
     private readonly IConfiguration _configuration = ConfigurationSingleton.Instance;
+    private readonly string _copiedDbConnString;
 
     public TestRetrieveSalesSqlite()
     {
         // Make a copy of the database file.
         var connString = _configuration["ConnectionStringSqlite"]!;
+        var split = connString.Split(';');
+        var originalFileName = split[0].Split('=')[1];
+        var newFileName = Path.Combine(".", $"{Guid.NewGuid()}.db");
+        File.Copy(originalFileName, newFileName);
 
+        // Need to construct the new connection string
     }
 
     [Theory]

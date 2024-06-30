@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <Content Include="SqliteCache.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
