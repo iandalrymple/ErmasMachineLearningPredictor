@@ -7,7 +7,7 @@ namespace Predictor.Testing.RetrieveSalesSqlite;
 public class TestRetrieveSalesSqlite
 {
     private readonly IConfiguration _configuration = ConfigurationSingleton.Instance;
-    private readonly string _copiedDbConnString;
+    private readonly string _temporaryTestingConnString;
 
     public TestRetrieveSalesSqlite()
     {
@@ -18,7 +18,8 @@ public class TestRetrieveSalesSqlite
         var newFileName = Path.Combine(".", $"{Guid.NewGuid()}.db");
         File.Copy(originalFileName, newFileName);
 
-        // Need to construct the new connection string
+        // Need to construct the new connection string.
+        _temporaryTestingConnString = connString.Replace(originalFileName, newFileName);
     }
 
     [Theory]
@@ -27,7 +28,7 @@ public class TestRetrieveSalesSqlite
     public async Task TestRetrieve(int year, int month, int day, decimal salesAtThree, uint firstOrderTime, uint lastOrderTime)
     {
         // Arrange
-        var sut = new Predictor.RetrieveSalesSqlite.Implementations.RetrieveSales(_configuration["ConnectionStringSqlite"]!);
+        var sut = new Predictor.RetrieveSalesSqlite.Implementations.RetrieveSales(_temporaryTestingConnString);
 
         // Act
         var dateTime = new DateTime(year: year, month: month, day: day);
