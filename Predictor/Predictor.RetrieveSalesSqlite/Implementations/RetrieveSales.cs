@@ -14,25 +14,14 @@ namespace Predictor.RetrieveSalesSqlite.Implementations
         public async Task<StateCurrentSalesResultModel?> Retrieve(DateTime dateTime, string storeName)
         {
             await using var conn = new SQLiteConnection(connectionString);
-            var queryString = "SELECT * FROM CurrentSales;";
-            var queryParameters = new QueryParameterModel
-            {
-                Store = storeName,
-                Date = dateTime.ToString("yyyy-MM-dd")
-            };
-            var dictionary = new Dictionary<string, object>
-            {
-                { "@Store", storeName }
-            };
-            var parameters = new DynamicParameters(dictionary);
-
+            const string queryString = "SELECT * FROM CurrentSales WHERE Store=@Store AND [Date]=@Date;";
             var queryParams = new
             {
                 Store = storeName,
                 Date = dateTime.ToString("yyyy-MM-dd")
             };
            
-            var result = await conn.QueryAsync<CacheModel>(queryString);
+            var result = await conn.QueryAsync<CacheModel>(queryString, queryParams);
             return null;
         }
     }

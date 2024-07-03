@@ -18,23 +18,34 @@ public class TestRetrieveSalesSqlite
     [InlineData(2024, 6, 20, 858.53, 660, 0)]
     public async Task TestRetrieve(int year, int month, int day, decimal salesAtThree, uint firstOrderTime, uint lastOrderTime)
     {
-        // TODO - delete the database 
+        string? tempDatabaseName = null;
+        try
+        {
+            // Arrange
+            var setUpResult = await SetUpDataBase("Utica", new DateTime(year, month, day), 3);
+            tempDatabaseName = setUpResult!.dbFileName;
+            var sut = new Predictor.RetrieveSalesSqlite.Implementations.RetrieveSales(setUpResult.connString!);
 
-        // Arrange
-        var connString = await SetUpDataBase("Utica", new DateTime(year, month, day), 3);
-        var sut = new Predictor.RetrieveSalesSqlite.Implementations.RetrieveSales(connString);
+            // Act
+            var dateTime = new DateTime(year: year, month: month, day: day);
+            var result = await sut.Retrieve(dateTime, "Utica");
 
-        // Act
-        var dateTime = new DateTime(year: year, month: month, day: day);
-        var result = await sut.Retrieve(dateTime, "Utica");
-
-        // Assert
-        Assert.Equal(salesAtThree, result.SalesAtThree, 0);
-        Assert.Equal(firstOrderTime, result.FirstOrderMinutesInDay);
-        Assert.Equal(lastOrderTime, result.LastOrderMinutesInDay);
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(salesAtThree, result.SalesAtThree, 0);
+            Assert.Equal(firstOrderTime, result.FirstOrderMinutesInDay);
+            Assert.Equal(lastOrderTime, result.LastOrderMinutesInDay);
+        }
+        finally
+        {
+            if (!string.IsNullOrEmpty(tempDatabaseName) && File.Exists(tempDatabaseName))
+            {
+                File.Delete(tempDatabaseName);
+            }
+        }
     }
 
-    private async Task<string> SetUpDataBase(string store, DateTime startDate, int recordCount = 1)
+    private async Task<(string? connString, string? dbFileName)> SetUpDataBase(string store, DateTime startDate, int recordCount = 1)
     {
         // Make a copy of the database file.
         var connString = _configuration["ConnectionStringSqlite"]!;
@@ -68,6 +79,6 @@ public class TestRetrieveSalesSqlite
             await Task.Delay(50);
         }
 
-        return tempConnectionString;
+        return (tempConnectionString, newFileName);
     }
 }
