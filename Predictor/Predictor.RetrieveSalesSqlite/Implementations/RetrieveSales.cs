@@ -1,6 +1,7 @@
 ﻿using System.Data.SQLite;
 using Dapper;
 using Predictor.Domain.Abstractions;
+using Predictor.Domain.Exceptions;
 using Predictor.Domain.Models.StateModels;
 using Predictor.RetrieveSalesSqlite.Models;
 
@@ -20,9 +21,26 @@ namespace Predictor.RetrieveSalesSqlite.Implementations
                 Store = storeName,
                 Date = dateTime.ToString("yyyy-MM-dd")
             };
-           
-            var result = await conn.QueryAsync<CacheModel>(queryString, queryParams);
-            return null;
+
+            var result = (await conn.QueryAsync<CacheModel>(queryString, queryParams)).ToList();
+
+            if (result.Count == 0)
+            {
+                return null;
+            }
+            if (result.Count > 1)
+            {
+                throw new MoreThanOneRecordException($"Store => {storeName} / Date => {dateTime}");
+            }
+
+            var firstRecord = result[0];
+            var returnModel = new StateCurrentSalesResultModel
+            {
+                FirstOrderMinutesInDay = Convert.ToUInt32(firstRecord.FirstOrderMinutesIntoDay),
+                LastOrderMinutesInDay = uint.MaxValue,
+                SalesAtThree = firstRecord.SalesThreePm
+            };
+            return returnModel;
         }
     }
 }

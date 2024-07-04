@@ -14,8 +14,8 @@ public class TestRetrieveSalesSqlite
     private readonly IConfiguration _configuration = ConfigurationSingleton.Instance;
 
     [Theory]
-    [InlineData(2024, 6, 19, 1127.85, 660, 0)]
-    [InlineData(2024, 6, 20, 858.53, 660, 0)]
+    [InlineData(2024, 6, 19, 1000.00, 650, uint.MaxValue)]
+    [InlineData(2024, 6, 20, 1000.00, 650, uint.MaxValue)]
     public async Task TestRetrieve(int year, int month, int day, decimal salesAtThree, uint firstOrderTime, uint lastOrderTime)
     {
         string? tempDatabaseName = null;
@@ -69,7 +69,7 @@ public class TestRetrieveSalesSqlite
         {
             var queryParams = new
             {
-                SalesThreePm = Convert.ToDecimal(i * 1000 + i),
+                SalesThreePm = Convert.ToDecimal((i + 1) * 1000 + i),
                 FirstOrderMinutesIntoDay = 650 + i,
                 Store = store,
                 Date = startDate.AddDays(i).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
