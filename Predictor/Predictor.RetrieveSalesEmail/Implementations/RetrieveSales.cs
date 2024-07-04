@@ -7,12 +7,21 @@ using Predictor.RetrieveSalesEmail.Models;
 
 namespace Predictor.RetrieveSalesEmail.Implementations
 {
-    public class RetrieveSales(BasicEmail email) : IRetrieveSales<StateCurrentSalesResultModel>
+    public class RetrieveSales : IRetrieveSales<StateCurrentSalesResultModel>
     {
+        private readonly BasicEmail _email;
+        private readonly IRetrieveSales<StateCurrentSalesResultModel?> _cacheRetriever;
+
+        public RetrieveSales(BasicEmail email, IRetrieveSales<StateCurrentSalesResultModel?> retriever)
+        {
+            _email = email;
+            _cacheRetriever = retriever;
+        }
+
         public async Task<StateCurrentSalesResultModel> Retrieve(DateTime dateTime, string storeName)
         {
             // Get all the emails 
-            var emails = await email.GetAllUnreadEmail(dateTime, storeName);
+            var emails = await _email.GetAllUnreadEmail(dateTime, storeName);
 
             // Grab the latest file since we know they just duplicate after the one at three. 
             var lastEmail = emails.MaxBy(e => e.Date.LocalDateTime) ?? throw new NoSalesDataFromEmailException(dateTime, storeName, "No emails returned.");

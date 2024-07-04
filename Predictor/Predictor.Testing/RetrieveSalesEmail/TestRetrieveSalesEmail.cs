@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Predictor.Console.Composition;
+using Predictor.Testing.Mocks;
 using Predictor.Testing.Supporting;
 
 namespace Predictor.Testing.RetrieveSalesEmail
@@ -15,7 +16,8 @@ namespace Predictor.Testing.RetrieveSalesEmail
         {
             // Arrange
             var basicEmail = BasicEmailComposition.CreateBasicEmailObject(_configuration);
-            var sut = new Predictor.RetrieveSalesEmail.Implementations.RetrieveSales(basicEmail);
+            var mockCacheRetriever = new RetrieveSalesAlwaysNullMock();
+            var sut = new Predictor.RetrieveSalesEmail.Implementations.RetrieveSales(basicEmail, mockCacheRetriever);
 
             // Act
             var dateTime = new DateTime(year: year, month: month, day: day);
