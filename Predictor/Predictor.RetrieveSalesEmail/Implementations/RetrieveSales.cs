@@ -1,4 +1,5 @@
 ﻿using BasicEmailLibrary.Lib;
+using Microsoft.Extensions.Logging;
 using MimeKit;
 using Predictor.Domain.Abstractions;
 using Predictor.Domain.Exceptions;
@@ -11,15 +12,27 @@ namespace Predictor.RetrieveSalesEmail.Implementations
     {
         private readonly BasicEmail _email;
         private readonly IRetrieveSales<StateCurrentSalesResultModel?> _cacheRetriever;
+        private readonly ILogger<RetrieveSales> _logger;
 
-        public RetrieveSales(BasicEmail email, IRetrieveSales<StateCurrentSalesResultModel?> retriever)
+        public RetrieveSales(
+            BasicEmail email, 
+            IRetrieveSales<StateCurrentSalesResultModel?> retriever, 
+            ILogger<RetrieveSales> logger)
         {
             _email = email;
             _cacheRetriever = retriever;
+            _logger = logger;
         }
 
         public async Task<StateCurrentSalesResultModel> Retrieve(DateTime dateTime, string storeName)
         {
+            // First just check if it's available in the cache. 
+            var cacheCheck = await CheckCache(dateTime, storeName);
+            if (cacheCheck is not null)
+            {
+                return cacheCheck;
+            }
+
             // Get all the emails 
             var emails = await _email.GetAllUnreadEmail(dateTime, storeName);
 
@@ -63,6 +76,22 @@ namespace Predictor.RetrieveSalesEmail.Implementations
 
             // Bounce back the result.
             return result;
+        }
+
+        private async Task<StateCurrentSalesResultModel?> CheckCache(DateTime dateTime, string storeName)
+        {
+            try
+            {
+                var cacheResult = await _cacheRetriever.Retrieve(dateTime, storeName);
+                return cacheResult;
+            }
+            catch (Exception ex)
+            {
+                // Intentionally logging and NOT throwing.
+                _logger.LogWarning("Error checking cache with {exception}", ex);
+            }
+
+            return null;
         }
     }
 }

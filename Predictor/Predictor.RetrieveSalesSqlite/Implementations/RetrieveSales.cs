@@ -9,7 +9,7 @@ namespace Predictor.RetrieveSalesSqlite.Implementations
 {
     public class RetrieveSales(string connectionString) : IRetrieveSales<StateCurrentSalesResultModel?>
     {
-        // Note:    May want to reuse the connection. At this time its not required since the
+        // Note:    May want to reuse the connection. At this time it's not required since the
         //          hit rate will be very low. So we are leaving as is.
 
         public async Task<StateCurrentSalesResultModel?> Retrieve(DateTime dateTime, string storeName)
