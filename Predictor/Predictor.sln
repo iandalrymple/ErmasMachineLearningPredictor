@@ -28,6 +28,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Predictor.RetrieveSalesEmai
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor.RetrieveSalesSqlite", "Predictor.RetrieveSalesSqlite\Predictor.RetrieveSalesSqlite.csproj", "{51587FD3-64C9-4880-A7E5-5AE6BC8CFED3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor.InsertSalesSqlite", "Predictor.InsertSalesSqlite\Predictor.InsertSalesSqlite.csproj", "{82A7D0B6-7310-43BF-AD31-78839F349E9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,10 @@ Global
 		{51587FD3-64C9-4880-A7E5-5AE6BC8CFED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51587FD3-64C9-4880-A7E5-5AE6BC8CFED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51587FD3-64C9-4880-A7E5-5AE6BC8CFED3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82A7D0B6-7310-43BF-AD31-78839F349E9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82A7D0B6-7310-43BF-AD31-78839F349E9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82A7D0B6-7310-43BF-AD31-78839F349E9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82A7D0B6-7310-43BF-AD31-78839F349E9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

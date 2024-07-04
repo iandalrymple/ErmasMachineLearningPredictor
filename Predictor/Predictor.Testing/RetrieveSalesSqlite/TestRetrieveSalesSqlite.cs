@@ -1,11 +1,8 @@
-﻿using System;
-using System.Data.SQLite;
-using System.Globalization;
-using System.Runtime.InteropServices.JavaScript;
-using System.Security.Cryptography.X509Certificates;
-using Dapper;
+﻿using Dapper;
 using Microsoft.Extensions.Configuration;
 using Predictor.Testing.Supporting;
+using System.Data.SQLite;
+using System.Globalization;
 
 namespace Predictor.Testing.RetrieveSalesSqlite;
 
@@ -22,7 +19,7 @@ public class TestRetrieveSalesSqlite
         try
         {
             // Arrange
-            var setUpResult = await SetUpDataBase("Utica", new DateTime(year, month, day), 3);
+            var setUpResult = await SetUpDataBase("Utica", new DateTime(year, month, day), _configuration, 3);
             tempDatabaseName = setUpResult!.dbFileName;
             var sut = new Predictor.RetrieveSalesSqlite.Implementations.RetrieveSales(setUpResult.connString!);
 
@@ -45,10 +42,10 @@ public class TestRetrieveSalesSqlite
         }
     }
 
-    private async Task<(string? connString, string? dbFileName)> SetUpDataBase(string store, DateTime startDate, int recordCount = 1)
+    internal static async Task<(string? connString, string? dbFileName)> SetUpDataBase(string store, DateTime startDate, IConfiguration config, int recordCount = 1)
     {
         // Make a copy of the database file.
-        var connString = _configuration["ConnectionStringSqlite"]!;
+        var connString = config["ConnectionStringSqlite"]!;
         var split = connString.Split(';');
         var originalFileName = split[0].Split('=')[1];
         var newFileName = Path.Combine(".", $"CACHE_SQLITE_DB_{Guid.NewGuid()}.db");

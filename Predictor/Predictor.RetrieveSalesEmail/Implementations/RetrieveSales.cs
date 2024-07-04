@@ -74,16 +74,18 @@ namespace Predictor.RetrieveSalesEmail.Implementations
                 SalesAtThree = parsedCsv.SalesAtThree
             };
 
+            // Insert into the cache. 
+
             // Bounce back the result.
             return result;
         }
 
         private async Task<StateCurrentSalesResultModel?> CheckCache(DateTime dateTime, string storeName)
         {
+            StateCurrentSalesResultModel? cacheResult = null;
             try
             {
-                var cacheResult = await _cacheRetriever.Retrieve(dateTime, storeName);
-                return cacheResult;
+                cacheResult = await _cacheRetriever.Retrieve(dateTime, storeName);
             }
             catch (Exception ex)
             {
@@ -91,7 +93,16 @@ namespace Predictor.RetrieveSalesEmail.Implementations
                 _logger.LogWarning("Error checking cache with {exception}", ex);
             }
 
-            return null;
+            if (cacheResult is not null)
+            {
+                _logger.LogInformation("Cache HIT for {dateTime} and {storeName}.", dateTime, storeName);
+            }
+            else
+            {
+                _logger.LogInformation("Cache MISS for {dateTime} and {storeName}.", dateTime, storeName);
+            }
+
+            return cacheResult;
         }
     }
 }

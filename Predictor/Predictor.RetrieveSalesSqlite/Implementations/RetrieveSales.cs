@@ -3,7 +3,7 @@ using Dapper;
 using Predictor.Domain.Abstractions;
 using Predictor.Domain.Exceptions;
 using Predictor.Domain.Models.StateModels;
-using Predictor.RetrieveSalesSqlite.Models;
+using Predictor.Domain.Models;
 
 namespace Predictor.RetrieveSalesSqlite.Implementations
 {
