@@ -7,14 +7,20 @@ using Predictor.Domain.Models;
 
 namespace Predictor.RetrieveSalesSqlite.Implementations
 {
-    public class RetrieveSales(string connectionString) : IRetrieveSales<StateCurrentSalesResultModel?>
+    public class RetrieveSales : IRetrieveSales<StateCurrentSalesResultModel?>
     {
-        // Note:    May want to reuse the connection. At this time it's not required since the
-        //          hit rate will be very low. So we are leaving as is.
+        private readonly string _connectionString;
+        private readonly SQLiteConnection _connection;
+
+        public RetrieveSales(string connectionString)
+        {
+            _connectionString = connectionString;
+            _connection = new SQLiteConnection(connectionString);
+        }
 
         public async Task<StateCurrentSalesResultModel?> Retrieve(DateTime dateTime, string storeName)
         {
-            await using var conn = new SQLiteConnection(connectionString);
+            await _connection.OpenAsync();
             const string queryString = "SELECT * FROM CurrentSales WHERE Store=@Store AND [Date]=@Date;";
             var queryParams = new
             {
@@ -22,7 +28,8 @@ namespace Predictor.RetrieveSalesSqlite.Implementations
                 Date = dateTime.ToString("yyyy-MM-dd")
             };
 
-            var result = (await conn.QueryAsync<CacheModel>(queryString, queryParams)).ToList();
+            var result = (await _connection.QueryAsync<CacheModel>(queryString, queryParams)).ToList();
+            await _connection.CloseAsync();
 
             if (result.Count == 0)
             {
