@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Predictor.Console.Composition;
+using Predictor.InsertSalesSqlite.Implementations;
+using Predictor.RetrieveSalesSqlite.Implementations;
 using Predictor.Testing.Mocks;
 using Predictor.Testing.RetrieveSalesSqlite;
 using Predictor.Testing.Supporting;
@@ -23,23 +25,38 @@ namespace Predictor.Testing.RetrieveSalesEmail
         }
 
         [Theory]
-        [InlineData(2024, 6, 19, 1127.85, 660, 0)]
-        [InlineData(2024, 6, 20, 858.53, 660, 0)]
-        public async Task TestRetrieve_NoCacheHit(int year, int month, int day, decimal salesAtThree, uint firstOrderTime, uint lastOrderTime)
+        [InlineData("Utica",2024, 6, 19, 1127.85, 660, 0)]
+        [InlineData("Utica",2024, 6, 20, 858.53, 660, 0)]
+        public async Task TestRetrieve_NoCacheHit(string store, int year, int month, int day, decimal salesAtThree, uint firstOrderTime, uint lastOrderTime)
         {
-            // Arrange
-            var basicEmail = BasicEmailComposition.CreateBasicEmailObject(_configuration);
-            var mockCacheRetriever = new RetrieveSalesAlwaysNullMock();
-            var sut = new Predictor.RetrieveSalesEmail.Implementations.RetrieveSales(basicEmail, mockCacheRetriever, _logger);
+            string? tempDatabaseName = null;
 
-            // Act
-            var dateTime = new DateTime(year: year, month: month, day: day);
-            var result = await sut.Retrieve(dateTime, "Utica");
+            try
+            {
+                // Arrange
+                var basicEmail = BasicEmailComposition.CreateBasicEmailObject(_configuration);
+                var (connString, dbName) = SqliteHelpers.SetUpDataBaseNoRecords(_configuration);
+                tempDatabaseName = dbName;
+                var cacheRetriever = new RetrieveSales(connString!);
+                var cacheInserter = new InsertSales(connString!);
+                var sut = new Predictor.RetrieveSalesEmail.Implementations.RetrieveSales(basicEmail, cacheRetriever, cacheInserter, _logger);
 
-            // Assert
-            Assert.Equal(salesAtThree, result.SalesAtThree, 0);
-            Assert.Equal(firstOrderTime, result.FirstOrderMinutesInDay);
-            Assert.Equal(lastOrderTime, result.LastOrderMinutesInDay);
+                // Act
+                var dateTime = new DateTime(year: year, month: month, day: day);
+                var result = await sut.Retrieve(dateTime, store);
+
+                // Assert
+                Assert.Equal(salesAtThree, result.SalesAtThree, 0);
+                Assert.Equal(firstOrderTime, result.FirstOrderMinutesInDay);
+                Assert.Equal(lastOrderTime, result.LastOrderMinutesInDay);
+            }
+            finally
+            {
+                if (!string.IsNullOrEmpty(tempDatabaseName) && File.Exists(tempDatabaseName))
+                {
+                    File.Delete(tempDatabaseName);
+                }
+            }
         }
 
         [Theory]
@@ -47,20 +64,34 @@ namespace Predictor.Testing.RetrieveSalesEmail
         [InlineData("Utica",2024, 6, 20, 1000.00, 650, uint.MaxValue)]
         public async Task TestRetrieve_WithCacheHit(string store, int year, int month, int day, decimal salesAtThree, uint firstOrderTime, uint lastOrderTime)
         {
-            // Arrange
-            var dateTime = new DateTime(year: year, month: month, day: day);
-            var (connString, _) = await TestRetrieveSalesSqlite.SetUpDataBase(store, dateTime, _configuration, 3);
-            var basicEmail = BasicEmailComposition.CreateBasicEmailObject(_configuration);
-            var cacheRetriever = new Predictor.RetrieveSalesSqlite.Implementations.RetrieveSales(connString!);
-            var sut = new Predictor.RetrieveSalesEmail.Implementations.RetrieveSales(basicEmail, cacheRetriever, _logger);
+            string? tempDatabaseName = null;
 
-            // Act
-            var result = await sut.Retrieve(dateTime, store);
+            try
+            {
+                // Arrange
+                var dateTime = new DateTime(year: year, month: month, day: day);
+                var (connString, dbName) = await SqliteHelpers.SetUpDataBaseWithRecords(store, dateTime, _configuration, 3);
+                tempDatabaseName = dbName;
+                var basicEmail = BasicEmailComposition.CreateBasicEmailObject(_configuration);
+                var cacheRetriever = new RetrieveSales(connString!);
+                var cacheInserter = new InsertSales(connString!);
+                var sut = new Predictor.RetrieveSalesEmail.Implementations.RetrieveSales(basicEmail, cacheRetriever, cacheInserter, _logger);
 
-            // Assert
-            Assert.Equal(salesAtThree, result.SalesAtThree, 0);
-            Assert.Equal(firstOrderTime, result.FirstOrderMinutesInDay);
-            Assert.Equal(lastOrderTime, result.LastOrderMinutesInDay);
+                // Act
+                var result = await sut.Retrieve(dateTime, store);
+
+                // Assert
+                Assert.Equal(salesAtThree, result.SalesAtThree, 0);
+                Assert.Equal(firstOrderTime, result.FirstOrderMinutesInDay);
+                Assert.Equal(lastOrderTime, result.LastOrderMinutesInDay);
+            }
+            finally
+            {
+                if (!string.IsNullOrEmpty(tempDatabaseName) && File.Exists(tempDatabaseName))
+                {
+                    File.Delete(tempDatabaseName);
+                }
+            }
         }
 
         [Fact]

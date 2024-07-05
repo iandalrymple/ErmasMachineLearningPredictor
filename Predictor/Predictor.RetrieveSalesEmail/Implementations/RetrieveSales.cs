@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using MimeKit;
 using Predictor.Domain.Abstractions;
 using Predictor.Domain.Exceptions;
+using Predictor.Domain.Models;
 using Predictor.Domain.Models.StateModels;
 using Predictor.RetrieveSalesEmail.Models;
 
@@ -12,15 +13,18 @@ namespace Predictor.RetrieveSalesEmail.Implementations
     {
         private readonly BasicEmail _email;
         private readonly IRetrieveSales<StateCurrentSalesResultModel?> _cacheRetriever;
+        private readonly ISalesInsert<CacheModel> _cacheInserter;
         private readonly ILogger<RetrieveSales> _logger;
 
         public RetrieveSales(
             BasicEmail email, 
-            IRetrieveSales<StateCurrentSalesResultModel?> retriever, 
+            IRetrieveSales<StateCurrentSalesResultModel?> retriever,
+            ISalesInsert<CacheModel> cacheInserter,
             ILogger<RetrieveSales> logger)
         {
             _email = email;
             _cacheRetriever = retriever;
+            _cacheInserter = cacheInserter;
             _logger = logger;
         }
 
@@ -75,6 +79,22 @@ namespace Predictor.RetrieveSalesEmail.Implementations
             };
 
             // Insert into the cache. 
+            var insertResult = await _cacheInserter.Insert(new CacheModel
+            {
+                SalesThreePm = result.SalesAtThree,
+                FirstOrderMinutesIntoDay = Convert.ToInt32(result.FirstOrderMinutesInDay),
+                Store = storeName,
+                Date = dateTime.ToString("yyyy-MM-dd")
+            });
+
+            if (insertResult)
+            {
+                _logger.LogInformation("Inserted into cache on {date} for {store}.", dateTime, storeName);
+            }
+            else
+            {
+                _logger.LogWarning("Failed to insert into cache on {date} for {store}.", dateTime, storeName);
+            }
 
             // Bounce back the result.
             return result;

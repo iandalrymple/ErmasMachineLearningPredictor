@@ -1,0 +1,57 @@
+﻿using Dapper;
+using Microsoft.Extensions.Configuration;
+using System.Data.SQLite;
+using System.Globalization;
+
+namespace Predictor.Testing.Supporting
+{
+    internal class SqliteHelpers
+    {
+        internal static async Task<(string? connString, string? dbFileName)> SetUpDataBaseWithRecords(string store, DateTime startDate, IConfiguration config, int recordCount = 1)
+        {
+            // Make a copy of the database file.
+            var (connString, dbFileName) = SetUpDataBaseNoRecords(config);
+
+            // Connect to the new database.
+            await using var conn = new SQLiteConnection(connString);
+
+            // Clean first.
+            await conn.ExecuteAsync("DELETE FROM CurrentSales;");
+
+            // Now shove in new data.
+            const string queryString = "INSERT INTO CurrentSales " +
+                                       "(SalesThreePm, FirstOrderMinutesIntoDay, Store, Date, InsertedUtcTimeStamp) " +
+                                       "VALUES (@SalesThreePm, @FirstOrderMinutesIntoDay, @Store, @Date, @InsertedUtcTimeStamp)";
+            for (var i = 0; i < recordCount; i++)
+            {
+                var queryParams = new
+                {
+                    SalesThreePm = Convert.ToDecimal((i + 1) * 1000 + i),
+                    FirstOrderMinutesIntoDay = 650 + i,
+                    Store = store,
+                    Date = startDate.AddDays(i).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
+                    InsertedUtcTimeStamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture)
+                };
+                await conn.ExecuteAsync(queryString, queryParams);
+                await Task.Delay(50);
+            }
+
+            return (connString, dbFileName);
+        }
+
+        internal static (string? connString, string? dbFileName) SetUpDataBaseNoRecords(IConfiguration config)
+        {
+            // Make a copy of the database file.
+            var connString = config["ConnectionStringSqlite"]!;
+            var split = connString.Split(';');
+            var originalFileName = split[0].Split('=')[1];
+            var newFileName = Path.Combine(".", $"CACHE_SQLITE_DB_{Guid.NewGuid()}.db");
+            File.Copy(originalFileName, newFileName);
+
+            // Connect to the new database.
+            var tempConnectionString = connString.Replace(originalFileName, newFileName);
+
+            return (tempConnectionString, newFileName);
+        }
+    }
+}

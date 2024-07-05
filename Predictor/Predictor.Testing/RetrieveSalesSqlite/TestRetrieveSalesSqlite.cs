@@ -19,7 +19,7 @@ public class TestRetrieveSalesSqlite
         try
         {
             // Arrange
-            var setUpResult = await SetUpDataBase("Utica", new DateTime(year, month, day), _configuration, 3);
+            var setUpResult = await SqliteHelpers.SetUpDataBaseWithRecords("Utica", new DateTime(year, month, day), _configuration, 3);
             tempDatabaseName = setUpResult!.dbFileName;
             var sut = new Predictor.RetrieveSalesSqlite.Implementations.RetrieveSales(setUpResult.connString!);
 
@@ -40,42 +40,5 @@ public class TestRetrieveSalesSqlite
                 File.Delete(tempDatabaseName);
             }
         }
-    }
-
-    internal static async Task<(string? connString, string? dbFileName)> SetUpDataBase(string store, DateTime startDate, IConfiguration config, int recordCount = 1)
-    {
-        // Make a copy of the database file.
-        var connString = config["ConnectionStringSqlite"]!;
-        var split = connString.Split(';');
-        var originalFileName = split[0].Split('=')[1];
-        var newFileName = Path.Combine(".", $"CACHE_SQLITE_DB_{Guid.NewGuid()}.db");
-        File.Copy(originalFileName, newFileName);
-        
-        // Connect to the new database.
-        var tempConnectionString = connString.Replace(originalFileName, newFileName);
-        await using var conn = new SQLiteConnection(tempConnectionString);
-
-        // Clean first.
-        await conn.ExecuteAsync("DELETE FROM CurrentSales;");
-
-        // Now shove in new data.
-        const string queryString = "INSERT INTO CurrentSales " +
-                                   "(SalesThreePm, FirstOrderMinutesIntoDay, Store, Date, InsertedUtcTimeStamp) " +
-                                   "VALUES (@SalesThreePm, @FirstOrderMinutesIntoDay, @Store, @Date, @InsertedUtcTimeStamp)";
-        for (var i = 0; i < recordCount; i++)
-        {
-            var queryParams = new
-            {
-                SalesThreePm = Convert.ToDecimal((i + 1) * 1000 + i),
-                FirstOrderMinutesIntoDay = 650 + i,
-                Store = store,
-                Date = startDate.AddDays(i).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
-                InsertedUtcTimeStamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture)
-            };
-            await conn.ExecuteAsync(queryString, queryParams);
-            await Task.Delay(50);
-        }
-
-        return (tempConnectionString, newFileName);
     }
 }

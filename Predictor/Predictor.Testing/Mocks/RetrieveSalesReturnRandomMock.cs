@@ -3,7 +3,7 @@ using Predictor.Domain.Models.StateModels;
 
 namespace Predictor.Testing.Mocks;
 
-public class RetrieveSalesMock : IRetrieveSales<decimal>
+public class RetrieveSalesReturnRandomMock : IRetrieveSales<decimal>
 {
     public Task<decimal> Retrieve(DateTime dateTime, string storeName)
     {
