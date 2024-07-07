@@ -26,9 +26,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Predictor.PredictingEngineP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Predictor.RetrieveSalesEmail", "Predictor.RetrieveSalesEmail\Predictor.RetrieveSalesEmail.csproj", "{C4AEA666-59DE-444D-A8FD-2DA74512A795}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor.RetrieveSalesSqlite", "Predictor.RetrieveSalesSqlite\Predictor.RetrieveSalesSqlite.csproj", "{51587FD3-64C9-4880-A7E5-5AE6BC8CFED3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Predictor.RetrieveSalesSqlite", "Predictor.RetrieveSalesSqlite\Predictor.RetrieveSalesSqlite.csproj", "{51587FD3-64C9-4880-A7E5-5AE6BC8CFED3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor.InsertSalesSqlite", "Predictor.InsertSalesSqlite\Predictor.InsertSalesSqlite.csproj", "{82A7D0B6-7310-43BF-AD31-78839F349E9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Predictor.InsertSalesSqlite", "Predictor.InsertSalesSqlite\Predictor.InsertSalesSqlite.csproj", "{82A7D0B6-7310-43BF-AD31-78839F349E9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

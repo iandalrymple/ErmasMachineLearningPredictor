@@ -35,6 +35,7 @@ namespace Predictor.Testing.RetrieveSalesEmail
             {
                 // Arrange
                 var basicEmail = BasicEmailComposition.CreateBasicEmailObject(_configuration);
+                await basicEmail.MarkAllEmailsToUnread();
                 var (connString, dbName) = SqliteHelpers.SetUpDataBaseNoRecords(_configuration);
                 tempDatabaseName = dbName;
                 var cacheRetriever = new RetrieveSales(connString!);
