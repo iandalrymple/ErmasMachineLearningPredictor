@@ -1,19 +1,19 @@
-﻿using System.Collections.Concurrent;
+﻿using BasicEmailLibrary.Lib;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
-using Serilog;
-
+using Microsoft.Extensions.Logging;
 using Predictor.Console.Composition;
-
 using Predictor.Domain.Abstractions;
 using Predictor.Domain.Implementations;
-using Predictor.Domain.System;
 using Predictor.Domain.Implementations.States;
 using Predictor.Domain.Models;
 using Predictor.Domain.Models.StateModels;
+using Predictor.Domain.System;
+using Predictor.InsertSalesSqlite.Implementations;
 using Predictor.RetrieveOwmWeather.Implementations;
+using Serilog;
+using System.Collections.Concurrent;
 
 
 // NOTE - DI model fashioned from here
@@ -67,16 +67,37 @@ try
     var host = Host.CreateDefaultBuilder()
         .ConfigureServices((context, services) =>
         {
+            // Create a transient for the basic email library. 
+            services.AddTransient<BasicEmail>(x => BasicEmailComposition.CreateBasicEmailObject(config));
+
             // Order matters here with the decorate pattern. This is using Scrutor.
             services.AddSingleton<IRetrieveWeather>(x => new RetrieveWeather(config["BaseWeatherUri"]!, config["AppId"]!));
             services.Decorate<IRetrieveWeather, LoggingDecoratorRetrieveWeather>();
 
             services.AddSingleton(x =>
             {
-                var retriever = x.GetRequiredService<IRetrieveWeather>();
-                var stateWeather = new StateWeather(retriever);
+                // Declare at top since we want to add as we go.
                 var stateDictionary = new ConcurrentDictionary<PredictorFsmStates, IFsmState>();
+
+                // Weather 
+                var weatherRetriever = x.GetRequiredService<IRetrieveWeather>();
+                var stateWeather = new StateWeather(weatherRetriever);
                 stateDictionary.TryAdd(stateWeather.State, stateWeather);
+
+                // CurrentSalesRetrieve
+                var cacheRetriever = new Predictor.RetrieveSalesSqlite.Implementations.RetrieveSales(config["ConnectionStringSqlite"]!);
+                var cacheInserter = new InsertSales(config["ConnectionStringSqlite"]!);
+                var emailRetriever = new Predictor.RetrieveSalesEmail.Implementations.RetrieveSales(
+                    x.GetRequiredService<BasicEmail>(), 
+                    cacheRetriever, 
+                    cacheInserter, 
+                    x.GetRequiredService<ILogger<Predictor.RetrieveSalesEmail.Implementations.RetrieveSales>>());
+                var stateCurrentSalesRetriever = new StateRetrieveCurrentSales(emailRetriever);
+                stateDictionary.TryAdd(stateCurrentSalesRetriever.State, stateCurrentSalesRetriever);
+
+                // Left off here 
+
+                // Bounce back the collection of states.
                 return stateDictionary;
             });
 
