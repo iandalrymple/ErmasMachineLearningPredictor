@@ -73,28 +73,26 @@ try
             // Create a transient for the basic email library. 
             services.AddTransient<BasicEmail>(x => BasicEmailComposition.CreateBasicEmailObject(config));
 
-            // Set up the weather retriever. Need to be able to bypass for integration
-            // testing, so we do not use up API hits on OWM API usage.
-            if (useMockWeather)
-            {
-                Log.Logger.Error("Using the mock weather retriever.");
-                services.AddSingleton<IRetrieveWeather>(x => new RetrieveWeatherMock());
-            }
-            else
-            {
-                // Order matters here with the decorate pattern. This is using Scrutor.
-                services.AddSingleton<IRetrieveWeather>(x =>
-                    new RetrieveWeather(config["BaseWeatherUri"]!, config["AppId"]!));
-                services.Decorate<IRetrieveWeather, LoggingDecoratorRetrieveWeather>();
-            }
-
+            // Set up the main state orchestrator with the dictionary of states.
             services.AddSingleton(x =>
             {
                 // Declare at top since we want to add as we go.
                 var stateDictionary = new ConcurrentDictionary<PredictorFsmStates, IFsmState>();
 
                 // Weather 
-                var weatherRetriever = x.GetRequiredService<IRetrieveWeather>();
+                // Set up the weather retriever. Need to be able to bypass for integration
+                // testing, so we do not use up API hits on OWM API usage.
+                IRetrieveWeather weatherRetriever;
+                if (useMockWeather)
+                {
+                    Log.Logger.Error("Using the mock weather retriever.");
+                    weatherRetriever = new RetrieveWeatherMock();
+                }
+                else
+                {
+                    var innerWeatherRetriever = new RetrieveWeather(config["BaseWeatherUri"]!, config["AppId"]!);
+                    weatherRetriever = new LoggingDecoratorRetrieveWeather(innerWeatherRetriever, x.GetRequiredService<ILogger<LoggingDecoratorRetrieveWeather>>());
+                }
                 var stateWeather = new StateWeather(weatherRetriever);
                 stateDictionary.TryAdd(stateWeather.State, stateWeather);
 
@@ -109,7 +107,12 @@ try
                 var stateCurrentSalesRetriever = new StateRetrieveCurrentSales(emailRetriever);
                 stateDictionary.TryAdd(stateCurrentSalesRetriever.State, stateCurrentSalesRetriever);
 
-                // Left off here 
+                // HistoricSalesRetrieve
+
+
+                // Aggregate
+
+                // Predict
 
                 // Bounce back the collection of states.
                 return stateDictionary;

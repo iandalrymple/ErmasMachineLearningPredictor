@@ -1,6 +1,5 @@
 ﻿using BasicEmailLibrary.Lib;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualBasic;
 using MimeKit;
 using Predictor.Domain.Abstractions;
 using Predictor.Domain.Exceptions;

@@ -20,7 +20,7 @@ public class LoggingDecoratorRetrieveWeather : IRetrieveWeather
         try
         {
             // This is a trace log on purpose, so we can turn up the logging verbosity via seq to get this when a problem occurs.
-            _logger.LogTrace("Retrieving the following Datetime: {Dt} Latitude: {Lat} Longitude {Lon}", inParams.DateTime, inParams.Latitude, inParams.Longitude);
+            _logger.LogInformation("Retrieving the following Datetime: {Dt} Latitude: {Lat} Longitude {Lon}", inParams.DateTime, inParams.Latitude, inParams.Longitude);
 
             return await _decoratedRetrieveWeather.Retrieve(inParams);
         }
