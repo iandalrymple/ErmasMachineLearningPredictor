@@ -1,8 +1,5 @@
-﻿using Dapper;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Predictor.Testing.Supporting;
-using System.Data.SQLite;
-using System.Globalization;
 
 namespace Predictor.Testing.RetrieveSalesSqlite;
 
