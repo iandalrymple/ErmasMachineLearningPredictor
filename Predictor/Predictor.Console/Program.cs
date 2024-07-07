@@ -19,6 +19,9 @@ using System.Collections.Concurrent;
 // NOTE - DI model fashioned from here
 // https://www.youtube.com/watch?v=GAOCe-2nXqc
 
+// Constants 
+const bool useMockWeather = true;
+
 // Args passed in. 
 const int storeArgIndex = 0;
 const int dateArgIndex = 1;
@@ -70,9 +73,20 @@ try
             // Create a transient for the basic email library. 
             services.AddTransient<BasicEmail>(x => BasicEmailComposition.CreateBasicEmailObject(config));
 
-            // Order matters here with the decorate pattern. This is using Scrutor.
-            services.AddSingleton<IRetrieveWeather>(x => new RetrieveWeather(config["BaseWeatherUri"]!, config["AppId"]!));
-            services.Decorate<IRetrieveWeather, LoggingDecoratorRetrieveWeather>();
+            // Set up the weather retriever. Need to be able to bypass for integration
+            // testing, so we do not use up API hits on OWM API usage.
+            if (useMockWeather)
+            {
+                Log.Logger.Error("Using the mock weather retriever.");
+                services.AddSingleton<IRetrieveWeather>(x => new RetrieveWeatherMock());
+            }
+            else
+            {
+                // Order matters here with the decorate pattern. This is using Scrutor.
+                services.AddSingleton<IRetrieveWeather>(x =>
+                    new RetrieveWeather(config["BaseWeatherUri"]!, config["AppId"]!));
+                services.Decorate<IRetrieveWeather, LoggingDecoratorRetrieveWeather>();
+            }
 
             services.AddSingleton(x =>
             {

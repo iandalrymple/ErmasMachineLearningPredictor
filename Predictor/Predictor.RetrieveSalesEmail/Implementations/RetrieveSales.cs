@@ -1,5 +1,6 @@
 ﻿using BasicEmailLibrary.Lib;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic;
 using MimeKit;
 using Predictor.Domain.Abstractions;
 using Predictor.Domain.Exceptions;
@@ -89,11 +90,11 @@ namespace Predictor.RetrieveSalesEmail.Implementations
 
             if (insertResult)
             {
-                _logger.LogInformation("Inserted into cache on {date} for {store}.", dateTime, storeName);
+                _logger.LogInformation("Inserted into cache on {date} for {store}.", dateTime.ToString("MM/dd/yyyy"), storeName);
             }
             else
             {
-                _logger.LogWarning("Failed to insert into cache on {date} for {store}.", dateTime, storeName);
+                _logger.LogWarning("Failed to insert into cache on {date} for {store}.", dateTime.ToString("MM/dd/yyyy"), storeName);
             }
 
             // Bounce back the result.
@@ -115,11 +116,11 @@ namespace Predictor.RetrieveSalesEmail.Implementations
 
             if (cacheResult is not null)
             {
-                _logger.LogInformation("Cache HIT for {dateTime} and {storeName}.", dateTime, storeName);
+                _logger.LogInformation("Cache HIT for {dateTime} and {storeName}.", dateTime.ToString("MM/dd/yyyy"), storeName);
             }
             else
             {
-                _logger.LogInformation("Cache MISS for {dateTime} and {storeName}.", dateTime, storeName);
+                _logger.LogInformation("Cache MISS for {dateTime} and {storeName}.", dateTime.ToString("MM/dd/yyyy"), storeName);
             }
 
             return cacheResult;
