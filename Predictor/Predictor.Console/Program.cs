@@ -14,6 +14,7 @@ using Predictor.InsertSalesSqlite.Implementations;
 using Predictor.RetrieveOwmWeather.Implementations;
 using Serilog;
 using System.Collections.Concurrent;
+using Predictor.RetrieveHolidays.Implementations;
 
 
 // NOTE - DI model fashioned from here
@@ -111,8 +112,11 @@ try
                 var historicRetriever = new Predictor.RetrieveSalesSqlServer.Implementations.RetrieveSales(config["ConnectionStringSqlExpressOne"]!);
                 var stateHistoricSalesRetrieve = new StateRetrieveHistoricSales(historicRetriever);
                 stateDictionary.TryAdd(stateHistoricSalesRetrieve.State, stateHistoricSalesRetrieve);
-                
+
                 // Aggregate
+                var retrieveHolidays = new RetrieveHolidays();
+                var stateAggregate = new StateAggregate(retrieveHolidays);
+                stateDictionary.TryAdd(stateAggregate.State, stateAggregate);
 
                 // Predict
 
