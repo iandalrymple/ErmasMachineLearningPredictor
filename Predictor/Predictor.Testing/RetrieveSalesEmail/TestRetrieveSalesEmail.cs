@@ -4,8 +4,6 @@ using Microsoft.Extensions.Logging;
 using Predictor.Console.Composition;
 using Predictor.InsertSalesSqlite.Implementations;
 using Predictor.RetrieveSalesSqlite.Implementations;
-using Predictor.Testing.Mocks;
-using Predictor.Testing.RetrieveSalesSqlite;
 using Predictor.Testing.Supporting;
 
 namespace Predictor.Testing.RetrieveSalesEmail

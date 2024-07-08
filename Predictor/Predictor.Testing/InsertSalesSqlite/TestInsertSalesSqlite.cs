@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Predictor.Domain.Models;
-using Predictor.Testing.RetrieveSalesSqlite;
 using Predictor.Testing.Supporting;
 
 namespace Predictor.Testing.InsertSalesSqlite

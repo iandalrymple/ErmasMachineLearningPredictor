@@ -7,7 +7,6 @@ using Predictor.Domain.Implementations.States;
 using Predictor.Domain.Models.StateModels;
 using Predictor.Domain.Models;
 using Predictor.Domain.System;
-using Predictor.RetrieveOwmWeather.Implementations;
 using Predictor.Testing.Mocks;
 using Predictor.Testing.Supporting;
 using Predictor.PredictingEnginePython.Implementations;

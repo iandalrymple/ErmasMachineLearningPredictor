@@ -3,7 +3,6 @@ using Predictor.Domain.Abstractions;
 using Predictor.Domain.Models;
 using System.Collections.Concurrent;
 using System.Diagnostics;
-using System.Security.Cryptography.X509Certificates;
 using Newtonsoft.Json;
 using Predictor.Domain.Exceptions;
 using Predictor.Domain.Extensions;

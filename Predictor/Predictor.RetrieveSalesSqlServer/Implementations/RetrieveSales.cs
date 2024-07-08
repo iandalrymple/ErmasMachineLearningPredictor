@@ -1,6 +1,7 @@
 ﻿using Predictor.Domain.Abstractions;
 using System.Data.SqlClient;
 using Dapper;
+using Predictor.Domain.Exceptions;
 using Predictor.RetrieveSalesSqlServer.Models;
 
 namespace Predictor.RetrieveSalesSqlServer.Implementations;
@@ -18,11 +19,11 @@ public class RetrieveSales : IRetrieveSales<decimal>
     {
         await using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
-        var sqlQuery = "SELECT * FROM viewPaymentsByStoreByDay " +
-                       "WHERE StoreName = @StoreName " +
-                       "AND [Year] = @Year " +
-                       "AND [Month] = @Month " +
-                       "AND [Day] = @Day;";
+        const string sqlQuery = "SELECT * FROM viewPaymentsByStoreByDay " +
+                                "WHERE StoreName = @StoreName " +
+                                "AND [Year] = @Year " +
+                                "AND [Month] = @Month " +
+                                "AND [Day] = @Day;";
         var result = await connection.QueryAsync<ViewPaymentsByStoreByDayResultModel>
         (
             sqlQuery,
@@ -34,6 +35,12 @@ public class RetrieveSales : IRetrieveSales<decimal>
                 dateTime.Day
             }
         );
-        return Convert.ToDecimal(result.First().TotalSales);
+        var resultAsList = result.ToList();
+        if (resultAsList.Count > 0)
+        {
+            return Convert.ToDecimal(resultAsList[0].TotalSales);
+        }
+
+        throw new NoSalesDataFromSqlServerException(dateTime, storeName, "nothing further needed");
     }
 }

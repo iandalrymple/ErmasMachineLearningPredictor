@@ -108,8 +108,10 @@ try
                 stateDictionary.TryAdd(stateCurrentSalesRetriever.State, stateCurrentSalesRetriever);
 
                 // HistoricSalesRetrieve
-
-
+                var historicRetriever = new Predictor.RetrieveSalesSqlServer.Implementations.RetrieveSales(config["ConnectionStringSqlExpressOne"]!);
+                var stateHistoricSalesRetrieve = new StateRetrieveHistoricSales(historicRetriever);
+                stateDictionary.TryAdd(stateHistoricSalesRetrieve.State, stateHistoricSalesRetrieve);
+                
                 // Aggregate
 
                 // Predict
