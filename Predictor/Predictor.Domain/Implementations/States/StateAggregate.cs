@@ -119,9 +119,10 @@ public class StateAggregate : IFsmState
 
             TempNine = container.StateResults.StateWeatherResults.WeatherAtTimes[21].Data!.First().Temp,
             Nine_Raining = container.StateResults.StateWeatherResults.WeatherAtTimes[21].Data!.First().IsRaining(),
-            Nine_Snowing = container.StateResults.StateWeatherResults.WeatherAtTimes[21].Data!.First().IsSnowing()
+            Nine_Snowing = container.StateResults.StateWeatherResults.WeatherAtTimes[21].Data!.First().IsSnowing(),
+
+            IsPopulated = true
         };
-        resultModel.IsPopulated = true;
         container.StateResults.StateAggregateResults = resultModel;
 
         // Move onto next state.

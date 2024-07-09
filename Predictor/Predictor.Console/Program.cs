@@ -1,5 +1,4 @@
-﻿using BasicEmailLibrary.Lib;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -11,17 +10,18 @@ using Predictor.Domain.Models;
 using Predictor.Domain.Models.StateModels;
 using Predictor.Domain.System;
 using Predictor.InsertSalesSqlite.Implementations;
+using Predictor.PredictingEnginePython.Implementations;
+using Predictor.RetrieveHolidays.Implementations;
 using Predictor.RetrieveOwmWeather.Implementations;
 using Serilog;
 using System.Collections.Concurrent;
-using Predictor.RetrieveHolidays.Implementations;
 
 
 // NOTE - DI model fashioned from here
 // https://www.youtube.com/watch?v=GAOCe-2nXqc
 
 // Constants 
-const bool useMockWeather = true;
+const bool useMockWeather = false;
 
 // Args passed in. 
 const int storeArgIndex = 0;
@@ -71,10 +71,7 @@ try
     var host = Host.CreateDefaultBuilder()
         .ConfigureServices((context, services) =>
         {
-            // Create a transient for the basic email library. 
-            services.AddTransient<BasicEmail>(x => BasicEmailComposition.CreateBasicEmailObject(config));
-
-            // Set up the main state orchestrator with the dictionary of states.
+            // State dictionary
             services.AddSingleton(x =>
             {
                 // Declare at top since we want to add as we go.
@@ -101,7 +98,7 @@ try
                 var cacheRetriever = new Predictor.RetrieveSalesSqlite.Implementations.RetrieveSales(config["ConnectionStringSqlite"]!);
                 var cacheInserter = new InsertSales(config["ConnectionStringSqlite"]!);
                 var emailRetriever = new Predictor.RetrieveSalesEmail.Implementations.RetrieveSales(
-                    x.GetRequiredService<BasicEmail>(), 
+                    BasicEmailComposition.CreateBasicEmailObject(config), 
                     cacheRetriever, 
                     cacheInserter, 
                     x.GetRequiredService<ILogger<Predictor.RetrieveSalesEmail.Implementations.RetrieveSales>>());
@@ -119,11 +116,19 @@ try
                 stateDictionary.TryAdd(stateAggregate.State, stateAggregate);
 
                 // Predict
+                var pythonEngine = new PredictingEnginePythonImpl(
+                    config["PythonExe"]!,
+                    config["PythonWorkingDirectory"]!,
+                    config.GetSection("PythonArgs").Get<string[]>()!,
+                    x.GetRequiredService<ILogger<PredictingEnginePythonImpl>>());
+                var statePredict = new StatePredict(pythonEngine);
+                stateDictionary.TryAdd(statePredict.State, statePredict);
 
                 // Bounce back the collection of states.
                 return stateDictionary;
             });
 
+            // Container 
             services.AddSingleton(x =>
             {
                 return new FsmStatefulContainer
@@ -134,6 +139,8 @@ try
                     DateToCheck = dateArg
                 };
             });
+
+            // Conductor
             services.AddSingleton<IFsmConductor, FsmConductor>();
         })
         .UseSerilog()
