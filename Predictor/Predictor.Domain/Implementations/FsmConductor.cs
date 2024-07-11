@@ -30,7 +30,9 @@ public class FsmConductor : IFsmConductor
         {
             _logger.LogInformation("About to execute state {state}.", StateContainer.CurrentState);
             await _states[StateContainer.CurrentState].Execute(StateContainer);
-            await Task.Delay(100);
+            await Task.Delay(10);
         }
+
+        _logger.LogInformation("Done with the state machine with summary log {log}",StateContainer.Log());
     }
 }
