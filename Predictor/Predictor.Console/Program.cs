@@ -95,8 +95,8 @@ try
                 stateDictionary.TryAdd(stateWeather.State, stateWeather);
 
                 // CurrentSalesRetrieve
-                var cacheRetriever = new Predictor.RetrieveSalesSqlite.Implementations.RetrieveSales(config["ConnectionStringSqlite"]!);
-                var cacheInserter = new InsertSales(config["ConnectionStringSqlite"]!);
+                var cacheRetriever = new Predictor.RetrieveSalesSqlite.Implementations.RetrieveSales(config["ConnectionStringSqliteSalesCache"]!);
+                var cacheInserter = new InsertSales(config["ConnectionStringSqliteSalesCache"]!);
                 var emailRetriever = new Predictor.RetrieveSalesEmail.Implementations.RetrieveSales(
                     BasicEmailComposition.CreateBasicEmailObject(config), 
                     cacheRetriever, 

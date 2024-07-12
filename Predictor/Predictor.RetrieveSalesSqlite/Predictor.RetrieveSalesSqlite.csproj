@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="SqliteCache.db" />
+    <None Remove="SalesSqliteCache.db" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="SqliteCache.db">
+    <Content Include="SalesSqliteCache.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

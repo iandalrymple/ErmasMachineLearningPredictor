@@ -15,7 +15,7 @@ namespace Predictor.Testing.InsertSalesSqlite
             try
             {
                 // Arrange
-                var setUpResult = await SqliteHelpers.SetUpDataBaseWithRecords("Utica", new DateTime(2024, 1, 1), _configuration, 3);
+                var setUpResult = await SqliteHelpers.SetUpDataBaseWithRecordsSalesCache("Utica", new DateTime(2024, 1, 1), _configuration, 3);
                 tempDatabaseName = setUpResult!.dbFileName;
                 var sut = new Predictor.InsertSalesSqlite.Implementations.InsertSales(setUpResult.connString!);
                 var insertionDataOne = new CacheModel

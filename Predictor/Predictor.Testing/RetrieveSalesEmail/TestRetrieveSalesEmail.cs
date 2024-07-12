@@ -34,7 +34,7 @@ namespace Predictor.Testing.RetrieveSalesEmail
                 // Arrange
                 var basicEmail = BasicEmailComposition.CreateBasicEmailObject(_configuration);
                 await basicEmail.MarkAllEmailsToUnread();
-                var (connString, dbName) = SqliteHelpers.SetUpDataBaseNoRecords(_configuration);
+                var (connString, dbName) = SqliteHelpers.SetUpDataBaseNoRecordsSalesCache(_configuration);
                 tempDatabaseName = dbName;
                 var cacheRetriever = new RetrieveSales(connString!);
                 var cacheInserter = new InsertSales(connString!);
@@ -69,7 +69,7 @@ namespace Predictor.Testing.RetrieveSalesEmail
             {
                 // Arrange
                 var dateTime = new DateTime(year: year, month: month, day: day);
-                var (connString, dbName) = await SqliteHelpers.SetUpDataBaseWithRecords(store, dateTime, _configuration, 3);
+                var (connString, dbName) = await SqliteHelpers.SetUpDataBaseWithRecordsSalesCache(store, dateTime, _configuration, 3);
                 tempDatabaseName = dbName;
                 var basicEmail = BasicEmailComposition.CreateBasicEmailObject(_configuration);
                 var cacheRetriever = new RetrieveSales(connString!);

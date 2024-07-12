@@ -7,10 +7,10 @@ namespace Predictor.Testing.Supporting
 {
     internal class SqliteHelpers
     {
-        internal static async Task<(string? connString, string? dbFileName)> SetUpDataBaseWithRecords(string store, DateTime startDate, IConfiguration config, int recordCount = 1)
+        internal static async Task<(string? connString, string? dbFileName)> SetUpDataBaseWithRecordsSalesCache(string store, DateTime startDate, IConfiguration config, int recordCount = 1)
         {
             // Make a copy of the database file.
-            var (connString, dbFileName) = SetUpDataBaseNoRecords(config);
+            var (connString, dbFileName) = SetUpDataBaseNoRecordsSalesCache(config);
 
             // Connect to the new database.
             await using var conn = new SQLiteConnection(connString);
@@ -39,10 +39,10 @@ namespace Predictor.Testing.Supporting
             return (connString, dbFileName);
         }
 
-        internal static (string? connString, string? dbFileName) SetUpDataBaseNoRecords(IConfiguration config)
+        internal static (string? connString, string? dbFileName) SetUpDataBaseNoRecordsSalesCache(IConfiguration config)
         {
             // Make a copy of the database file.
-            var connString = config["ConnectionStringSqlite"]!;
+            var connString = config["ConnectionStringSqliteSalesCache"]!;
             var split = connString.Split(';');
             var originalFileName = split[0].Split('=')[1];
             var newFileName = Path.Combine(".", $"CACHE_SQLITE_DB_{Guid.NewGuid()}.db");
