@@ -5,6 +5,8 @@ namespace Predictor.Domain.Models;
 
 public class FsmStatefulContainer
 {
+    private const string Separator = " || ";
+
     public PredictorFsmStates CurrentState { get; set; } = PredictorFsmStates.Weather;
     public required StoreLocation StoreLocation { get; init; }
     public required DateTime DateToCheck { get; init; }
@@ -30,11 +32,11 @@ public class FsmStatefulContainer
             "No prediction made" : 
             $"{StateResults.StatePredictResults.PredictingEngineModel.ParsedModelFromStandardInput.Prediction:C}";
 
-        var finalString = $"State => {CurrentState}{Environment.NewLine}" +
-                          $"Store => {StoreLocation.Name}{Environment.NewLine}" +
-                          $"Date => {DateToCheck:MM/dd/yyyy}{Environment.NewLine}" +
-                          $"Results => {predictionMessage}{Environment.NewLine}" +
-                          $"Error => {errorMessage}{Environment.NewLine}";
+        var finalString = $"State => {CurrentState}{Separator}" +
+                          $"Store => {StoreLocation.Name}{Separator}" +
+                          $"Date => {DateToCheck:MM/dd/yyyy}{Separator}" +
+                          $"Results => {predictionMessage}{Separator}" +
+                          $"Error => {errorMessage}";
 
         return finalString;
     }
