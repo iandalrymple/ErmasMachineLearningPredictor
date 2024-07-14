@@ -28,7 +28,7 @@ namespace Predictor.RetrieveSalesSqlite.Implementations
                 Date = dateTime.ToString("yyyy-MM-dd")
             };
 
-            var result = (await _connection.QueryAsync<CacheModel>(queryString, queryParams)).ToList();
+            var result = (await _connection.QueryAsync<SalesCacheModel>(queryString, queryParams)).ToList();
             await _connection.CloseAsync();
 
             if (result.Count == 0)

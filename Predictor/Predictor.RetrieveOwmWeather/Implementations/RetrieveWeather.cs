@@ -21,7 +21,7 @@ public class RetrieveWeather : IRetrieveWeather
         _appId = appId;
     }
 
-    public async Task<WeatherSourceModel> Retrieve(WeatherRetrieveParamModel inParams)
+    public async Task<WeatherSourceModel?> Retrieve(WeatherRetrieveParamModel inParams)
     {
         // Test exception gobbling.
         //if (Math.Abs(inParams.Latitude - 42.534500122070313) < 0.01)

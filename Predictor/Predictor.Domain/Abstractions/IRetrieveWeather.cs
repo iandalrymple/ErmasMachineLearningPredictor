@@ -4,5 +4,5 @@ namespace Predictor.Domain.Abstractions;
 
 public interface IRetrieveWeather
 {
-    Task<WeatherSourceModel> Retrieve(WeatherRetrieveParamModel inParams);
+    Task<WeatherSourceModel?> Retrieve(WeatherRetrieveParamModel inParams);
 }

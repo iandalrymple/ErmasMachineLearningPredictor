@@ -18,14 +18,14 @@ namespace Predictor.Testing.InsertSalesSqlite
                 var setUpResult = await SqliteHelpers.SetUpDataBaseWithRecordsSalesCache("Utica", new DateTime(2024, 1, 1), _configuration, 3);
                 tempDatabaseName = setUpResult!.dbFileName;
                 var sut = new Predictor.InsertSalesSqlite.Implementations.InsertSales(setUpResult.connString!);
-                var insertionDataOne = new CacheModel
+                var insertionDataOne = new SalesCacheModel
                 {
                     SalesThreePm = 22.3m,
                     FirstOrderMinutesIntoDay = 668,
                     Store = "Utica",
                     Date = "2024-05-01",
                 };
-                var insertionDataTwo = new CacheModel
+                var insertionDataTwo = new SalesCacheModel
                 {
                     SalesThreePm = 22.3m,
                     FirstOrderMinutesIntoDay = 668,

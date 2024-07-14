@@ -1,6 +1,6 @@
 ﻿namespace Predictor.Domain.Models
 {
-    public class CacheModel
+    public class SalesCacheModel
     {
         public int DbId { get; init; }
         public decimal SalesThreePm { get; init; }

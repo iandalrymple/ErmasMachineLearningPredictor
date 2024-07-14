@@ -6,7 +6,7 @@ using Dapper;
 
 namespace Predictor.InsertSalesSqlite.Implementations;
 
-public class InsertSales : ISalesInsert<CacheModel>
+public class InsertSales : ISalesInsert<SalesCacheModel>
 {
     private readonly string _connectionString;
     private readonly SQLiteConnection _connection;
@@ -17,7 +17,7 @@ public class InsertSales : ISalesInsert<CacheModel>
         _connection = new SQLiteConnection(connectionString);
     }
 
-    public async Task<bool> Insert(CacheModel insertionData)
+    public async Task<bool> Insert(SalesCacheModel insertionData)
     {
         await _connection.OpenAsync();
         const string queryString = "INSERT INTO CurrentSales " +

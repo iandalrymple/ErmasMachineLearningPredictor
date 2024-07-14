@@ -3,9 +3,9 @@ using Predictor.Domain.Models;
 
 namespace Predictor.Testing.Mocks
 {
-    public class InsertSalesAlwaysTrueMock : ISalesInsert<CacheModel>
+    public class InsertSalesAlwaysTrueMock : ISalesInsert<SalesCacheModel>
     {
-        public Task<bool> Insert(CacheModel insertionData)
+        public Task<bool> Insert(SalesCacheModel insertionData)
         {
             return Task.FromResult<bool>(true);
         }

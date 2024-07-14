@@ -13,13 +13,13 @@ namespace Predictor.RetrieveSalesEmail.Implementations
     {
         private readonly BasicEmail _email;
         private readonly IRetrieveSales<StateCurrentSalesResultModel?> _cacheRetriever;
-        private readonly ISalesInsert<CacheModel> _cacheInserter;
+        private readonly ISalesInsert<SalesCacheModel> _cacheInserter;
         private readonly ILogger<RetrieveSales> _logger;
 
         public RetrieveSales(
             BasicEmail email, 
             IRetrieveSales<StateCurrentSalesResultModel?> retriever,
-            ISalesInsert<CacheModel> cacheInserter,
+            ISalesInsert<SalesCacheModel> cacheInserter,
             ILogger<RetrieveSales> logger)
         {
             _email = email;
@@ -79,7 +79,7 @@ namespace Predictor.RetrieveSalesEmail.Implementations
             };
 
             // Insert into the cache. 
-            var insertResult = await _cacheInserter.Insert(new CacheModel
+            var insertResult = await _cacheInserter.Insert(new SalesCacheModel
             {
                 SalesThreePm = result.SalesAtThree,
                 FirstOrderMinutesIntoDay = Convert.ToInt32(result.FirstOrderMinutesInDay),
