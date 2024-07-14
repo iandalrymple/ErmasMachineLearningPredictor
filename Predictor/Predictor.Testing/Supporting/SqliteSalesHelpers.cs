@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace Predictor.Testing.Supporting
 {
-    internal class SqliteHelpers
+    internal class SqliteSalesHelpers
     {
         internal static async Task<(string? connString, string? dbFileName)> SetUpDataBaseWithRecordsSalesCache(string store, DateTime startDate, IConfiguration config, int recordCount = 1)
         {

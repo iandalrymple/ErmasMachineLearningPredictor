@@ -16,7 +16,7 @@ namespace Predictor.Testing.RetrieveWeatherSqlite
             try
             {
                 // Arrange
-                var setUpResult = await SqliteHelpers.SetUpDataBaseWithRecordsSalesCache("Utica", new DateTime(year, month, day), _configuration, 3);
+                var setUpResult = await SqliteSalesHelpers.SetUpDataBaseWithRecordsSalesCache("Utica", new DateTime(year, month, day), _configuration, 3);
                 tempDatabaseName = setUpResult!.dbFileName;
                 var sut = new Predictor.RetrieveSalesSqlite.Implementations.RetrieveSales(setUpResult.connString!);
 
