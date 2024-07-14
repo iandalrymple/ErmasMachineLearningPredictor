@@ -1,10 +1,9 @@
-﻿using Predictor.Domain.Abstractions;
+﻿using Dapper;
+using Newtonsoft.Json;
+using Predictor.Domain.Abstractions;
 using Predictor.Domain.Exceptions;
 using Predictor.Domain.Models;
-using Predictor.Domain.Models.StateModels;
 using System.Data.SQLite;
-using Dapper;
-using Newtonsoft.Json;
 
 namespace Predictor.RetrieveOwmWeatherSqlite.Implementations
 {

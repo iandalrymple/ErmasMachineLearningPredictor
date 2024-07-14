@@ -7,7 +7,7 @@ namespace Predictor.Testing.Supporting;
 
 internal class SqliteWeatherHelpers
 {
-    internal static async Task<(string? connString, string? dbFileName)> SetUpDataBaseWithRecordsSalesCache(string store, DateTime startDate, IConfiguration config, int recordCount = 1)
+    internal static async Task<(string? connString, string? dbFileName)> SetUpDataBaseWithRecordsWeatherCache(string store, DateTime startDateTime, IConfiguration config)
     {
         // Make a copy of the database file.
         var (connString, dbFileName) = SetUpDataBaseNoRecordsWeatherCache(config);
@@ -18,24 +18,35 @@ internal class SqliteWeatherHelpers
         // Clean first.
         await conn.ExecuteAsync("DELETE FROM Weather;");
 
-        // Now shove in new data. // TODO - left off here 
-        const string queryString = "INSERT INTO Weather " +
-                                   "(SalesThreePm, FirstOrderMinutesIntoDay, Store, Date, InsertedUtcTimeStamp) " +
-                                   "VALUES (@SalesThreePm, @FirstOrderMinutesIntoDay, @Store, @Date, @InsertedUtcTimeStamp)";
-        for (var i = 0; i < recordCount; i++)
+        // Determine the longitude and latitude based on the store name.
+        double longitude;
+        double latitude;
+        if (store.Equals("Utica", StringComparison.OrdinalIgnoreCase))
         {
-            var queryParams = new
-            {
-                SalesThreePm = Convert.ToDecimal((i + 1) * 1000 + i),
-                FirstOrderMinutesIntoDay = 650 + i,
-                Store = store,
-                Date = startDate.AddDays(i).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
-                InsertedUtcTimeStamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture)
-            };
-            await conn.ExecuteAsync(queryString, queryParams);
-            await Task.Delay(50);
+            longitude = TestingConstants.UticaLongitude;
+            latitude = TestingConstants.UticaLatitude;
+        }
+        else
+        {
+            longitude = TestingConstants.WarrenLongitude;
+            latitude = TestingConstants.WarrenLatitude;
         }
 
+        // Now shove in new data. // TODO - left off here 
+        const string queryString = "INSERT INTO Weather " +
+                                   "(Longitude, Latitude, DateTime, WeatherJson, InsertedUtcTimeStamp) " +
+                                   "VALUES (@Longitude, @Latitude, @DateTime, @WeatherJson, @InsertedUtcTimeStamp)";
+        var queryParams = new
+        {
+            Longitude = longitude,
+            Latitude = latitude,
+            DateTime = startDateTime.ToString("yyyy-MM-dd HH:mm:ss"),
+            WeatherJson = Properties.Resources.WeatherData_05152024,
+            InsertedUtcTimeStamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture)
+        };
+        await conn.ExecuteAsync(queryString, queryParams);
+        await Task.Delay(50);
+            
         return (connString, dbFileName);
     }
 
