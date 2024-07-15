@@ -15,7 +15,7 @@ public class LoggingDecoratorRetrieveWeather : IRetrieveWeather
         _logger = logger;
     }
 
-    public async Task<WeatherSourceModel> Retrieve(WeatherRetrieveParamModel inParams)
+    public async Task<WeatherSourceModel?> Retrieve(WeatherRetrieveParamModel inParams)
     {
         try
         {

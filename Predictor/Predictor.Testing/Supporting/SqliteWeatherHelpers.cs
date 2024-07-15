@@ -19,18 +19,7 @@ internal class SqliteWeatherHelpers
         await conn.ExecuteAsync("DELETE FROM Weather;");
 
         // Determine the longitude and latitude based on the store name.
-        double longitude;
-        double latitude;
-        if (store.Equals("Utica", StringComparison.OrdinalIgnoreCase))
-        {
-            longitude = TestingConstants.UticaLongitude;
-            latitude = TestingConstants.UticaLatitude;
-        }
-        else
-        {
-            longitude = TestingConstants.WarrenLongitude;
-            latitude = TestingConstants.WarrenLatitude;
-        }
+        var (longitude, latitude) = config.Coordinates(store);
 
         // Now shove in new data. // TODO - left off here 
         const string queryString = "INSERT INTO Weather " +
@@ -56,7 +45,7 @@ internal class SqliteWeatherHelpers
         var connString = config["ConnectionStringSqliteWeatherCache"]!;
         var split = connString.Split(';');
         var originalFileName = split[0].Split('=')[1];
-        var newFileName = Path.Combine(".", $"CACHE_SQLITE_DB_{Guid.NewGuid()}.db");
+        var newFileName = Path.Combine(".", $"CACHE_SQLITE_DB_WEATHER_{Guid.NewGuid()}.db");
         File.Copy(originalFileName, newFileName);
 
         // Connect to the new database.

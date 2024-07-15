@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Predictor.Domain.Models;
 using Predictor.Testing.Supporting;
+using ConfigurationExtensions = Microsoft.Extensions.Configuration.ConfigurationExtensions;
 
 namespace Predictor.Testing.RetrieveWeatherSqlite
 {
@@ -8,27 +10,35 @@ namespace Predictor.Testing.RetrieveWeatherSqlite
         private readonly IConfiguration _configuration = ConfigurationSingleton.Instance;
 
         [Theory]
-        [InlineData(2024, 6, 19, 1000.00, 650, uint.MaxValue)]
-        [InlineData(2024, 6, 20, 1000.00, 650, uint.MaxValue)]
-        public async Task TestRetrieve(int year, int month, int day, int hour, double longitude, double latitude)
+        [InlineData(2024, 6, 19, 15, "Utica")]
+        [InlineData(2024, 6, 20, 15, "Utica")]
+        public async Task TestRetrieve(int year, int month, int day, int hour, string storeName)
         {
             string? tempDatabaseName = null;
             try
             {
                 // Arrange
-                var setUpResult = await SqliteSalesHelpers.SetUpDataBaseWithRecordsSalesCache("Utica", new DateTime(year, month, day), _configuration, 3);
+                var setUpResult = await SqliteWeatherHelpers.SetUpDataBaseWithRecordsWeatherCache("Utica", new DateTime(year, month, day, hour, 0, 0), _configuration);
                 tempDatabaseName = setUpResult!.dbFileName;
-                var sut = new Predictor.RetrieveSalesSqlite.Implementations.RetrieveSales(setUpResult.connString!);
+                var sut = new Predictor.RetrieveOwmWeatherSqlite.Implementations.RetrieveWeather(setUpResult.connString!);
+
+                var (@long, lat) = _configuration.Coordinates(storeName);
+                var weatherParams = new WeatherRetrieveParamModel
+                {
+                    DateTime = new DateTime(year, month, day, hour, 0, 0),
+                    Latitude = lat,
+                    Longitude = @long
+                };
 
                 // Act
-                var dateTime = new DateTime(year: year, month: month, day: day);
-                var result = await sut.Retrieve(dateTime, "Utica");
+
+                var result = await sut.Retrieve(weatherParams);
 
                 // Assert
                 Assert.NotNull(result);
-                Assert.Equal(salesAtThree, result.SalesAtThree, 0);
-                Assert.Equal(firstOrderTime, result.FirstOrderMinutesInDay);
-                Assert.Equal(lastOrderTime, result.LastOrderMinutesInDay);
+                //Assert.Equal(salesAtThree, result.SalesAtThree, 0);
+                //Assert.Equal(firstOrderTime, result.FirstOrderMinutesInDay);
+                //Assert.Equal(lastOrderTime, result.LastOrderMinutesInDay);
             }
             finally
             {

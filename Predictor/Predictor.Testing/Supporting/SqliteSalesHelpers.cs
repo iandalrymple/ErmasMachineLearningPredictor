@@ -45,7 +45,7 @@ namespace Predictor.Testing.Supporting
             var connString = config["ConnectionStringSqliteSalesCache"]!;
             var split = connString.Split(';');
             var originalFileName = split[0].Split('=')[1];
-            var newFileName = Path.Combine(".", $"CACHE_SQLITE_DB_{Guid.NewGuid()}.db");
+            var newFileName = Path.Combine(".", $"CACHE_SQLITE_DB_SALES_{Guid.NewGuid()}.db");
             File.Copy(originalFileName, newFileName);
 
             // Connect to the new database.
