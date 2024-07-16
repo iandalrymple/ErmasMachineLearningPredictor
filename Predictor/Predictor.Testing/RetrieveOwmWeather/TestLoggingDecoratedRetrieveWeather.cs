@@ -45,6 +45,7 @@ public class TestLoggingDecoratedRetrieveWeather
         var result = await decorator.Retrieve(paramObject);
 
         // Assert
+        Assert.NotNull(result);
         Assert.True(CheckWeather(result, _pastDateTime));
     }
 
@@ -65,6 +66,7 @@ public class TestLoggingDecoratedRetrieveWeather
         var result = await decorator.Retrieve(paramObject);
 
         // Assert
+        Assert.NotNull(result);
         Assert.True(CheckWeather(result, _futureDateTime));
     }
 

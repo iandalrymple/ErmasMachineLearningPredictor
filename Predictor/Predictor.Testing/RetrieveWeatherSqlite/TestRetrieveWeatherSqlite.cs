@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Predictor.Domain.Models;
 using Predictor.Testing.Supporting;
-using ConfigurationExtensions = Microsoft.Extensions.Configuration.ConfigurationExtensions;
 
 namespace Predictor.Testing.RetrieveWeatherSqlite
 {
