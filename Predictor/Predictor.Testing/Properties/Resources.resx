@@ -136,6 +136,9 @@
   <data name="PredictorFeatures" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>PredictorFeatures.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="WeatherApiData_04192023_12AM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>WeatherApiData_04192023_12AM.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="WeatherData_05152024" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>WeatherData_05152024.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

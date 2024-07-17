@@ -30,7 +30,6 @@ namespace Predictor.Testing.RetrieveWeatherSqlite
                 };
 
                 // Act
-
                 var result = await sut.Retrieve(weatherParams);
 
                 // Assert

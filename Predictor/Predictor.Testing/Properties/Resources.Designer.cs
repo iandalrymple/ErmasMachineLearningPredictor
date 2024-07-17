@@ -145,6 +145,15 @@ namespace Predictor.Testing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {&quot;lat&quot;:0,&quot;lon&quot;:0,&quot;timezone&quot;:&quot;Etc/GMT&quot;,&quot;timezone_offset&quot;:0,&quot;data&quot;:[{&quot;dt&quot;:1681862400,&quot;sunrise&quot;:1681883737,&quot;sunset&quot;:1681927343,&quot;temp&quot;:79.7,&quot;feels_like&quot;:79.7,&quot;pressure&quot;:1010,&quot;humidity&quot;:91,&quot;dew_point&quot;:76.84,&quot;clouds&quot;:13,&quot;wind_speed&quot;:10.18,&quot;wind_deg&quot;:157,&quot;weather&quot;:[{&quot;id&quot;:500,&quot;main&quot;:&quot;Rain&quot;,&quot;description&quot;:&quot;light rain&quot;,&quot;icon&quot;:&quot;10n&quot;}],&quot;rain&quot;:{&quot;1h&quot;:1}}]}.
+        /// </summary>
+        internal static string WeatherApiData_04192023_12AM {
+            get {
+                return ResourceManager.GetString("WeatherApiData_04192023_12AM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {&quot;WeatherAtTimes&quot;:{&quot;12&quot;:{&quot;lat&quot;:42.5345,&quot;lon&quot;:-83.0856,&quot;timezone&quot;:&quot;America/Detroit&quot;,&quot;timezone_offset&quot;:-14400,&quot;data&quot;:[{&quot;dt&quot;:1715788800,&quot;sunrise&quot;:1715767799,&quot;sunset&quot;:1715820456,&quot;temp&quot;:66.54,&quot;feels_like&quot;:65.86,&quot;pressure&quot;:1010.0,&quot;humidity&quot;:63.0,&quot;dew_point&quot;:53.56,&quot;uvi&quot;:0.0,&quot;clouds&quot;:0.0,&quot;visibility&quot;:10000.0,&quot;wind_speed&quot;:9.22,&quot;wind_gust&quot;:0.0,&quot;wind_deg&quot;:40.0,&quot;weather&quot;:[{&quot;id&quot;:500,&quot;main&quot;:&quot;Rain&quot;,&quot;description&quot;:&quot;light rain&quot;,&quot;icon&quot;:&quot;10d&quot;}]}]},&quot;15&quot;:{&quot;lat&quot;:42.5345,&quot;lon&quot;:-83.0856,&quot;timezone&quot;:&quot;America/Detroit&quot;,&quot;timezone_offset [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string WeatherData_05152024 {

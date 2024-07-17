@@ -1,0 +1,1 @@
+{"lat":0,"lon":0,"timezone":"Etc/GMT","timezone_offset":0,"data":[{"dt":1681862400,"sunrise":1681883737,"sunset":1681927343,"temp":79.7,"feels_like":79.7,"pressure":1010,"humidity":91,"dew_point":76.84,"clouds":13,"wind_speed":10.18,"wind_deg":157,"weather":[{"id":500,"main":"Rain","description":"light rain","icon":"10n"}],"rain":{"1h":1}}]}

@@ -30,7 +30,7 @@ internal class SqliteWeatherHelpers
             Longitude = longitude,
             Latitude = latitude,
             DateTime = startDateTime.ToString("yyyy-MM-dd HH:mm:ss"),
-            WeatherJson = Properties.Resources.WeatherData_05152024,
+            WeatherJson = Properties.Resources.WeatherApiData_04192023_12AM,
             InsertedUtcTimeStamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture)
         };
         await conn.ExecuteAsync(queryString, queryParams);
