@@ -11,6 +11,7 @@ namespace Predictor.RetrieveOwmWeatherSqlite.Implementations
     {
         private readonly string _connectionString;
         private readonly SQLiteConnection _connection;
+        private const double CoordinateBand = 0.001;
 
         public RetrieveWeather(string connectionString)
         {
@@ -21,24 +22,32 @@ namespace Predictor.RetrieveOwmWeatherSqlite.Implementations
         public async Task<WeatherSourceModel?> Retrieve(WeatherRetrieveParamModel inParams)
         {
             await _connection.OpenAsync();
-            const string queryString = "SELECT * FROM Weather WHERE Longitude=@Longitude AND Latitude=@Latitude AND DateTime=@DateTime;";
+            const string queryString = "SELECT * FROM Weather WHERE " +
+                                       "Longitude>=@longitudeMin AND Longitude<=@longitudeMax AND " +
+                                       "Latitude>=@latitudeMin AND Latitude<=@latitudeMax AND " +
+                                       "DateTime=@DateTime;";
+            var longitudeMin = inParams.Longitude - CoordinateBand;
+            var longitudeMax = inParams.Longitude + CoordinateBand;
+            var latitudeMin = inParams.Latitude - CoordinateBand;
+            var latitudeMax = inParams.Latitude + CoordinateBand;   
             var queryParams = new
             {
-                inParams.Longitude,
-                inParams.Latitude,   
+                longitudeMin,
+                longitudeMax,
+                latitudeMin,
+                latitudeMax,
                 DateTime = inParams.DateTime.ToString("yyyy-MM-dd HH:mm:ss")
             };
 
             var result = (await _connection.QueryAsync<WeatherCacheModel>(queryString, queryParams)).ToList();
             await _connection.CloseAsync();
 
-            if (result.Count == 0)
+            switch (result.Count)
             {
-                throw new WeatherDataNotFoundException(inParams.DateTime);
-            }
-            if (result.Count > 1)
-            {
-                throw new MoreThanOneRecordException($"Latitude => {inParams.Latitude} / Longitude => {inParams.Longitude} / DateTime => {inParams.DateTime}");
+                case 0:
+                    throw new WeatherDataNotFoundException(inParams.DateTime);
+                case > 1:
+                    throw new MoreThanOneRecordException($"Latitude => {inParams.Latitude} / Longitude => {inParams.Longitude} / DateTime => {inParams.DateTime}");
             }
 
             var firstRecord = result[0];
@@ -55,6 +64,11 @@ namespace Predictor.RetrieveOwmWeatherSqlite.Implementations
                 MissingMemberHandling = MissingMemberHandling.Ignore
             };
             var parsedResponse = JsonConvert.DeserializeObject<WeatherSourceModel>(firstRecord.WeatherJson, settings);
+
+
+            // TODO - insert the lat and lon 
+            sdfsdfsd
+
             return parsedResponse;
         }
     }
