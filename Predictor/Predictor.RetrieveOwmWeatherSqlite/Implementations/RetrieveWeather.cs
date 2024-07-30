@@ -64,11 +64,6 @@ namespace Predictor.RetrieveOwmWeatherSqlite.Implementations
                 MissingMemberHandling = MissingMemberHandling.Ignore
             };
             var parsedResponse = JsonConvert.DeserializeObject<WeatherSourceModel>(firstRecord.WeatherJson, settings);
-
-
-            // TODO - insert the lat and lon 
-            sdfsdfsd
-
             return parsedResponse;
         }
     }
