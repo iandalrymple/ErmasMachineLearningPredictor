@@ -110,7 +110,7 @@ namespace Predictor.RetrieveSalesEmail.Implementations
             catch (Exception ex)
             {
                 // Intentionally logging and NOT throwing.
-                _logger.LogWarning("Error checking cache with {exception}", ex);
+                _logger.LogWarning("Error checking sales cache with {exception}", ex);
             }
 
             if (cacheResult is not null)
