@@ -88,8 +88,12 @@ try
                 }
                 else
                 {
-                    var innerWeatherRetriever = new RetrieveWeather(config["BaseWeatherUri"]!, config["AppId"]!);
-                    weatherRetriever = new LoggingDecoratorRetrieveWeather(innerWeatherRetriever, x.GetRequiredService<ILogger<LoggingDecoratorRetrieveWeather>>());
+                    var weatherCacheRetriever = new Predictor.RetrieveOwmWeatherSqlite.Implementations.RetrieveWeather(config["ConnectionStringSqliteWeatherCache"]!);
+                    weatherRetriever = new RetrieveWeather(
+                        config["BaseWeatherUri"]!, 
+                        config["AppId"]!, 
+                        x.GetRequiredService<ILogger<RetrieveWeather>>(),
+                        weatherCacheRetriever);
                 }
                 var stateWeather = new StateWeather(weatherRetriever);
                 stateDictionary.TryAdd(stateWeather.State, stateWeather);

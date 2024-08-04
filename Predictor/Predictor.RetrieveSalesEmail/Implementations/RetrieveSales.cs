@@ -13,13 +13,13 @@ namespace Predictor.RetrieveSalesEmail.Implementations
     {
         private readonly BasicEmail _email;
         private readonly IRetrieveSales<StateCurrentSalesResultModel?> _cacheRetriever;
-        private readonly ISalesInsert<SalesCacheModel> _cacheInserter;
+        private readonly IGenericInsert<SalesCacheModel> _cacheInserter;
         private readonly ILogger<RetrieveSales> _logger;
 
         public RetrieveSales(
             BasicEmail email, 
             IRetrieveSales<StateCurrentSalesResultModel?> retriever,
-            ISalesInsert<SalesCacheModel> cacheInserter,
+            IGenericInsert<SalesCacheModel> cacheInserter,
             ILogger<RetrieveSales> logger)
         {
             _email = email;

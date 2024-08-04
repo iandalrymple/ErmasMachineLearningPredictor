@@ -21,7 +21,7 @@ internal class SqliteWeatherHelpers
         // Determine the longitude and latitude based on the store name.
         var (longitude, latitude) = config.Coordinates(store);
 
-        // Now shove in new data. // TODO - left off here 
+        // Now shove in new data. 
         const string queryString = "INSERT INTO Weather " +
                                    "(Longitude, Latitude, DateTime, WeatherJson, InsertedUtcTimeStamp) " +
                                    "VALUES (@Longitude, @Latitude, @DateTime, @WeatherJson, @InsertedUtcTimeStamp)";

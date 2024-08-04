@@ -18,7 +18,7 @@ public class RetrieveWeather : IRetrieveWeather
 
     private readonly IRetrieveWeather _cacheRetriever;
 
-    //Need the Sqlite implementation injected (Retrieve and insert)
+    // Inject the inserter which is not created.
     // Use them both just like in the sales retriever
 
     public RetrieveWeather(string baseUri, string appId, ILogger<RetrieveWeather> logger, IRetrieveWeather cacheRetriever)

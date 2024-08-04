@@ -3,7 +3,7 @@ using Predictor.Domain.Models;
 
 namespace Predictor.Testing.Mocks
 {
-    public class InsertSalesAlwaysTrueMock : ISalesInsert<SalesCacheModel>
+    public class InsertSalesAlwaysTrueMock : IGenericInsert<SalesCacheModel>
     {
         public Task<bool> Insert(SalesCacheModel insertionData)
         {

@@ -30,7 +30,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Predictor.RetrieveSalesSqli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Predictor.InsertSalesSqlite", "Predictor.InsertSalesSqlite\Predictor.InsertSalesSqlite.csproj", "{82A7D0B6-7310-43BF-AD31-78839F349E9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor.RetrieveOwmWeatherSqlite", "Predictor.RetrieveOwmWeatherSqlite\Predictor.RetrieveOwmWeatherSqlite.csproj", "{5DB59D02-D462-4741-AA7C-7810F24C3404}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Predictor.RetrieveOwmWeatherSqlite", "Predictor.RetrieveOwmWeatherSqlite\Predictor.RetrieveOwmWeatherSqlite.csproj", "{5DB59D02-D462-4741-AA7C-7810F24C3404}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor.InsertWeatherSqlite", "Predictor.InsertWeatherSqlite\Predictor.InsertWeatherSqlite.csproj", "{38AF41D7-2DFA-49A6-9B3F-BA315823A2F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,6 +88,10 @@ Global
 		{5DB59D02-D462-4741-AA7C-7810F24C3404}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DB59D02-D462-4741-AA7C-7810F24C3404}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DB59D02-D462-4741-AA7C-7810F24C3404}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38AF41D7-2DFA-49A6-9B3F-BA315823A2F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38AF41D7-2DFA-49A6-9B3F-BA315823A2F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38AF41D7-2DFA-49A6-9B3F-BA315823A2F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38AF41D7-2DFA-49A6-9B3F-BA315823A2F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

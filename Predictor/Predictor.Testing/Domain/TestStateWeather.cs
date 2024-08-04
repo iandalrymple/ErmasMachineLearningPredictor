@@ -7,13 +7,14 @@ using Predictor.Domain.Models.StateModels;
 using Predictor.Domain.System;
 using Predictor.RetrieveOwmWeather.Implementations;
 using Predictor.Testing.Supporting;
+using OwmSqlite = Predictor.RetrieveOwmWeatherSqlite.Implementations;
 
 namespace Predictor.Testing.Domain;
 
 public class TestStateWeather
 {
     private readonly IConfiguration _config;
-    private readonly ILogger<LoggingDecoratorRetrieveWeather> _logger;
+    private readonly ILogger<RetrieveWeather> _logger;
 
     public TestStateWeather()
     {
@@ -23,7 +24,7 @@ public class TestStateWeather
             .AddLogging()
             .BuildServiceProvider();
         var factory = serviceProvider.GetService<ILoggerFactory>();
-        _logger = factory!.CreateLogger<LoggingDecoratorRetrieveWeather>();
+        _logger = factory!.CreateLogger<RetrieveWeather>();
     }
 
     [Theory]
@@ -33,9 +34,8 @@ public class TestStateWeather
     {
         // Arrange
         var dateToCheck = new DateTime(year: year, month: month, day: day);
-        var retrieverBaseObject = new RetrieveWeather(_config["BaseWeatherUri"]!, _config["AppId"]!);
-        var decorator = new LoggingDecoratorRetrieveWeather(retrieverBaseObject, _logger);
-        var sut = new StateWeather(decorator);
+        var retrieverBaseObject = new RetrieveWeather(_config["BaseWeatherUri"]!, _config["AppId"]!, _logger, new OwmSqlite.RetrieveWeatherNullMock());
+        var sut = new StateWeather(retrieverBaseObject);
         var container = new FsmStatefulContainer
         {
             CurrentState = PredictorFsmStates.Weather,

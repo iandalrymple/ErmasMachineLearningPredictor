@@ -24,8 +24,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Predictor.InsertSalesSqlite\Predictor.InsertSalesSqlite.csproj" />
+    <ProjectReference Include="..\Predictor.InsertWeatherSqlite\Predictor.InsertWeatherSqlite.csproj" />
     <ProjectReference Include="..\Predictor.PredictingEnginePython\Predictor.PredictingEnginePython.csproj" />
     <ProjectReference Include="..\Predictor.RetrieveHolidays\Predictor.RetrieveHolidays.csproj" />
+    <ProjectReference Include="..\Predictor.RetrieveOwmWeatherSqlite\Predictor.RetrieveOwmWeatherSqlite.csproj" />
     <ProjectReference Include="..\Predictor.RetrieveOwmWeather\Predictor.RetrieveOwmWeather.csproj" />
     <ProjectReference Include="..\Predictor.RetrieveSalesEmail\Predictor.RetrieveSalesEmail.csproj" />
     <ProjectReference Include="..\Predictor.RetrieveSalesSqlite\Predictor.RetrieveSalesSqlite.csproj" />

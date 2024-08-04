@@ -36,6 +36,7 @@
     <ProjectReference Include="..\Predictor.Console\Predictor.Console.csproj" />
     <ProjectReference Include="..\Predictor.Domain\Predictor.Domain.csproj" />
     <ProjectReference Include="..\Predictor.InsertSalesSqlite\Predictor.InsertSalesSqlite.csproj" />
+    <ProjectReference Include="..\Predictor.InsertWeatherSqlite\Predictor.InsertWeatherSqlite.csproj" />
     <ProjectReference Include="..\Predictor.PredictingEnginePython\Predictor.PredictingEnginePython.csproj" />
     <ProjectReference Include="..\Predictor.RetrieveHolidays\Predictor.RetrieveHolidays.csproj" />
     <ProjectReference Include="..\Predictor.RetrieveOwmWeatherSqlite\Predictor.RetrieveOwmWeatherSqlite.csproj" />

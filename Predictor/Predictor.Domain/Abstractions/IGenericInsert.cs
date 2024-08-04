@@ -1,6 +1,6 @@
 ﻿namespace Predictor.Domain.Abstractions;
 
-public interface ISalesInsert<in T>
+public interface IGenericInsert<in T> where T : class
 {
     public Task<bool> Insert(T insertionData);
 }
